@@ -72,7 +72,7 @@
 
     export class User {
         _id: string;
-        private _photo: goodidea.FileInfo;
+
         /**
          * 取得使用者id
          */
@@ -88,7 +88,7 @@
         /**
          * 取得或設定使用者學號
          */
-        public studentId: string;
+        public studentid: string;
 
         /**
          * 取得或設定使用者信箱
@@ -108,10 +108,22 @@
         /**
          * 取得使用者照片
          */
-        public get photo(): goodidea.FileInfo {
-            return this._photo;
-        }
-               
+        public photo: FileInfo;
+
+        /**
+         * 取得使用者專長
+         */
+        public specialty: KeyValue[];
+
+        /**
+         * 取得或設定系所
+         */
+        public department: Department;
+
+        /**
+         * 是否連結Facebook
+         */
+        public isLinkFB: boolean;
         
         //#region 資料更新
         /**
@@ -121,11 +133,61 @@
             var responseJSON: JSON = await postAsync('api/user/about', null, {
                 id: this.id
             });
-            var fields = ['Name', 'StudentId', 'Phone', 'Information'];
+            var fields = ['Name', 'StudentId', 'Phone','Email' , 'Information'];
             for (var i = 0; i < fields.length; i++) {
                 this[fields[i].toLowerCase()] = responseJSON['Result'][fields[i]];
             }
+            var sp = responseJSON['Result']['Specialty'];
+            this.specialty = [];
+            for (var i = 0; i < sp.length; i++) {
+                this.specialty.push(KeyValue.loadFromJSON(sp[i]));
+            }
+
+            this.isLinkFB = responseJSON['Result']['FB'] != null;
+            
+
+            if (responseJSON['Result']['Photo']) {
+                this.photo = FileInfo.loadFromJSON(responseJSON['Result']['Photo']);
+            }
+            if (responseJSON['Result']['Department']) {
+                this.department = Department.loadFromJSON(responseJSON['Result']['Department']);
+            }
         }
+
+        //#region 專長
+        /**
+         * 新增使用者專長
+         * @param value 專長
+         */
+        public async addSpecialty(value: string) : Promise<KeyValue> {
+            var responseJSON = await postAsync('api/user/AddSpecialty', null, {
+                Specialty: value
+            });
+
+            var result = KeyValue.loadFromJSON(responseJSON['Result']);
+            this.specialty.push(result);
+            return result;
+        }
+
+        /**
+         * 移除使用者專長
+         * @param value 專長Id或物件
+         */
+        public async removeSpecialty(value: (string | KeyValue)): Promise<void> {
+            var id = null;
+            if (value['id']) {
+                id = value['id'];
+            } else {
+                id = this.specialty.filter(x => x.value == value).first().id;
+            }
+
+            await postAsync('api/user/RemoveSpecialty', null, {
+                Specialty: id
+            });
+
+            this.specialty = this.specialty.filter(x => x.id != id);
+        }
+        //#endregion
 
         /**
          * 建立新的提案
@@ -140,15 +202,31 @@
          * 上傳目前用戶照片
          * @param file
          */
-        public async uploadPhoto(file : File): Promise<void> {
-            
+        public async uploadPhoto(file: File): Promise<FileInfo> {
+            var responseJSON = await postAsync('api/user/update', null, { Photo: file });
+            var photo = FileInfo.loadFromJSON(responseJSON['Result']);
+
+            this.photo = photo;
+
+            return photo;
         }
 
         /**
          * 更新目前使用者資訊
          */
         public async update(): Promise<void> {
+            var data = {
+                name: this.name,
+                email: this.email,
+                phone: this.phone,
+                information: this.information
+            };
 
+            if (this.department) {
+                data['department'] = this.department.id;
+            }
+
+            await postAsync('api/user/update', null, data);
         }
         //#endregion
 
@@ -158,14 +236,18 @@
          * @param token Facebook權杖
          */
         public async connectFB(token: string): Promise<void> {
-
+            await postAsync('api/user/linkFB', null, {
+                token: token
+            });
+            this.isLinkFB = true;
         }
 
         /**
          * 取消串聯Facebook帳號
          */
         public async unconnectFB(): Promise<void> {
-            
+            await postAsync('api/user/unlinkfb');
+            this.isLinkFB = false;
         }
         //#endregion
     }

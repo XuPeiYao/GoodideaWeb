@@ -156,8 +156,11 @@ var nativeExtensions;
                             }
                             else {
                                 var formdata = new FormData();
-                                for (var key in data)
+                                for (var key in data) {
+                                    if (data[key] instanceof Function)
+                                        continue;
                                     formdata.append(key, data[key]);
+                                }
                                 xhr.send(formdata);
                             }
                         }

@@ -29,7 +29,10 @@
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Class.ts" />
+    <TypeScriptCompile Include="College.ts" />
+    <TypeScriptCompile Include="Department.ts" />
     <TypeScriptCompile Include="FileInfo.ts" />
+    <TypeScriptCompile Include="KeyValue.ts" />
     <TypeScriptCompile Include="Lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="Project.ts" />
     <TypeScriptCompile Include="User.ts" />
