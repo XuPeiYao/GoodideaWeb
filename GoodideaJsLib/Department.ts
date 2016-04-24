@@ -13,6 +13,7 @@
                 if (data[fields[i]] instanceof Function) continue;
                 result[fields[i].toLowerCase()] = data[fields[i]];
             }
+            result.college = College.loadFromJSON(data['College']);
             return result;
         }
 

@@ -11,6 +11,10 @@
         if (!response.Success) throw response.Result;
         return response;
     }
+    
+    export function firstToLowerCase(input:string):string{
+        return input[0].toLowerCase() + input.substring(1);
+    }
 
     //#region 帳號狀態
     /**
@@ -88,7 +92,7 @@
         /**
          * 取得或設定使用者學號
          */
-        public studentid: string;
+        public studentId: string;
 
         /**
          * 取得或設定使用者信箱
@@ -134,8 +138,9 @@
                 id: this.id
             });
             var fields = ['Name', 'StudentId', 'Phone','Email' , 'Information'];
+            
             for (var i = 0; i < fields.length; i++) {
-                this[fields[i].toLowerCase()] = responseJSON['Result'][fields[i]];
+                this[firstToLowerCase(fields[i])] = responseJSON['Result'][fields[i]];
             }
             var sp = responseJSON['Result']['Specialty'];
             this.specialty = [];
@@ -190,15 +195,6 @@
         //#endregion
 
         /**
-         * 建立新的提案
-         * @param name 提案名稱
-         * @param _class 提案類別
-         */
-        public async createProject(name: string, _class: Class): Promise<Project> {
-            return null;
-        }
-
-        /**
          * 上傳目前用戶照片
          * @param file
          */
@@ -212,7 +208,7 @@
         }
 
         /**
-         * 更新目前使用者資訊
+         * 更新使用者資訊
          */
         public async update(): Promise<void> {
             var data = {
