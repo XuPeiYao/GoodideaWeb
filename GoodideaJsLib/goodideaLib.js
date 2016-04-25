@@ -15,8 +15,20 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class College {
+        static loadFromJSON(data) {
+            var result = new College();
+            result.id = data['Id'];
+            result.name = data['Name'];
+            return result;
+        }
     }
     goodidea.College = College;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class Competition {
+    }
+    goodidea.Competition = Competition;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
@@ -27,8 +39,9 @@ var goodidea;
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
-                result[fields[i].toLowerCase()] = data[fields[i]];
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
+            result.college = goodidea.College.loadFromJSON(data['College']);
             return result;
         }
         /**
@@ -47,6 +60,23 @@ var goodidea;
         }
     }
     goodidea.Department = Department;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class DocumentInfo {
+        static loadFromJSON(data) {
+            var result = new DocumentInfo();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function)
+                    continue;
+                result[fields[i].toLowerCase()] = data[fields[i]];
+            }
+            result.file = goodidea.FileInfo.loadFromJSON(data['File']);
+            return result;
+        }
+    }
+    goodidea.DocumentInfo = DocumentInfo;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
@@ -88,19 +118,106 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    (function (OrderBy) {
+    })(goodidea.OrderBy || (goodidea.OrderBy = {}));
+    var OrderBy = goodidea.OrderBy;
     class Project {
+        /**
+         * 讀取提案內容
+         */
+        load() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var temp = yield Project.getProjectById(this.id);
+                var fields = temp.getKeys();
+                for (var i = 0; i < fields.length; i++) {
+                    if (temp[fields[i]] instanceof Function)
+                        continue;
+                    this[fields[i]] = temp[fields[i]];
+                }
+            });
+        }
+        /**
+         * 更新提案內容
+         */
+        update() {
+            return __awaiter(this, void 0, Promise, function* () {
+                return null;
+            });
+        }
+        static loadFromJSON(data) {
+            var result = new Project();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function)
+                    continue;
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
+            }
+            return result;
+        }
+        static getUserProjects(user) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = user['id'] || user;
+                var responseJSON = yield goodidea.postAsync('api/project/userlist', null, { id: id });
+                return goodidea.UserProjectList.loadFromJSON(responseJSON['Result']);
+            });
+        }
+        static getProjectById(id) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/get', null, { project: id });
+                return Project.loadFromJSON(responseJSON['Result']);
+            });
+        }
+        static getLoginUserProjects() {
+            return __awaiter(this, void 0, Promise, function* () {
+                return Project.getUserProjects("me");
+            });
+        }
+        static getProjectList(_class, competition, orderby) {
+            return __awaiter(this, void 0, Promise, function* () {
+                return Project.search(null, _class, competition, orderby);
+            });
+        }
+        static search(keyword, _class, competition, orderby) {
+            return __awaiter(this, void 0, Promise, function* () {
+                return null;
+            });
+        }
     }
     goodidea.Project = Project;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    class ProjectResultPage {
+        nextPage() {
+            return __awaiter(this, void 0, Promise, function* () {
+                return null;
+            });
+        }
+    }
+    goodidea.ProjectResultPage = ProjectResultPage;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class Team {
+    }
+    goodidea.Team = Team;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class TeamMember {
+    }
+    goodidea.TeamMember = TeamMember;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
     goodidea.host = "http://goodidea.nkfust.edu.tw/";
+    goodidea.origin = "http://goodidea.nkfust.edu.tw/";
     function postAsync(url, header, data, user, password, progressCallback) {
         return __awaiter(this, void 0, Promise, function* () {
             var request = new nativeExtensions.HttpClient();
             if (!data)
                 data = {};
-            data['origin'] = goodidea.host;
+            data['origin'] = goodidea.origin;
             var response = JSON.parse((yield request.postAsync(url, header, data, user, password, progressCallback)).resultText);
             if (!response.Success)
                 throw response.Result;
@@ -108,6 +225,10 @@ var goodidea;
         });
     }
     goodidea.postAsync = postAsync;
+    function firstToLowerCase(input) {
+        return input[0].toLowerCase() + input.substring(1);
+    }
+    goodidea.firstToLowerCase = firstToLowerCase;
     function login(id, password) {
         return __awaiter(this, void 0, Promise, function* () {
             var apiPath = "api/user/login";
@@ -178,7 +299,7 @@ var goodidea;
                 });
                 var fields = ['Name', 'StudentId', 'Phone', 'Email', 'Information'];
                 for (var i = 0; i < fields.length; i++) {
-                    this[fields[i].toLowerCase()] = responseJSON['Result'][fields[i]];
+                    this[firstToLowerCase(fields[i])] = responseJSON['Result'][fields[i]];
                 }
                 var sp = responseJSON['Result']['Specialty'];
                 this.specialty = [];
@@ -230,16 +351,6 @@ var goodidea;
         }
         //#endregion
         /**
-         * 建立新的提案
-         * @param name 提案名稱
-         * @param _class 提案類別
-         */
-        createProject(name, _class) {
-            return __awaiter(this, void 0, Promise, function* () {
-                return null;
-            });
-        }
-        /**
          * 上傳目前用戶照片
          * @param file
          */
@@ -252,7 +363,7 @@ var goodidea;
             });
         }
         /**
-         * 更新目前使用者資訊
+         * 更新使用者資訊
          */
         update() {
             return __awaiter(this, void 0, Promise, function* () {
@@ -293,5 +404,25 @@ var goodidea;
         }
     }
     goodidea.User = User;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class UserProjectList {
+        constructor() {
+            this.own = [];
+            this.participate = [];
+        }
+        static loadFromJSON(data) {
+            var result = new UserProjectList();
+            for (var i = 0; i < data['Own'].length; i++) {
+                result.own.push(goodidea.Project.loadFromJSON(data['Own'][i]));
+            }
+            for (var i = 0; i < data['Participate'].length; i++) {
+                result.participate.push(goodidea.Project.loadFromJSON(data['Participate'][i]));
+            }
+            return result;
+        }
+    }
+    goodidea.UserProjectList = UserProjectList;
 })(goodidea || (goodidea = {}));
 //# sourceMappingURL=goodideaLib.js.map

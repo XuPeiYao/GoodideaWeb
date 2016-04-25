@@ -1,11 +1,12 @@
 ﻿module goodidea {
     export var host: string = "http://goodidea.nkfust.edu.tw/";
+    export var origin: string = "http://goodidea.nkfust.edu.tw/";
 
     export async function postAsync(url: string, header?: any, data?: (FormData | String | Object), user?: string, password?: string, progressCallback?: (event: ProgressEvent) => any): Promise<JSON> {
         var request = new nativeExtensions.HttpClient();
 
         if (!data) data = {};
-        data['origin'] = host;
+        data['origin'] = origin;
 
         var response: any = JSON.parse((await request.postAsync(url, header, data, user, password, progressCallback)).resultText);
         if (!response.Success) throw response.Result;

@@ -22,20 +22,24 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
-    <Content Include="index.html" />
     <Content Include="Lib\nativeExtensions.js" />
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Class.ts" />
     <TypeScriptCompile Include="College.ts" />
+    <TypeScriptCompile Include="Competition.ts" />
     <TypeScriptCompile Include="Department.ts" />
+    <TypeScriptCompile Include="DocumentInfo.ts" />
     <TypeScriptCompile Include="FileInfo.ts" />
     <TypeScriptCompile Include="KeyValue.ts" />
     <TypeScriptCompile Include="Lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="Project.ts" />
+    <TypeScriptCompile Include="ProjectResultPage.ts" />
+    <TypeScriptCompile Include="Team.ts" />
+    <TypeScriptCompile Include="TeamMember.ts" />
     <TypeScriptCompile Include="User.ts" />
+    <TypeScriptCompile Include="UserProjectList.ts" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">

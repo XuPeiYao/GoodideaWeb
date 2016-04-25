@@ -1,6 +1,6 @@
 ﻿module goodidea {
     export class Department {
-        public collegeid: string;
+        public collegeId: string;
         public id: string;
         public name: string;    
 
@@ -11,7 +11,7 @@
             var fields = data.getKeys();
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function) continue;
-                result[fields[i].toLowerCase()] = data[fields[i]];
+                result[firstToLowerCase(fields[i])] = data[fields[i]];
             }
             result.college = College.loadFromJSON(data['College']);
             return result;

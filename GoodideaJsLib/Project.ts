@@ -92,7 +92,12 @@
          * 讀取提案內容
          */
         public async load():Promise<void>{
-            return null;
+            var temp = await Project.getProjectById(this.id);
+            var fields =  temp.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (temp[fields[i]] instanceof Function) continue;
+                this[fields[i]] = temp[fields[i]];
+            }
         }
         
         /**
@@ -101,13 +106,26 @@
         public async update():Promise<void>{
             return null;
         }
-        
-        public static async getUserProjects(user:(User|string)):Promise<UserProjectList>{
-            if(user['id']){
-                
-            }else{
-                
+
+        public static loadFromJSON(data: JSON): Project {
+            var result = new Project();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function) continue;
+                result[firstToLowerCase(fields[i])] = data[fields[i]];
             }
+            return result;
+        }
+        
+        public static async getUserProjects(user: (User | string)): Promise<UserProjectList>{
+            var id = user['id'] || user;
+            var responseJSON = await postAsync('api/project/userlist', null, { id: id });
+            return UserProjectList.loadFromJSON(responseJSON['Result']);
+        }
+
+        public static async getProjectById(id: string): Promise<Project> {
+            var responseJSON = await postAsync('api/project/get', null, { project: id });
+            return Project.loadFromJSON(responseJSON['Result']);
         }
         
         public static async getLoginUserProjects():Promise<UserProjectList> {
