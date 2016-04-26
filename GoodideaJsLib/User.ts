@@ -5,6 +5,8 @@
     export async function postAsync(url: string, header?: any, data?: (FormData | String | Object), user?: string, password?: string, progressCallback?: (event: ProgressEvent) => any): Promise<JSON> {
         var request = new nativeExtensions.HttpClient();
 
+        url = host + url;
+
         if (!data) data = {};
         data['origin'] = origin;
 
@@ -70,20 +72,16 @@
      */
     export async function getUserById(id: string): Promise<User> {
         var result = new User();
-        result._id = id;
+        result.id = id;
         await result.load();
         return result;
     }
 
     export class User {
-        _id: string;
-
         /**
          * 取得使用者id
          */
-        public get id(): string {
-            return this._id;
-        }
+        public id: string;
 
         /**
          * 取得或設定使用者姓名
@@ -131,6 +129,37 @@
         public isLinkFB: boolean;
         
         //#region 資料更新
+        public static loadFromJSON(data: JSON): User {
+            var result = new User();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                result[firstToLowerCase(fields[i])] = data[fields[i]];
+            }
+
+            var sp = data['Specialty'];
+            result.specialty = [];
+            for (var i = 0; i < sp.length; i++) {
+                if (sp[i]['Id']) {
+                    result.specialty.push(KeyValue.loadFromJSON(sp[i]));
+                } else {
+                    result.specialty.push(sp[i]);
+                }
+            }
+
+            result.isLinkFB = data['FB'] != null;
+
+
+            if (data['Photo']) {
+                result.photo = FileInfo.loadFromJSON(data['Photo']);
+            }
+            if (data['Department']) {
+                result.department = Department.loadFromJSON(data['Department']);
+            }
+
+            return result;
+        }
+
+
         /**
          * 讀取使用者資料
          */
@@ -138,25 +167,11 @@
             var responseJSON: JSON = await postAsync('api/user/about', null, {
                 id: this.id
             });
-            var fields = ['Name', 'StudentId', 'Phone','Email' , 'Information'];
-            
+
+            var user = await User.loadFromJSON(responseJSON['Result']);
+            var fields = user.getKeys();
             for (var i = 0; i < fields.length; i++) {
-                this[firstToLowerCase(fields[i])] = responseJSON['Result'][fields[i]];
-            }
-            var sp = responseJSON['Result']['Specialty'];
-            this.specialty = [];
-            for (var i = 0; i < sp.length; i++) {
-                this.specialty.push(KeyValue.loadFromJSON(sp[i]));
-            }
-
-            this.isLinkFB = responseJSON['Result']['FB'] != null;
-            
-
-            if (responseJSON['Result']['Photo']) {
-                this.photo = FileInfo.loadFromJSON(responseJSON['Result']['Photo']);
-            }
-            if (responseJSON['Result']['Department']) {
-                this.department = Department.loadFromJSON(responseJSON['Result']['Department']);
+                this[fields[i]] = user[fields[i]];
             }
         }
 

@@ -20,7 +20,7 @@
         /**
          * 取得所有系所陣列
          */
-        public static async getAllDepartments(): Promise<Department[]> {
+        public static async getDepartmentList(): Promise<Department[]> {
             var responseJSON: JSON = await postAsync('api/Department/list');
 
             var dep = responseJSON['Result'];

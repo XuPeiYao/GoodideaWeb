@@ -5,8 +5,8 @@
         
         public static loadFromJSON(data: JSON): College {
             var result = new College();
-            result.id = <string>data['Id'];
-            result.name = <string>data['Name'];
+            result.id = data['Id'];
+            result.name = data['Name'];
             return result;
         }
     }
