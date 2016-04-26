@@ -191,9 +191,21 @@ var goodidea;
          */
         update() {
             return __awaiter(this, void 0, Promise, function* () {
-                return null;
+                yield goodidea.postAsync('api/project/update', null, {
+                    project: this.id,
+                    name: this.name,
+                    class: this.class.id,
+                    content: this.content,
+                    isPublish: this.isPublish,
+                    teamName: this.team.name
+                });
             });
         }
+        /**
+         * 加入新的團隊成員
+         * @param user 團隊成員的ID或User物件
+         * @param memberType 團隊成員類型
+         */
         addMember(user, memberType) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = user['id'] || user; //isTeacher: boolean, isAssistant: boolean
@@ -205,6 +217,10 @@ var goodidea;
                 return member;
             });
         }
+        /**
+         * 剔除團隊成員
+         * @param member 團隊成員的ID或TeamMember、User物件
+         */
         removeMember(member) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = member['user']['id'] || member['id'] || member;
@@ -212,6 +228,11 @@ var goodidea;
                 this.team.group = this.team.group.filter(x => x.user.id != id);
             });
         }
+        /**
+         * 上傳相關文件
+         * @param name 檔案名稱
+         * @param file 檔案
+         */
         uploadFile(name, file) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/project/addfile', null, { project: this.id, file: file, name: name });
@@ -220,6 +241,10 @@ var goodidea;
                 return result;
             });
         }
+        /**
+         * 刪除相關文件
+         * @param doc 檔案ID或DocumentInfo物件
+         */
         deleteFile(doc) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = doc['id'] || doc;
@@ -227,12 +252,42 @@ var goodidea;
                 this.files = this.files.filter(x => x.id != id);
             });
         }
+        /**
+         * 上傳封面
+         * @param file 封面檔案
+         */
         uploadCover(file) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/project/update', null, { project: this.id, cover: file });
                 var result = goodidea.FileInfo.loadFromJSON(responseJSON['Result']);
                 this.cover = result;
                 return result;
+            });
+        }
+        /**
+         * 刪除目前專案
+         */
+        delete() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/delete', null, { project: this.id });
+            });
+        }
+        /**
+         * 新增提案
+         * @param name 提案名稱
+         * @param _class 提案分類ID或Class物件
+         * @param temp 提案競賽樣板，競賽ID或Competition物件
+         */
+        static create(name, _class, temp) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = {
+                    name: name,
+                    class: _class['id'] || _class
+                };
+                if (temp)
+                    data['competition'] = temp['id'] || temp;
+                var responseJSON = yield goodidea.postAsync('api/project/add', null, data);
+                return Project.loadFromJSON(responseJSON['Result']);
             });
         }
         static loadFromJSON(data) {
@@ -253,6 +308,10 @@ var goodidea;
             }
             return result;
         }
+        /**
+         * 取得指定使用者ID或User物件對象所有提案
+         * @param user 指定使用者
+         */
         static getUserProjects(user) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = user['id'] || user;
@@ -260,22 +319,42 @@ var goodidea;
                 return goodidea.UserProjectList.loadFromJSON(responseJSON['Result']);
             });
         }
+        /**
+         * 取得指定使用者所有提案
+         * @param id 指定使用者ID
+         */
         static getProjectById(id) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/project/get', null, { project: id });
                 return Project.loadFromJSON(responseJSON['Result']);
             });
         }
+        /**
+         * 取得目前登入使用者的所有提案
+         */
         static getLoginUserProjects() {
             return __awaiter(this, void 0, Promise, function* () {
                 return Project.getUserProjects("me");
             });
         }
+        /**
+         * 取得目前系統中公開提案清單
+         * @param _class 分類
+         * @param competition 競賽
+         * @param order 排序
+         */
         static getProjectList(_class, competition, order) {
             return __awaiter(this, void 0, Promise, function* () {
                 return Project.search(null, _class, competition, order);
             });
         }
+        /**
+         * 搜尋目前系統中公開提案
+         * @param keyword 關鍵字
+         * @param _class 分類
+         * @param competition 競賽
+         * @param order 排序
+         */
         static search(keyword, _class, competition, order) {
             return __awaiter(this, void 0, Promise, function* () {
                 var api = 'api/project/list';

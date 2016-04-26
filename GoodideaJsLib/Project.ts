@@ -104,10 +104,22 @@
         /**
          * 更新提案內容
          */
-        public async update():Promise<void>{
-            return null;
+        public async update(): Promise<void>{
+            await postAsync('api/project/update', null, {
+                project: this.id,
+                name: this.name,
+                class: this.class.id,
+                content: this.content,
+                isPublish: this.isPublish,
+                teamName: this.team.name
+            });
         }
 
+        /**
+         * 加入新的團隊成員
+         * @param user 團隊成員的ID或User物件
+         * @param memberType 團隊成員類型
+         */
         public async addMember(user: (string | User), memberType : MemberType ): Promise<TeamMember> {
             var id = user['id'] || user;//isTeacher: boolean, isAssistant: boolean
             memberType = memberType || MemberType.member;
@@ -118,12 +130,21 @@
             return member;
         }
 
+        /**
+         * 剔除團隊成員
+         * @param member 團隊成員的ID或TeamMember、User物件
+         */
         public async removeMember(member: (string | TeamMember | User)): Promise<void>{
             var id = member['user']['id'] || member['id'] || member;
             var responseJSON = await postAsync('api/project/removemember', null, { project: this.id, user: id });
             this.team.group = this.team.group.filter(x => x.user.id != id);
         }
 
+        /**
+         * 上傳相關文件
+         * @param name 檔案名稱
+         * @param file 檔案
+         */
         public async uploadFile(name:string,file: File): Promise<DocumentInfo> {
             var responseJSON = await postAsync('api/project/addfile', null, { project: this.id, file: file,name:name });
             var result = DocumentInfo.loadFromJSON(responseJSON['Result']);
@@ -131,19 +152,50 @@
             return result;
         }
 
+        /**
+         * 刪除相關文件
+         * @param doc 檔案ID或DocumentInfo物件
+         */
         public async deleteFile(doc: (string | DocumentInfo)): Promise<void> {
             var id = doc['id'] || doc;
             var responseJSON = await postAsync('api/project/removefile', null, { file: id });
             this.files = this.files.filter(x => x.id != id);
         }
 
+        /**
+         * 上傳封面
+         * @param file 封面檔案
+         */
         public async uploadCover(file: File): Promise<FileInfo> {
             var responseJSON = await postAsync('api/project/update', null, { project: this.id, cover: file });
             var result = FileInfo.loadFromJSON(responseJSON['Result']);
             this.cover = result;
             return result;
         }
-                        
+
+        /**
+         * 刪除目前專案
+         */
+        public async delete(): Promise<void> {
+            await postAsync('api/project/delete', null, { project: this.id });
+        }
+
+        /**
+         * 新增提案
+         * @param name 提案名稱
+         * @param _class 提案分類ID或Class物件
+         * @param temp 提案競賽樣板，競賽ID或Competition物件
+         */
+        public static async create(name: string, _class: (Class | string), temp: (Competition | string)): Promise<Project> {
+            var data = {
+                name: name,
+                class: _class['id'] || _class
+            };
+            if (temp) data['competition'] = temp['id'] || temp;
+            var responseJSON = await postAsync('api/project/add', null, data);
+            return Project.loadFromJSON(responseJSON['Result']);
+        }
+
         public static loadFromJSON(data: JSON): Project {
             var result = new Project();
             var fields = data.getKeys();
@@ -162,26 +214,50 @@
             }
             return result;
         }
-        
+
+        /**
+         * 取得指定使用者ID或User物件對象所有提案
+         * @param user 指定使用者
+         */
         public static async getUserProjects(user: (User | string)): Promise<UserProjectList>{
             var id = user['id'] || user;
             var responseJSON = await postAsync('api/project/userlist', null, { id: id });
             return UserProjectList.loadFromJSON(responseJSON['Result']);
         }
 
+        /**
+         * 取得指定使用者所有提案
+         * @param id 指定使用者ID
+         */
         public static async getProjectById(id: string): Promise<Project> {
             var responseJSON = await postAsync('api/project/get', null, { project: id });
             return Project.loadFromJSON(responseJSON['Result']);
         }
-        
+
+        /**
+         * 取得目前登入使用者的所有提案
+         */
         public static async getLoginUserProjects():Promise<UserProjectList> {
             return Project.getUserProjects("me");
         }
-        
+
+        /**
+         * 取得目前系統中公開提案清單
+         * @param _class 分類
+         * @param competition 競賽
+         * @param order 排序
+         */
         public static async getProjectList(_class:Class,competition:Competition,order:OrderBy):Promise<ProjectResultPage>{
             return Project.search(null,_class,competition,order);
         }
-        
+
+        /**
+         * 搜尋目前系統中公開提案
+         * @param keyword 關鍵字
+         * @param _class 分類
+         * @param competition 競賽
+         * @param order 排序
+         */
         public static async search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<ProjectResultPage>{
             var  api = 'api/project/list';
             var data = {
