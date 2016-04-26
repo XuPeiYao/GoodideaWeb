@@ -194,10 +194,12 @@ var goodidea;
                 return null;
             });
         }
-        addMember(user, isTeacher, isAssistant) {
+        addMember(user, memberType) {
             return __awaiter(this, void 0, Promise, function* () {
-                var id = user['id'] || user;
-                var responseJSON = yield goodidea.postAsync('api/project/addmember', null, { project: this.id, user: id, isTeacher: isTeacher, isAssistant: isAssistant });
+                var id = user['id'] || user; //isTeacher: boolean, isAssistant: boolean
+                memberType = memberType || goodidea.MemberType.member;
+                var data = { project: this.id, user: id, isTeacher: memberType != goodidea.MemberType.member, isAssistant: memberType == goodidea.MemberType.assistant };
+                var responseJSON = yield goodidea.postAsync('api/project/addmember', null, data);
                 var member = goodidea.TeamMember.loadFromJSON(responseJSON['Result']);
                 this.team.group.push(member);
                 return member;
@@ -366,7 +368,34 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    (function (MemberType) {
+        MemberType[MemberType["teacher"] = 0] = "teacher";
+        MemberType[MemberType["assistant"] = 1] = "assistant";
+        MemberType[MemberType["member"] = 2] = "member";
+    })(goodidea.MemberType || (goodidea.MemberType = {}));
+    var MemberType = goodidea.MemberType;
     class TeamMember {
+        get memberType() {
+            if (!this.isTeacher)
+                return MemberType.member;
+            return this.isAssistant ? MemberType.assistant : MemberType.teacher;
+        }
+        set memberType(value) {
+            switch (value) {
+                case MemberType.member:
+                    this.isTeacher = false;
+                    this.isAssistant = false;
+                    break;
+                case MemberType.assistant:
+                    this.isTeacher = true;
+                    this.isAssistant = true;
+                    break;
+                case MemberType.teacher:
+                    this.isTeacher = true;
+                    this.isAssistant = false;
+                    break;
+            }
+        }
         static loadFromJSON(data) {
             var result = new TeamMember();
             var fields = data.getKeys();

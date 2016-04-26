@@ -2,6 +2,7 @@
     export enum OrderBy{
         lastEditTime,name,class,views,votes,awardsFirst
     }
+   
     export class Project {
         /**
          * 取得提案Id
@@ -107,9 +108,11 @@
             return null;
         }
 
-        public async addMember(user: (string | User), isTeacher: boolean, isAssistant: boolean): Promise<TeamMember> {
-            var id = user['id'] || user;
-            var responseJSON = await postAsync('api/project/addmember', null, { project: this.id, user: id, isTeacher: isTeacher, isAssistant: isAssistant });
+        public async addMember(user: (string | User), memberType : MemberType ): Promise<TeamMember> {
+            var id = user['id'] || user;//isTeacher: boolean, isAssistant: boolean
+            memberType = memberType || MemberType.member;
+            var data = { project: this.id, user: id, isTeacher: memberType != MemberType.member, isAssistant: memberType == MemberType.assistant };
+            var responseJSON = await postAsync('api/project/addmember', null, data);
             var member = TeamMember.loadFromJSON(responseJSON['Result']);
             this.team.group.push(member);
             return member;
