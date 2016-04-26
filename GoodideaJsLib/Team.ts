@@ -1,7 +1,7 @@
 module goodidea {
     export class Team {
         public name:string;
-        public group: TeamMember[];
+        public group: TeamMember[] = [];
 
         public static loadFromJSON(data: JSON): Team {
             var result = new Team();

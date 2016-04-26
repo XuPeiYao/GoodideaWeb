@@ -116,7 +116,7 @@
         /**
          * 取得使用者專長
          */
-        public specialty: KeyValue[];
+        public specialty: KeyValue[] = [];
 
         /**
          * 取得或設定系所

@@ -41,7 +41,7 @@
         /**
          * 取得提案夾帶的檔案
          */
-        public files:DocumentInfo;
+        public files:DocumentInfo[] = [];
         
         /**
          * 取得提案成員徵人需求
@@ -106,6 +106,40 @@
         public async update():Promise<void>{
             return null;
         }
+
+        public async addMember(user: (string | User), isTeacher: boolean, isAssistant: boolean): Promise<TeamMember> {
+            var id = user['id'] || user;
+            var responseJSON = await postAsync('api/project/addmember', null, { project: this.id, user: id, isTeacher: isTeacher, isAssistant: isAssistant });
+            var member = TeamMember.loadFromJSON(responseJSON['Result']);
+            this.team.group.push(member);
+            return member;
+        }
+
+        public async removeMember(member: (string | TeamMember | User)): Promise<void>{
+            var id = member['user']['id'] || member['id'] || member;
+            var responseJSON = await postAsync('api/project/removemember', null, { project: this.id, user: id });
+            this.team.group = this.team.group.filter(x => x.user.id != id);
+        }
+
+        public async uploadFile(name:string,file: File): Promise<DocumentInfo> {
+            var responseJSON = await postAsync('api/project/addfile', null, { project: this.id, file: file,name:name });
+            var result = DocumentInfo.loadFromJSON(responseJSON['Result']);
+            this.files.push(DocumentInfo.loadFromJSON(responseJSON['Result']));
+            return result;
+        }
+
+        public async deleteFile(doc: (string | DocumentInfo)): Promise<void> {
+            var id = doc['id'] || doc;
+            var responseJSON = await postAsync('api/project/removefile', null, { file: id });
+            this.files = this.files.filter(x => x.id != id);
+        }
+
+        public async uploadCover(file: File): Promise<FileInfo> {
+            var responseJSON = await postAsync('api/project/update', null, { project: this.id, cover: file });
+            var result = FileInfo.loadFromJSON(responseJSON['Result']);
+            this.cover = result;
+            return result;
+        }
                         
         public static loadFromJSON(data: JSON): Project {
             var result = new Project();
@@ -116,6 +150,10 @@
             }
 
             result.owner = User.loadFromJSON(data['Owner']);
+            result.files = [];
+            for (var i = 0; i < data['Files'].length; i++) {
+                result.files.push(DocumentInfo.loadFromJSON(data['Files'][i]));
+            }
             if (data['Team']) {
                 result.team = Team.loadFromJSON(data['Team']);
             }

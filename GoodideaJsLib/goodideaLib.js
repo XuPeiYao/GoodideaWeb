@@ -166,6 +166,12 @@ var goodidea;
     })(goodidea.OrderBy || (goodidea.OrderBy = {}));
     var OrderBy = goodidea.OrderBy;
     class Project {
+        constructor() {
+            /**
+             * 取得提案夾帶的檔案
+             */
+            this.files = [];
+        }
         /**
          * 讀取提案內容
          */
@@ -188,6 +194,45 @@ var goodidea;
                 return null;
             });
         }
+        addMember(user, isTeacher, isAssistant) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = user['id'] || user;
+                var responseJSON = yield goodidea.postAsync('api/project/addmember', null, { project: this.id, user: id, isTeacher: isTeacher, isAssistant: isAssistant });
+                var member = goodidea.TeamMember.loadFromJSON(responseJSON['Result']);
+                this.team.group.push(member);
+                return member;
+            });
+        }
+        removeMember(member) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = member['user']['id'] || member['id'] || member;
+                var responseJSON = yield goodidea.postAsync('api/project/removemember', null, { project: this.id, user: id });
+                this.team.group = this.team.group.filter(x => x.user.id != id);
+            });
+        }
+        uploadFile(name, file) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/addfile', null, { project: this.id, file: file, name: name });
+                var result = goodidea.DocumentInfo.loadFromJSON(responseJSON['Result']);
+                this.files.push(goodidea.DocumentInfo.loadFromJSON(responseJSON['Result']));
+                return result;
+            });
+        }
+        deleteFile(doc) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = doc['id'] || doc;
+                var responseJSON = yield goodidea.postAsync('api/project/removefile', null, { file: id });
+                this.files = this.files.filter(x => x.id != id);
+            });
+        }
+        uploadCover(file) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/update', null, { project: this.id, cover: file });
+                var result = goodidea.FileInfo.loadFromJSON(responseJSON['Result']);
+                this.cover = result;
+                return result;
+            });
+        }
         static loadFromJSON(data) {
             var result = new Project();
             var fields = data.getKeys();
@@ -197,6 +242,10 @@ var goodidea;
                 result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
             result.owner = goodidea.User.loadFromJSON(data['Owner']);
+            result.files = [];
+            for (var i = 0; i < data['Files'].length; i++) {
+                result.files.push(goodidea.DocumentInfo.loadFromJSON(data['Files'][i]));
+            }
             if (data['Team']) {
                 result.team = goodidea.Team.loadFromJSON(data['Team']);
             }
@@ -300,6 +349,9 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Team {
+        constructor() {
+            this.group = [];
+        }
         static loadFromJSON(data) {
             var result = new Team();
             result.name = data['Name'];
@@ -402,6 +454,12 @@ var goodidea;
     }
     goodidea.getUserById = getUserById;
     class User {
+        constructor() {
+            /**
+             * 取得使用者專長
+             */
+            this.specialty = [];
+        }
         //#region 資料更新
         static loadFromJSON(data) {
             var result = new User();
