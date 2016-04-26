@@ -265,6 +265,25 @@ var goodidea;
             });
         }
         /**
+         * 參加指定競賽
+         * @param competition 指定競賽的ID或Competition物件
+         */
+        joinCompetition(competition) {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/joinCompetition', null, { project: this.id });
+                this.load(); //reload Project
+            });
+        }
+        /**
+         * 複製目前提案
+         */
+        clone() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/clone', null, { project: this.id });
+                return Project.loadFromJSON(responseJSON['Result']);
+            });
+        }
+        /**
          * 刪除目前專案
          */
         delete() {
