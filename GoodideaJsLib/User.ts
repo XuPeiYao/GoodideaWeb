@@ -18,65 +18,7 @@
     export function firstToLowerCase(input:string):string{
         return input[0].toLowerCase() + input.substring(1);
     }
-
-    //#region 帳號狀態
-    /**
-     * 使用Facebook權杖登入
-     * @param fbToken Facebook權杖
-     */
-    export async function login(fbToken: string): Promise<User>;
-
-    /**
-     * 使用學校信箱登入
-     * @param id 帳號
-     * @param password 密碼
-     */
-    export async function login(id: string,password : string): Promise<User>;
-    export async function login(id: string, password?: string): Promise<User>{
-        var apiPath = "api/user/login";
-        var postData : any = {
-            id: id,
-            pwd: password
-        };
-        if (!password) {
-            apiPath = "api/user/fblogin";
-            postData = {
-                token: id
-            };
-        }
-
-        var responseJSON : JSON = await postAsync(apiPath, null, postData);
-
-        return await getUserById(responseJSON['Result'].Id);
-    }
-
-    /**
-     * 登出系統
-     */
-    export async function logout(): Promise<void>{
-        await postAsync('api/user/logout');
-    }
-
-    /**
-     * 取得目前登入使用者資訊
-     */
-    export async function getLoginUser(): Promise<User> {
-        var response = await postAsync('api/user/checklogin');
-        if (response['Result'] == null) return null;
-        return await getUserById(response['Result'].Id);
-    }
-    //#endregion
-
-    /**
-     * 取得指定使用者相關資訊
-     */
-    export async function getUserById(id: string): Promise<User> {
-        var result = new User();
-        result.id = id;
-        await result.load();
-        return result;
-    }
-
+    
     export class User {
         /**
          * 取得使用者id
@@ -138,11 +80,13 @@
 
             var sp = data['Specialty'];
             result.specialty = [];
-            for (var i = 0; i < sp.length; i++) {
-                if (sp[i]['Id']) {
-                    result.specialty.push(KeyValue.loadFromJSON(sp[i]));
-                } else {
-                    result.specialty.push(sp[i]);
+            if (sp) {
+                for (var i = 0; i < sp.length; i++) {
+                    if (sp[i]['Id']) {
+                        result.specialty.push(KeyValue.loadFromJSON(sp[i]));
+                    } else {
+                        result.specialty.push(sp[i]);
+                    }
                 }
             }
 
@@ -262,5 +206,64 @@
             this.isLinkFB = false;
         }
         //#endregion
+
+        //#region 帳號狀態
+        /**
+         * 使用Facebook權杖登入
+         * @param fbToken Facebook權杖
+         */
+        public static async login(fbToken: string): Promise<User>;
+
+        /**
+         * 使用學校信箱登入
+         * @param id 帳號
+         * @param password 密碼
+         */
+        public static async login(id: string, password: string): Promise<User>;
+        public static async login(id: string, password?: string): Promise<User> {
+            var apiPath = "api/user/login";
+            var postData: any = {
+                id: id,
+                pwd: password
+            };
+            if (!password) {
+                apiPath = "api/user/fblogin";
+                postData = {
+                    token: id
+                };
+            }
+
+            var responseJSON: JSON = await postAsync(apiPath, null, postData);
+
+            return await User.getUserById(responseJSON['Result'].Id);
+        }
+
+        /**
+         * 登出系統
+         */
+        public static async logout(): Promise<void> {
+            await postAsync('api/user/logout');
+        }
+
+        /**
+         * 取得目前登入使用者資訊
+         */
+        public static async getLoginUser(): Promise<User> {
+            var response = await postAsync('api/user/checklogin');
+            if (response['Result'] == null) return null;
+            return await User.getUserById(response['Result'].Id);
+        }
+        //#endregion
+
+        /**
+         * 取得指定使用者相關資訊
+         */
+        public static async getUserById(id: string): Promise<User> {
+            var result = new User();
+            result.id = id;
+            await result.load();
+            return result;
+        }
+
     }
 }
