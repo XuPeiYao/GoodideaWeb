@@ -467,6 +467,32 @@ var goodidea;
             });
         }
         /**
+         * 取得目前系統中有徵人公開提案清單
+         * @param _class 分類
+         * @param competition 競賽
+         * @param order 排序
+         */
+        static getRequestProjectList(_class, competition, order) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var api = 'api/project/requestList';
+                var data = {
+                    length: 10,
+                    class: _class ? _class.id : 'N',
+                    competition: competition ? competition.id : 'N',
+                    order: OrderBy[order]
+                };
+                var responseJSON = yield goodidea.postAsync(api, null, data);
+                var result = goodidea.ProjectResultPage.loadFromJSON(responseJSON);
+                result.url = api;
+                result.index = 0;
+                result.length = 10;
+                result.competition = competition;
+                result.class = _class;
+                result.order = order;
+                return result;
+            });
+        }
+        /**
          * 搜尋目前系統中公開提案
          * @param keyword 關鍵字
          * @param _class 分類
