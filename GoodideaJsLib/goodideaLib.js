@@ -156,6 +156,97 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    class MemberRequest {
+        static loadFromJSON(data) {
+            var result = new MemberRequest();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function)
+                    continue;
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
+            }
+            result.specialty = [];
+            for (var i = 0; i < data['Specialty'].length; i++) {
+                result.specialty.push(goodidea.MemberRequestSpecialty.loadFromJSON(data['Specialty'][i]));
+            }
+            return result;
+        }
+        /**
+         * 新增需求技能
+         * @param specialty 技能字串
+         */
+        addSpecialty(specialty) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/addMemberSpecialty', null, { memberRequest: this.id, specialty: specialty });
+                this.specialty.push(goodidea.MemberRequestSpecialty.loadFromJSON(responseJSON['Result']));
+            });
+        }
+        /**
+         * 移除指定技能需求
+         * @param specialty 指定技能之ID或MemberSpecialty物件
+         */
+        removeSpecialty(specialty) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = specialty['id'] || specialty;
+                yield goodidea.postAsync('api/project/removeMemberSpecialty', null, { specialty: id });
+                this.specialty = this.specialty.filter(x => x.id != id);
+            });
+        }
+        /**
+         * 使用目前登入使用者應徵
+         */
+        joinMemberRequest() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/JoinMemberResponse', null, { memberRequest: this.id });
+            });
+        }
+        /**
+         * 將目前登入使用者脫離該應徵
+         */
+        quitMemberRequest() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/QuitMemberResponse', null, { memberRequest: this.id });
+            });
+        }
+        /**
+         * 取得應徵人員名單
+         */
+        getMemberResponseList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/MemberResponseList', null, { project: this.projectId });
+                var memberRequest = responseJSON['Result'].filter(x => x['ProjectId'] == this.projectId)[0];
+                return memberRequest['MemberResponse'].map(x => goodidea.User.loadFromJSON(x['User']));
+            });
+        }
+        /**
+         * 將指定使用者抽離應徵人員清單
+         */
+        removeMemberResponse(user) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = user['id'] || user;
+                yield goodidea.postAsync('api/project/RemoveMemberResponse', null, {
+                    memberRequest: this.projectId,
+                    user: id
+                });
+            });
+        }
+    }
+    goodidea.MemberRequest = MemberRequest;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class MemberRequestSpecialty {
+        static loadFromJSON(data) {
+            var result = new MemberRequestSpecialty();
+            result.id = data['Id'];
+            result.value = data['Value'];
+            return result;
+        }
+    }
+    goodidea.MemberRequestSpecialty = MemberRequestSpecialty;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
     (function (OrderBy) {
         OrderBy[OrderBy["lastEditTime"] = 0] = "lastEditTime";
         OrderBy[OrderBy["name"] = 1] = "name";
@@ -276,10 +367,14 @@ var goodidea;
         }
         /**
          * 複製目前提案
+         * @param name 新的提案名稱
          */
-        clone() {
+        clone(name) {
             return __awaiter(this, void 0, Promise, function* () {
-                var responseJSON = yield goodidea.postAsync('api/project/clone', null, { project: this.id });
+                var data = { project: this.id };
+                if (name)
+                    data['name'] = name;
+                var responseJSON = yield goodidea.postAsync('api/project/clone', null, data);
                 return Project.loadFromJSON(responseJSON['Result']);
             });
         }
@@ -321,6 +416,10 @@ var goodidea;
             result.files = [];
             for (var i = 0; i < data['Files'].length; i++) {
                 result.files.push(goodidea.DocumentInfo.loadFromJSON(data['Files'][i]));
+            }
+            result.memberRequest = [];
+            for (var i = 0; i < data['MemberRequest'].length; i++) {
+                result.memberRequest.push(goodidea.MemberRequest.loadFromJSON(data['MemberRequest'][i]));
             }
             if (data['Team']) {
                 result.team = goodidea.Team.loadFromJSON(data['Team']);

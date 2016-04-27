@@ -47,7 +47,7 @@
         /**
          * 取得提案成員徵人需求
          */
-        public memberRequest:any;
+        public memberRequest: MemberRequest[];
         
         /**
          * 取得標籤(由系統管理員設定)
@@ -184,9 +184,12 @@
 
         /**
          * 複製目前提案
+         * @param name 新的提案名稱
          */
-        public async clone(): Promise<Project> {
-            var responseJSON = await postAsync('api/project/clone', null, { project: this.id });
+        public async clone(name?: string): Promise<Project> {
+            var data = { project: this.id };
+            if (name) data['name'] = name;
+            var responseJSON = await postAsync('api/project/clone', null, data);
             return Project.loadFromJSON(responseJSON['Result']);
         }
 
@@ -226,6 +229,11 @@
             for (var i = 0; i < data['Files'].length; i++) {
                 result.files.push(DocumentInfo.loadFromJSON(data['Files'][i]));
             }
+            result.memberRequest = [];
+            for (var i = 0; i < data['MemberRequest'].length; i++) {
+                result.memberRequest.push(MemberRequest.loadFromJSON(data['MemberRequest'][i]));
+            }
+
             if (data['Team']) {
                 result.team = Team.loadFromJSON(data['Team']);
             }
