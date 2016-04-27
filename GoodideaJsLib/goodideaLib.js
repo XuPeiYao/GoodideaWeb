@@ -140,6 +140,91 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    class Forum {
+        remove() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/forum/remove', null, {
+                    forum: this.id
+                });
+            });
+        }
+        static createForum(project, teamOnly, content) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var result = new Forum();
+                var id = project['id'] || project;
+                var responseJSON = yield goodidea.postAsync('api/forum/add', null, {
+                    project: id,
+                    team: teamOnly,
+                    content: content
+                });
+                return Forum.loadFromJSON(responseJSON['Result']);
+            });
+        }
+        static getForumList(project, teamOnly) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var result = new goodidea.ForumResultPage();
+                var id = project['id'] || project;
+                var responseJSON = yield goodidea.postAsync('api/forum/list', null, {
+                    project: id,
+                    length: 10,
+                    team: teamOnly
+                });
+                return goodidea.ForumResultPage.loadFromJSON(responseJSON['Result']);
+            });
+        }
+        static loadFromJSON(data) {
+            var result = new Forum();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function)
+                    continue;
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
+            }
+            result.user = goodidea.User.loadFromJSON(data['User']);
+            result.time = new Date(data['Time']);
+            return result;
+        }
+    }
+    goodidea.Forum = Forum;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class ForumResultPage {
+        constructor() {
+            this.index = 0;
+        }
+        hasNext() {
+            return this.index < this.count;
+        }
+        nextPage() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = {
+                    length: this.length,
+                    index: this.index + this.length,
+                    team: this.team
+                };
+                var responseJSON = yield goodidea.postAsync(this.url, null, data);
+                var result = goodidea.ProjectResultPage.loadFromJSON(responseJSON);
+                result.url = this.url;
+                result.index = data.index;
+                result.length = data.length;
+                return result;
+            });
+        }
+        static loadFromJSON(data) {
+            var result = new ForumResultPage();
+            result.result = [];
+            for (var i = 0; i < data['length']; i++) {
+                result.result.push(goodidea.Forum.loadFromJSON(data[i]));
+            }
+            result.count = result['Count'];
+            return result;
+        }
+    }
+    goodidea.ForumResultPage = ForumResultPage;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
     class KeyValue {
         static loadFromJSON(data) {
             var result = new KeyValue();
@@ -657,58 +742,6 @@ var goodidea;
         return input[0].toLowerCase() + input.substring(1);
     }
     goodidea.firstToLowerCase = firstToLowerCase;
-    function login(id, password) {
-        return __awaiter(this, void 0, Promise, function* () {
-            var apiPath = "api/user/login";
-            var postData = {
-                id: id,
-                pwd: password
-            };
-            if (!password) {
-                apiPath = "api/user/fblogin";
-                postData = {
-                    token: id
-                };
-            }
-            var responseJSON = yield postAsync(apiPath, null, postData);
-            return yield getUserById(responseJSON['Result'].Id);
-        });
-    }
-    goodidea.login = login;
-    /**
-     * 登出系統
-     */
-    function logout() {
-        return __awaiter(this, void 0, Promise, function* () {
-            yield postAsync('api/user/logout');
-        });
-    }
-    goodidea.logout = logout;
-    /**
-     * 取得目前登入使用者資訊
-     */
-    function getLoginUser() {
-        return __awaiter(this, void 0, Promise, function* () {
-            var response = yield postAsync('api/user/checklogin');
-            if (response['Result'] == null)
-                return null;
-            return yield getUserById(response['Result'].Id);
-        });
-    }
-    goodidea.getLoginUser = getLoginUser;
-    //#endregion
-    /**
-     * 取得指定使用者相關資訊
-     */
-    function getUserById(id) {
-        return __awaiter(this, void 0, Promise, function* () {
-            var result = new User();
-            result.id = id;
-            yield result.load();
-            return result;
-        });
-    }
-    goodidea.getUserById = getUserById;
     class User {
         constructor() {
             /**
@@ -725,12 +758,14 @@ var goodidea;
             }
             var sp = data['Specialty'];
             result.specialty = [];
-            for (var i = 0; i < sp.length; i++) {
-                if (sp[i]['Id']) {
-                    result.specialty.push(goodidea.KeyValue.loadFromJSON(sp[i]));
-                }
-                else {
-                    result.specialty.push(sp[i]);
+            if (sp) {
+                for (var i = 0; i < sp.length; i++) {
+                    if (sp[i]['Id']) {
+                        result.specialty.push(goodidea.KeyValue.loadFromJSON(sp[i]));
+                    }
+                    else {
+                        result.specialty.push(sp[i]);
+                    }
                 }
             }
             result.isLinkFB = data['FB'] != null;
@@ -842,6 +877,54 @@ var goodidea;
             return __awaiter(this, void 0, Promise, function* () {
                 yield postAsync('api/user/unlinkfb');
                 this.isLinkFB = false;
+            });
+        }
+        static login(id, password) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var apiPath = "api/user/login";
+                var postData = {
+                    id: id,
+                    pwd: password
+                };
+                if (!password) {
+                    apiPath = "api/user/fblogin";
+                    postData = {
+                        token: id
+                    };
+                }
+                var responseJSON = yield postAsync(apiPath, null, postData);
+                return yield User.getUserById(responseJSON['Result'].Id);
+            });
+        }
+        /**
+         * 登出系統
+         */
+        static logout() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield postAsync('api/user/logout');
+            });
+        }
+        /**
+         * 取得目前登入使用者資訊
+         */
+        static getLoginUser() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var response = yield postAsync('api/user/checklogin');
+                if (response['Result'] == null)
+                    return null;
+                return yield User.getUserById(response['Result'].Id);
+            });
+        }
+        //#endregion
+        /**
+         * 取得指定使用者相關資訊
+         */
+        static getUserById(id) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var result = new User();
+                result.id = id;
+                yield result.load();
+                return result;
             });
         }
     }

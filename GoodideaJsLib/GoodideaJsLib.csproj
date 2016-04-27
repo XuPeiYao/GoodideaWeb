@@ -32,11 +32,13 @@
     <TypeScriptCompile Include="Department.ts" />
     <TypeScriptCompile Include="DocumentInfo.ts" />
     <TypeScriptCompile Include="FileInfo.ts" />
+    <TypeScriptCompile Include="Forum.ts" />
     <TypeScriptCompile Include="KeyValue.ts" />
     <TypeScriptCompile Include="Lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="MemberRequest.ts" />
     <TypeScriptCompile Include="MemberRequestSpecialty.ts" />
     <TypeScriptCompile Include="Project.ts" />
+    <TypeScriptCompile Include="ForumResultPage.ts" />
     <TypeScriptCompile Include="ProjectResultPage.ts" />
     <TypeScriptCompile Include="Team.ts" />
     <TypeScriptCompile Include="TeamMember.ts" />
