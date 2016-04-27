@@ -7,12 +7,21 @@
         public content: string;
         public user: User;
 
+        /**
+         * 刪除這個討論
+         */
         public async remove(): Promise<void> {
             await postAsync('api/forum/remove', null, {
                 forum: this.id
             });
         }
 
+        /**
+         * 建立新的討論
+         * @param project 目標提案的ID或Project物件
+         * @param teamOnly 是否僅團隊可見(必須為團隊成員)
+         * @param content 內容
+         */
         public static async createForum(project: Project | string, teamOnly: boolean, content: string): Promise<Forum> {
             var result = new Forum();
             var id = project['id'] || project;
@@ -25,6 +34,11 @@
             return Forum.loadFromJSON(responseJSON['Result']);
         }
 
+        /**
+         * 取得指定提案的討論清單
+         * @param project 指定提案的ID或Project物件
+         * @param teamOnly 是否為團隊訊息(必須為團隊成員)
+         */
         public static async getForumList(project: Project | string,teamOnly: boolean): Promise<ForumResultPage> {
             var result = new ForumResultPage();
             var id = project['id'] || project;

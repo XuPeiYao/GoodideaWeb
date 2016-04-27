@@ -141,6 +141,9 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Forum {
+        /**
+         * 刪除這個討論
+         */
         remove() {
             return __awaiter(this, void 0, Promise, function* () {
                 yield goodidea.postAsync('api/forum/remove', null, {
@@ -148,6 +151,12 @@ var goodidea;
                 });
             });
         }
+        /**
+         * 建立新的討論
+         * @param project 目標提案的ID或Project物件
+         * @param teamOnly 是否僅團隊可見(必須為團隊成員)
+         * @param content 內容
+         */
         static createForum(project, teamOnly, content) {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = new Forum();
@@ -160,6 +169,11 @@ var goodidea;
                 return Forum.loadFromJSON(responseJSON['Result']);
             });
         }
+        /**
+         * 取得指定提案的討論清單
+         * @param project 指定提案的ID或Project物件
+         * @param teamOnly 是否為團隊訊息(必須為團隊成員)
+         */
         static getForumList(project, teamOnly) {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = new goodidea.ForumResultPage();
