@@ -226,14 +226,17 @@
 
             result.owner = User.loadFromJSON(data['Owner']);
             result.files = [];
-            for (var i = 0; i < data['Files'].length; i++) {
-                result.files.push(DocumentInfo.loadFromJSON(data['Files'][i]));
+            if (data['Files']) {
+                for (var i = 0; i < data['Files'].length; i++) {
+                    result.files.push(DocumentInfo.loadFromJSON(data['Files'][i]));
+                }
             }
-            result.memberRequest = [];
-            for (var i = 0; i < data['MemberRequest'].length; i++) {
-                result.memberRequest.push(MemberRequest.loadFromJSON(data['MemberRequest'][i]));
+            if (data['MemberRequest']) {
+                result.memberRequest = [];
+                for (var i = 0; i < data['MemberRequest'].length; i++) {
+                    result.memberRequest.push(MemberRequest.loadFromJSON(data['MemberRequest'][i]));
+                }
             }
-
             if (data['Team']) {
                 result.team = Team.loadFromJSON(data['Team']);
             }
