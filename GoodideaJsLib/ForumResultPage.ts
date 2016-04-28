@@ -25,7 +25,7 @@ module goodidea {
             result.url = this.url;
             result.index = data.index;
             result.length = data.length;
-            
+            result.count = responseJSON['Count'];
             return result;
         }
 
@@ -36,7 +36,6 @@ module goodidea {
                 result.result.push(Forum.loadFromJSON(data[i]));
             }
 
-            result.count = result['Count'];
             return result;
         }
     }

@@ -40,15 +40,20 @@
          * @param teamOnly 是否為團隊訊息(必須為團隊成員)
          */
         public static async getForumList(project: Project | string,teamOnly: boolean): Promise<ForumResultPage> {
-            var result = new ForumResultPage();
             var id = project['id'] || project;
             var responseJSON = await postAsync('api/forum/list', null, {
                 project: id,
                 length: 10,
                 team: teamOnly
             });
-
-            return ForumResultPage.loadFromJSON(responseJSON['Result']);
+            
+            var result = ForumResultPage.loadFromJSON(responseJSON['Result']);
+            result.index = 0;
+            result.length = 10;
+            result.team = teamOnly;
+            result.url = 'api/forum/list';
+            result.count = responseJSON['Count'];
+            return result;
         }
 
         public static loadFromJSON(data: JSON): Forum {

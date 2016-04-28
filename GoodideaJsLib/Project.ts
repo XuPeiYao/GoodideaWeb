@@ -77,7 +77,7 @@
         /**
          * 取得提案最後編輯時間
          */
-        public lastEditDate:string;
+        public lastEditTime:Date;
         
         /**
          * 取得提案團隊資訊
@@ -237,6 +237,9 @@
                     result.memberRequest.push(MemberRequest.loadFromJSON(data['MemberRequest'][i]));
                 }
             }
+            if (data['LastEditTime']) {
+                result.lastEditTime = new Date(data['LastEditTime']);
+            }
             if (data['Team']) {
                 result.team = Team.loadFromJSON(data['Team']);
             }
@@ -303,7 +306,7 @@
             result.competition = competition;
             result.class = _class;
             result.order = order;
-
+            result.count = responseJSON['Count'];
             return result;
         }
         
@@ -337,7 +340,7 @@
             result.class = _class;
             result.keyword = keyword;
             result.order = order;
-
+            result.count = responseJSON['Count'];
             return result;
         }
     }

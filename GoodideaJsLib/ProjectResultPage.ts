@@ -34,7 +34,7 @@ module goodidea {
             result.class = this.class;
             result.keyword = this.keyword;
             result.order = this.order;
-
+            result.count = responseJSON['Count'];
             return result;
         }
 
@@ -45,8 +45,7 @@ module goodidea {
             for (var i = 0; i < data['Result'].length; i++) {
                 result.result.push(Project.loadFromJSON(data['Result'][i]));
             }
-
-            result.count = result['Count'];
+            
             return result;
         }
     }

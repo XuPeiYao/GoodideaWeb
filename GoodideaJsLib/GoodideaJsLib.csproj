@@ -23,7 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Lib\nativeExtensions.js" />
-    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="Class.ts" />
@@ -44,14 +43,6 @@
     <TypeScriptCompile Include="TeamMember.ts" />
     <TypeScriptCompile Include="User.ts" />
     <TypeScriptCompile Include="UserProjectList.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
@@ -89,7 +80,7 @@
     <TypeScriptModuleKind />
     <TypeScriptOutFile>goodideaLib.js</TypeScriptOutFile>
     <TypeScriptOutDir />
-    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptGeneratesDeclarations>True</TypeScriptGeneratesDeclarations>
     <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
     <TypeScriptMapRoot />
     <TypeScriptSourceRoot />

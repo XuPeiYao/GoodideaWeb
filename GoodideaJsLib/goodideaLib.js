@@ -176,14 +176,19 @@ var goodidea;
          */
         static getForumList(project, teamOnly) {
             return __awaiter(this, void 0, Promise, function* () {
-                var result = new goodidea.ForumResultPage();
                 var id = project['id'] || project;
                 var responseJSON = yield goodidea.postAsync('api/forum/list', null, {
                     project: id,
                     length: 10,
                     team: teamOnly
                 });
-                return goodidea.ForumResultPage.loadFromJSON(responseJSON['Result']);
+                var result = goodidea.ForumResultPage.loadFromJSON(responseJSON['Result']);
+                result.index = 0;
+                result.length = 10;
+                result.team = teamOnly;
+                result.url = 'api/forum/list';
+                result.count = responseJSON['Count'];
+                return result;
             });
         }
         static loadFromJSON(data) {
@@ -222,6 +227,7 @@ var goodidea;
                 result.url = this.url;
                 result.index = data.index;
                 result.length = data.length;
+                result.count = responseJSON['Count'];
                 return result;
             });
         }
@@ -231,7 +237,6 @@ var goodidea;
             for (var i = 0; i < data['length']; i++) {
                 result.result.push(goodidea.Forum.loadFromJSON(data[i]));
             }
-            result.count = result['Count'];
             return result;
         }
     }
@@ -524,6 +529,9 @@ var goodidea;
                     result.memberRequest.push(goodidea.MemberRequest.loadFromJSON(data['MemberRequest'][i]));
                 }
             }
+            if (data['LastEditTime']) {
+                result.lastEditTime = new Date(data['LastEditTime']);
+            }
             if (data['Team']) {
                 result.team = goodidea.Team.loadFromJSON(data['Team']);
             }
@@ -592,6 +600,7 @@ var goodidea;
                 result.competition = competition;
                 result.class = _class;
                 result.order = order;
+                result.count = responseJSON['Count'];
                 return result;
             });
         }
@@ -624,6 +633,7 @@ var goodidea;
                 result.class = _class;
                 result.keyword = keyword;
                 result.order = order;
+                result.count = responseJSON['Count'];
                 return result;
             });
         }
@@ -659,6 +669,7 @@ var goodidea;
                 result.class = this.class;
                 result.keyword = this.keyword;
                 result.order = this.order;
+                result.count = responseJSON['Count'];
                 return result;
             });
         }
@@ -668,7 +679,6 @@ var goodidea;
             for (var i = 0; i < data['Result'].length; i++) {
                 result.result.push(goodidea.Project.loadFromJSON(data['Result'][i]));
             }
-            result.count = result['Count'];
             return result;
         }
     }
