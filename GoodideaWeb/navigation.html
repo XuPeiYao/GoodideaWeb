@@ -1,0 +1,103 @@
+﻿<!--#region 巡覽列與側邊攔-->
+<div ng-controller="Navigation" class="nkfust-header mdl-layout__header mdl-layout__header--waterfall">
+    <!--#region 桌電用巡覽列-->
+    <div class="mdl-layout__header-row">
+        <span class="nkfust-title mdl-layout-title">
+            <a href="index.html"><img class="nkfust-logo-image" src="images/nkfust-logo.png"></a>
+        </span>
+        <div class="nkfust-header-spacer mdl-layout-spacer"></div>
+        <div class="nkfust-search-box mdl-textfield mdl-js-textfield mdl-textfield--expandable mdl-textfield--floating-label mdl-textfield--align-right mdl-textfield--full-width">
+            <label class="mdl-button mdl-js-button mdl-button--icon" style="margin-bottom:0" for="search-field">
+                <i class="material-icons">search</i>
+            </label>
+            <div class="mdl-textfield__expandable-holder">
+                <input ng-enter="Search()" ng-model="Keyword" class="mdl-textfield__input" type="text" id="search-field" />
+            </div>
+        </div>
+        <!--#region 巡覽列-->
+        <div class="nkfust-navigation-container">
+            <nav class="nkfust-navigation mdl-navigation">
+                <!--<a class="mdl-navigation__link mdl-typography--text-uppercase" href="">網站簡介</a>-->
+                <!--20151009-1版面微調-->
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="#" ng-click="LoginModal()" ng-hide="Logined">登入</a>
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="list.html">所有提案</a>
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="request.html">團隊媒合</a>
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="competition.html">競賽資訊</a>
+                <a class="mdl-navigation__link mdl-typography--text-uppercase" href="search.html">進階搜尋</a>
+            </nav>
+        </div>
+        <button class="nkfust-inbanner-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
+            <i class="material-icons">more_vert</i>
+        </button>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
+            <li class="mdl-menu__item" ng-click="Goto('About')" ng-show="Logined">個人資訊</li>
+            <li class="mdl-menu__item" ng-click="Goto('Projects')" ng-show="Logined">提案管理</li>
+            <li class="mdl-menu__item" ng-click="Logout()" ng-show="Logined">登出</li>
+            <!--20151009-1版面微調-->
+            <li class="mdl-menu__item" ng-hide="Logined">請先登入後再執行此操作</li>
+            <!--20151009-1版面微調
+            <li class="mdl-menu__item" ng-click="LoginModal()" ng-hide="Logined">登入</li>
+            -->
+        </ul>
+        <!--#endregion-->
+        <span class="nkfust-mobile-title mdl-layout-title">
+            <a href="index.html"><img class="nkfust-logo-image" src="images/nkfust-logo.png"></a>
+        </span>
+    </div>
+    <!--#endregion-->
+</div>
+<!--#region 側邊欄-->
+<div class="nkfust-drawer mdl-layout__drawer">
+    <span class="mdl-layout-title">
+        <a href="index.html"><img class="nkfust-logo-image" src="images/nkfust-logo-white.png"></a>
+    </span>
+    <nav ng-controller="Navigation" class="mdl-navigation">
+        <!--<a class="mdl-navigation__link" href="">網站簡介</a>-->
+        <a class="mdl-navigation__link" href="list.html">所有提案</a>
+        <a class="mdl-navigation__link" href="request.html">團隊媒合</a>
+        <a class="mdl-navigation__link" href="competition.html">競賽資訊</a>
+        <a class="mdl-navigation__link" href="search.html">進階搜尋</a>
+        <div class="nkfust-drawer-separator"></div>
+        <span class="mdl-navigation__link" href="">選項</span>
+        <a class="mdl-navigation__link" href="" ng-click="Goto('About')" ng-show="Logined">個人資訊</a>
+        <a class="mdl-navigation__link" href="" ng-click="Goto('Projects')" ng-show="Logined">提案管理</a>
+        <a class="mdl-navigation__link" href="" ng-click="Logout()" ng-show="Logined">登出</a>
+        <a class="mdl-navigation__link" href="" id="LoginNavButton" ng-click="LoginModal()" ng-hide="Logined">登入</a>
+        <div class="nkfust-drawer-separator"></div>
+        <span class="mdl-navigation__link" href="">相關連結</span>
+        <a class="mdl-navigation__link" ng-repeat="t in Links" href="{{t.Url}}">{{t.Name}}</a>
+    </nav>
+</div>
+<!--#endregion-->
+<!--#endregion-->
+<script type="text/ng-template" id="Login.html">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+        <h5 class="modal-title">登入</h5>
+    </div>
+    <div class="modal-body">
+        <from>
+            <div id="LoginIdInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:100%">
+                <input class="mdl-textfield__input" ng-enter="Login()" ng-change="OnLoginIdTypeing()" id="LoginId" ng-model="LoginId" />
+                <label class="mdl-textfield__label" for="sample3">學校信箱(@nkfust.edu.tw)</label>
+            </div><br />
+            <div id="LoginPasswordInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo" style="width:100%">
+                <input class="mdl-textfield__input" ng-enter="Login()" type="password" id="LoginPassword" ng-model="LoginPwd" />
+                <label class="mdl-textfield__label" for="sample3">密碼</label>
+            </div>
+        </from>
+    </div>
+    <div class="modal-footer">
+        <fb:login-button scope="public_profile" onlogin="FBLogin();">登入</fb:login-button>
+        <button type="button" id="FBLoginButton" hidden ng-click="FBLogin()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" data-dismiss="modal">
+            FB登入
+        </button>
+        <button type="button" ng-click="Login()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" data-dismiss="modal">
+            登入
+        </button>
+        <button type="button" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" data-dismiss="modal">
+            取消
+        </button>
+    </div>
+</script>
+<div id="fb-root"></div>

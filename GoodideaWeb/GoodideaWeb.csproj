@@ -22,12 +22,23 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="app.css" />
+    <Content Include="footer.html" />
     <Content Include="index.html" />
-    <Content Include="web.config" />
+    <Content Include="lib\nativeExtensions.js" />
+    <Content Include="lib\goodideaLib.js" />
+    <Content Include="navigation.html" />
+    <Content Include="styles\goodidea.css" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="app.ts" />
+    <Content Include="lib\goodideaLib.js.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="lib\nativeExtensions.d.ts" />
+    <TypeScriptCompile Include="lib\goodideaLib.d.ts" />
+    <TypeScriptCompile Include="scripts\index.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
     <None Include="web.Debug.config">
@@ -66,6 +77,17 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
     <TypeScriptSourceMap>true</TypeScriptSourceMap>
+    <TypeScriptTarget>ES6</TypeScriptTarget>
+    <TypeScriptJSXEmit>None</TypeScriptJSXEmit>
+    <TypeScriptCompileOnSaveEnabled>True</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptNoImplicitAny>False</TypeScriptNoImplicitAny>
+    <TypeScriptModuleKind />
+    <TypeScriptOutFile />
+    <TypeScriptOutDir />
+    <TypeScriptGeneratesDeclarations>False</TypeScriptGeneratesDeclarations>
+    <TypeScriptNoEmitOnError>True</TypeScriptNoEmitOnError>
+    <TypeScriptMapRoot />
+    <TypeScriptSourceRoot />
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Release'">
     <TypeScriptRemoveComments>true</TypeScriptRemoveComments>

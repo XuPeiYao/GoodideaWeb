@@ -1,0 +1,38 @@
+﻿<!--#region 頁尾-->
+<footer class="nkfust-footer mdl-mega-footer">
+    <div class="mdl-mega-footer--top-section">
+        <div ng-controller="Footer" class="mdl-mega-footer--right-section">
+            <a class="mdl-typography--font-light" ng-href="#top" target="_self" id="GotoTop">
+                回頂端
+                <i class="material-icons">expand_less</i>
+            </a>
+        </div>
+    </div>
+    <div class="mdl-mega-footer--middle-section">
+        <p class="mdl-typography--font-light">國立高雄第一科技大學 © 2016 FirstTeach All Rights Reserved</p>
+        <p class="mdl-typography--font-light">本網站建議使用Chrome 44、Firefox 39、Safari 8.0、Opera 30或更新版本進行瀏覽</p>
+    </div>
+    <div class="mdl-mega-footer--bottom-section">
+        <!--
+        <a class="nkfust-link nkfust-link-menu mdl-typography--font-light" id="version-dropdown">
+            程式開發
+            <i class="material-icons">arrow_drop_up</i>
+        </a>
+        <ul class="mdl-menu mdl-js-menu mdl-menu--top-left mdl-js-ripple-effect" for="version-dropdown">
+            <li class="mdl-menu__item">Web API</li>
+            <li class="mdl-menu__item">Javascript/Typescript SDK</li>
+        </ul>
+        -->
+        <a class="nkfust-link mdl-typography--font-light" href="http://www.nkfust.edu.tw/">回學校網站</a>
+        <a class="nkfust-link mdl-typography--font-light" href="http://goodidea.nkfust.edu.tw/project.html?id=93f2b552-b85b-46e9-876a-7973cdb73107">使用說明</a>
+        <a class="nkfust-link mdl-typography--font-light" href="mailto:maggy@nkfust.edu.tw">聯絡我們</a>
+        <a class="nkfust-link mdl-typography--font-light" href="http://www.lic.nkfust.edu.tw/ezfiles/5/1005/img/165/privacy_protection.pdf">隱私保護聲明</a>
+        <a class="nkfust-link mdl-typography--font-light" href="admin/login.html">管理登入</a>
+    </div>
+</footer>
+<script>
+    document.getElementById("GotoTop").onclick = function () {
+        //location.hash = "#top";
+    }
+</script>
+<!--#endregion-->
