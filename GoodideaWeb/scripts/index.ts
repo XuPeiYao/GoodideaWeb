@@ -4,7 +4,7 @@
     var list = await goodidea.Project.getProjectList(null, null, null);//取得提案列表
     var index = 1;
     
-    while (false) {
+    while (true) {
         list.result.forEach(x => {            
             document.writeln("<p>" + (index++) + ". " + x.name + "(" + x.lastEditTime + ")</p>");
         });
