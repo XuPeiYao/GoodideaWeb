@@ -39,6 +39,7 @@
     <TypeScriptCompile Include="Project.ts" />
     <TypeScriptCompile Include="ForumResultPage.ts" />
     <TypeScriptCompile Include="ProjectResultPage.ts" />
+    <TypeScriptCompile Include="System.ts" />
     <TypeScriptCompile Include="Team.ts" />
     <TypeScriptCompile Include="TeamMember.ts" />
     <TypeScriptCompile Include="User.ts" />

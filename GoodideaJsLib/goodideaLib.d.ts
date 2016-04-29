@@ -381,6 +381,13 @@ declare module goodidea {
     }
 }
 declare module goodidea {
+    var host: string;
+    var origin: string;
+    var version: string;
+    function postAsync(url: string, header?: any, data?: (FormData | String | Object), user?: string, password?: string, progressCallback?: (event: ProgressEvent) => any): Promise<JSON>;
+    function firstToLowerCase(input: string): string;
+}
+declare module goodidea {
     class Team {
         name: string;
         group: TeamMember[];
@@ -403,10 +410,6 @@ declare module goodidea {
     }
 }
 declare module goodidea {
-    var host: string;
-    var origin: string;
-    function postAsync(url: string, header?: any, data?: (FormData | String | Object), user?: string, password?: string, progressCallback?: (event: ProgressEvent) => any): Promise<JSON>;
-    function firstToLowerCase(input: string): string;
     class User {
         /**
          * 取得使用者id

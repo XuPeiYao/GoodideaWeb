@@ -1,9 +1,10 @@
 ﻿(async () => {
     /*await include();*/
-    goodidea.origin = location.origin;//設定允許域
+    
     var list = await goodidea.Project.getProjectList(null, null, null);//取得提案列表
     var index = 1;
-    while (true) {
+    
+    while (false) {
         list.result.forEach(x => {            
             document.writeln("<p>" + (index++) + ". " + x.name + "(" + x.lastEditTime + ")</p>");
         });

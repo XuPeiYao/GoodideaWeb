@@ -8,10 +8,9 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 (() => __awaiter(this, void 0, void 0, function* () {
     /*await include();*/
-    goodidea.origin = location.origin; //設定允許域
     var list = yield goodidea.Project.getProjectList(null, null, null); //取得提案列表
     var index = 1;
-    while (true) {
+    while (false) {
         list.result.forEach(x => {
             document.writeln("<p>" + (index++) + ". " + x.name + "(" + x.lastEditTime + ")</p>");
         });

@@ -686,6 +686,31 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    goodidea.host = "http://goodidea.nkfust.edu.tw/";
+    goodidea.origin = "http://goodidea.nkfust.edu.tw/";
+    goodidea.version = "1.0.1";
+    function postAsync(url, header, data, user, password, progressCallback) {
+        return __awaiter(this, void 0, Promise, function* () {
+            var request = new nativeExtensions.HttpClient();
+            request.withCredentials = true;
+            url = goodidea.host + url;
+            if (!data)
+                data = {};
+            data['origin'] = goodidea.origin;
+            var response = JSON.parse((yield request.postAsync(url, header, data, user, password, progressCallback)).resultText);
+            if (!response.Success)
+                throw response.Result;
+            return response;
+        });
+    }
+    goodidea.postAsync = postAsync;
+    function firstToLowerCase(input) {
+        return input[0].toLowerCase() + input.substring(1);
+    }
+    goodidea.firstToLowerCase = firstToLowerCase;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
     class Team {
         constructor() {
             this.group = [];
@@ -746,26 +771,6 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
-    goodidea.host = "http://goodidea.nkfust.edu.tw/";
-    goodidea.origin = "http://goodidea.nkfust.edu.tw/";
-    function postAsync(url, header, data, user, password, progressCallback) {
-        return __awaiter(this, void 0, Promise, function* () {
-            var request = new nativeExtensions.HttpClient();
-            url = goodidea.host + url;
-            if (!data)
-                data = {};
-            data['origin'] = goodidea.origin;
-            var response = JSON.parse((yield request.postAsync(url, header, data, user, password, progressCallback)).resultText);
-            if (!response.Success)
-                throw response.Result;
-            return response;
-        });
-    }
-    goodidea.postAsync = postAsync;
-    function firstToLowerCase(input) {
-        return input[0].toLowerCase() + input.substring(1);
-    }
-    goodidea.firstToLowerCase = firstToLowerCase;
     class User {
         constructor() {
             /**
@@ -778,7 +783,7 @@ var goodidea;
             var result = new User();
             var fields = data.getKeys();
             for (var i = 0; i < fields.length; i++) {
-                result[firstToLowerCase(fields[i])] = data[fields[i]];
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
             var sp = data['Specialty'];
             result.specialty = [];
@@ -806,7 +811,7 @@ var goodidea;
          */
         load() {
             return __awaiter(this, void 0, Promise, function* () {
-                var responseJSON = yield postAsync('api/user/about', null, {
+                var responseJSON = yield goodidea.postAsync('api/user/about', null, {
                     id: this.id
                 });
                 var user = yield User.loadFromJSON(responseJSON['Result']);
@@ -823,7 +828,7 @@ var goodidea;
          */
         addSpecialty(value) {
             return __awaiter(this, void 0, Promise, function* () {
-                var responseJSON = yield postAsync('api/user/AddSpecialty', null, {
+                var responseJSON = yield goodidea.postAsync('api/user/AddSpecialty', null, {
                     Specialty: value
                 });
                 var result = goodidea.KeyValue.loadFromJSON(responseJSON['Result']);
@@ -844,7 +849,7 @@ var goodidea;
                 else {
                     id = this.specialty.filter(x => x.value == value).first().id;
                 }
-                yield postAsync('api/user/RemoveSpecialty', null, {
+                yield goodidea.postAsync('api/user/RemoveSpecialty', null, {
                     Specialty: id
                 });
                 this.specialty = this.specialty.filter(x => x.id != id);
@@ -857,7 +862,7 @@ var goodidea;
          */
         uploadPhoto(file) {
             return __awaiter(this, void 0, Promise, function* () {
-                var responseJSON = yield postAsync('api/user/update', null, { Photo: file });
+                var responseJSON = yield goodidea.postAsync('api/user/update', null, { Photo: file });
                 var photo = goodidea.FileInfo.loadFromJSON(responseJSON['Result']);
                 this.photo = photo;
                 return photo;
@@ -877,7 +882,7 @@ var goodidea;
                 if (this.department) {
                     data['department'] = this.department.id;
                 }
-                yield postAsync('api/user/update', null, data);
+                yield goodidea.postAsync('api/user/update', null, data);
             });
         }
         //#endregion
@@ -888,7 +893,7 @@ var goodidea;
          */
         connectFB(token) {
             return __awaiter(this, void 0, Promise, function* () {
-                yield postAsync('api/user/linkFB', null, {
+                yield goodidea.postAsync('api/user/linkFB', null, {
                     token: token
                 });
                 this.isLinkFB = true;
@@ -899,7 +904,7 @@ var goodidea;
          */
         unconnectFB() {
             return __awaiter(this, void 0, Promise, function* () {
-                yield postAsync('api/user/unlinkfb');
+                yield goodidea.postAsync('api/user/unlinkfb');
                 this.isLinkFB = false;
             });
         }
@@ -916,7 +921,7 @@ var goodidea;
                         token: id
                     };
                 }
-                var responseJSON = yield postAsync(apiPath, null, postData);
+                var responseJSON = yield goodidea.postAsync(apiPath, null, postData);
                 return yield User.getUserById(responseJSON['Result'].Id);
             });
         }
@@ -925,7 +930,7 @@ var goodidea;
          */
         static logout() {
             return __awaiter(this, void 0, Promise, function* () {
-                yield postAsync('api/user/logout');
+                yield goodidea.postAsync('api/user/logout');
             });
         }
         /**
@@ -933,7 +938,7 @@ var goodidea;
          */
         static getLoginUser() {
             return __awaiter(this, void 0, Promise, function* () {
-                var response = yield postAsync('api/user/checklogin');
+                var response = yield goodidea.postAsync('api/user/checklogin');
                 if (response['Result'] == null)
                     return null;
                 return yield User.getUserById(response['Result'].Id);

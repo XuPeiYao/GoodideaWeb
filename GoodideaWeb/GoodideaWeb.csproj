@@ -24,8 +24,29 @@
   <ItemGroup>
     <Content Include="footer.html" />
     <Content Include="index.html" />
+    <Content Include="lib\angularJs\angular.min.js" />
+    <Content Include="lib\angularJs\ui-bootstrap-tpls-1.3.2.min.js" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap-theme.css" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap.css" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="lib\bootstrap-3.3.6-dist\js\bootstrap.js" />
+    <Content Include="lib\bootstrap-3.3.6-dist\js\bootstrap.min.js" />
+    <Content Include="lib\bootstrap-3.3.6-dist\js\npm.js" />
+    <Content Include="lib\dateFormat.js" />
+    <Content Include="lib\mdl\material.css" />
+    <Content Include="lib\mdl\material.js" />
+    <Content Include="lib\mdl\material.min.css" />
+    <Content Include="lib\mdl\material.min.js" />
     <Content Include="lib\nativeExtensions.js" />
     <Content Include="lib\goodideaLib.js" />
+    <Content Include="lib\sweetalert\sweetalert-dev.js" />
+    <Content Include="lib\sweetalert\sweetalert.css" />
+    <Content Include="lib\sweetalert\sweetalert.min.js" />
+    <Content Include="lib\sweetalert\themes\facebook\facebook.css" />
+    <Content Include="lib\sweetalert\themes\google\google.css" />
+    <Content Include="lib\sweetalert\themes\twitter\twitter.css" />
     <Content Include="navigation.html" />
     <Content Include="styles\goodidea.css" />
   </ItemGroup>
@@ -36,11 +57,28 @@
     <TypeScriptCompile Include="lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="lib\goodideaLib.d.ts" />
     <TypeScriptCompile Include="scripts\index.ts" />
+    <TypeScriptCompile Include="scripts\main.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="lib\sweetalert\themes\facebook\facebook.scss" />
+    <Content Include="lib\sweetalert\themes\google\google.scss" />
+    <Content Include="lib\sweetalert\themes\twitter\twitter.scss" />
+    <Content Include="lib\mdl\bower.json" />
+    <Content Include="lib\mdl\LICENSE" />
+    <Content Include="lib\mdl\material.min.css.map" />
+    <Content Include="lib\mdl\material.min.js.map" />
+    <Content Include="lib\mdl\package.json" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap-theme.css.map" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap-3.3.6-dist\css\bootstrap.min.css.map" />
+    <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff2" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
@@ -48,6 +86,7 @@
       <DependentUpon>web.config</DependentUpon>
     </None>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>
