@@ -1,4 +1,12 @@
 declare module goodidea {
+    class Banner {
+        id: string;
+        url: string;
+        static loadFromJSON(data: JSON): Banner;
+        static getBannerList(): Promise<Banner[]>;
+    }
+}
+declare module goodidea {
     class Class {
         id: string;
         name: string;
@@ -27,6 +35,7 @@ declare module goodidea {
         condition: Class[];
         static loadFromJSON(data: JSON): Competition;
         static getCompetitionList(active: boolean, vote: boolean): Promise<Competition[]>;
+        static getLoginUserQuota(competition: string | Competition): Promise<number>;
     }
 }
 declare module goodidea {
@@ -133,6 +142,15 @@ declare module goodidea {
         id: string;
         value: string;
         static loadFromJSON(data: JSON): KeyValue;
+    }
+}
+declare module goodidea {
+    class Link {
+        id: string;
+        name: string;
+        url: string;
+        static loadFromJSON(data: JSON): Link;
+        static getLinkList(): Promise<Link[]>;
     }
 }
 declare module goodidea {
@@ -309,6 +327,10 @@ declare module goodidea {
          * @param competition 指定競賽的ID或Competition物件
          */
         joinCompetition(competition: Competition | string): Promise<void>;
+        /**
+         * 投票並回傳剩餘票數
+         */
+        vote(): Promise<number>;
         /**
          * 複製目前提案
          * @param name 新的提案名稱

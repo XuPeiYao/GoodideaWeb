@@ -48,6 +48,7 @@
     <Content Include="lib\sweetalert\themes\google\google.css" />
     <Content Include="lib\sweetalert\themes\twitter\twitter.css" />
     <Content Include="navigation.html" />
+    <Content Include="scripts\googleAnalytics.js" />
     <Content Include="styles\goodidea.css" />
   </ItemGroup>
   <ItemGroup>

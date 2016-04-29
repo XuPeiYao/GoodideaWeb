@@ -8,6 +8,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 var goodidea;
 (function (goodidea) {
+    class Banner {
+        static loadFromJSON(data) {
+            var result = new goodidea.Link();
+            result.id = data['Id'];
+            result.url = data['Url'];
+            return result;
+        }
+        static getBannerList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/banner/list');
+                var result = [];
+                for (var i = 0; i < responseJSON['Result'].length; i++) {
+                    result.push(Banner.loadFromJSON(responseJSON['Result'][i]));
+                }
+                return result;
+            });
+        }
+    }
+    goodidea.Banner = Banner;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
     class Class {
         static loadFromJSON(data) {
             var result = new Class();
@@ -63,6 +85,15 @@ var goodidea;
                     result.push(Competition.loadFromJSON(responseJSON['Result'][i]));
                 }
                 return result;
+            });
+        }
+        static getLoginUserQuota(competition) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = competition['id'] || competition;
+                var responseJSON = yield goodidea.postAsync('api/Competition/getuserquota', null, {
+                    Competition: id
+                });
+                return responseJSON['Result']['Quota'];
             });
         }
     }
@@ -257,6 +288,29 @@ var goodidea;
         }
     }
     goodidea.KeyValue = KeyValue;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class Link {
+        static loadFromJSON(data) {
+            var result = new Link();
+            result.id = data['Id'];
+            result.name = data['Name'];
+            result.url = data['Url'];
+            return result;
+        }
+        static getLinkList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/link/list');
+                var result = [];
+                for (var i = 0; i < responseJSON['Result'].length; i++) {
+                    result.push(Link.loadFromJSON(responseJSON['Result'][i]));
+                }
+                return result;
+            });
+        }
+    }
+    goodidea.Link = Link;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
@@ -467,6 +521,17 @@ var goodidea;
             return __awaiter(this, void 0, Promise, function* () {
                 yield goodidea.postAsync('api/project/joinCompetition', null, { project: this.id });
                 this.load(); //reload Project
+            });
+        }
+        /**
+         * 投票並回傳剩餘票數
+         */
+        vote() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/vote', null, {
+                    project: this.id
+                });
+                return responseJSON['Result']['Quota'];
             });
         }
         /**

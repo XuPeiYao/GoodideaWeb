@@ -25,6 +25,7 @@
     <Content Include="Lib\nativeExtensions.js" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="Banner.ts" />
     <TypeScriptCompile Include="Class.ts" />
     <TypeScriptCompile Include="College.ts" />
     <TypeScriptCompile Include="Competition.ts" />
@@ -34,6 +35,7 @@
     <TypeScriptCompile Include="Forum.ts" />
     <TypeScriptCompile Include="KeyValue.ts" />
     <TypeScriptCompile Include="Lib\nativeExtensions.d.ts" />
+    <TypeScriptCompile Include="Link.ts" />
     <TypeScriptCompile Include="MemberRequest.ts" />
     <TypeScriptCompile Include="MemberRequestSpecialty.ts" />
     <TypeScriptCompile Include="Project.ts" />

@@ -38,5 +38,13 @@ module goodidea {
 
             return result;
         }
+
+        public static async getLoginUserQuota(competition: string | Competition): Promise<number> {
+            var id = competition['id'] || competition;
+            var responseJSON = await postAsync('api/Competition/getuserquota', null, {
+                Competition: id
+            });
+            return responseJSON['Result']['Quota'];
+        }
     }
 }

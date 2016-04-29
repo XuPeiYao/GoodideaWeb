@@ -183,6 +183,16 @@
         }
 
         /**
+         * 投票並回傳剩餘票數
+         */
+        public async vote(): Promise<number> {
+            var responseJSON =await postAsync('api/project/vote', null, {
+                project: this.id
+            });
+            return responseJSON['Result']['Quota'];
+        }
+
+        /**
          * 複製目前提案
          * @param name 新的提案名稱
          */
