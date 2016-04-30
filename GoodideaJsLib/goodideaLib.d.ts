@@ -264,6 +264,10 @@ declare module goodidea {
          */
         competition: Competition;
         /**
+         * 取得參賽編號
+         */
+        competitionPId: string;
+        /**
          * 取得或設定提案分類
          */
         class: Class;

@@ -58,7 +58,12 @@
          * 取得提案參與的競賽
          */
         public competition:Competition;
-        
+
+        /**
+         * 取得參賽編號
+         */
+        public competitionPId: string;
+
         /**
          * 取得或設定提案分類
          */
