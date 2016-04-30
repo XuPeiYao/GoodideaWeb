@@ -1,51 +1,83 @@
 ﻿<!DOCTYPE html>
-<html>
+<html ng-app="app">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="description" content="創意創新雲端平台，提供創意構想發佈與討論"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="創意創新雲端平台，提供創意構想發佈與討論" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
     <title>創意創新雲端平台 - 國立高雄第一科技大學</title>
+
     
+
     <!--#region styles-->
-
-    <!--#region mdl-->
-    <link rel="stylesheet" href="lib/mdl/material.min.css" />
-    <!--#endregion-->
-
     <!--#region sweetalert-->
     <link rel="stylesheet" href="lib/sweetalert/sweetalert.css" />
     <link href="lib/sweetalert/themes/google/google.css" rel="stylesheet" />
     <!--#endregion-->
-    
     <!--#region bootstarp-->
     <link rel="stylesheet" href="lib/bootstrap-3.3.6-dist/css/bootstrap.min.css" />
     <!--#endregion-->
 
+    <!--#region mdl-->
+    <link rel="stylesheet" href="lib/mdl/material.min.css" />
+    <!--#endregion-->
+    <!--#region page styles-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link href="lib/font-awesome-4.6.1/css/font-awesome.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="styles/goodidea.css" />
+    <!--#endregion-->
     <!--#endregion-->
 </head>
 <body>
-    <include src="navigation.html"></include>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <include src="navigation.html"></include>
 
-    <div>
-
+        <div class="android-content mdl-layout__content">
+            <a name="top"></a>
+            
+            <div class="android-wear-section" style="background: url(http://goodidea.nkfust.edu.tw/files/nyvu0YKcycuFqU-fe6ss-A==.jpg) center / cover;">
+                <div class="android-wear-band">
+                    <div class="android-wear-band-text">
+                        <div class="mdl-typography--display-2 mdl-typography--font-thin segmentFont">人人都是設計師</div>
+                        <p class="mdl-typography--headline mdl-typography--font-thin segmentFont">
+                            創意創新雲端平台,
+                            是一個提供本校學生發表創意構想的線上平台.
+                        </p>
+                        <p>
+                            <a class="mdl-typography--font-regular mdl-typography--text-uppercase android-alt-link" href="">
+                                觀看其他人的提案&nbsp;<i class="material-icons">chevron_right</i>
+                            </a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <include src="footer.html"></include>
+        </div>
+        
     </div>
-
-    <include src="footer.html"></include>
-
     <!--#region script-->
     <script src="lib/nativeExtensions.js"></script>
     <script src="lib/goodideaLib.js"></script>
+       
+    <script src="lib/mdl/material.min.js"></script>
+
+    <script>
+        include();    
+        componentHandler.upgradeAllRegistered();
+    </script>
 
     <script src="lib/angularJs/angular.min.js"></script>
     <script src="lib/angularJs/ui-bootstrap-tpls-1.3.2.min.js"></script>
-    
-    <script src="lib/mdl/material.min.js"></script>
 
     <script src="scripts/main.js"></script>
-    <script src="scripts/googleAnalytics.js"></script>
     <script src="scripts/index.js"></script>
+    <script src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="scripts/googleAnalytics.js"></script>
+    
+
     <!--#endregion-->
 
 </body>

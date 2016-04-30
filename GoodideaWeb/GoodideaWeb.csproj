@@ -23,6 +23,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="footer.html" />
+    <Content Include="images\nav-top-logo.png" />
+    <Content Include="images\nva-left-logo.png" />
     <Content Include="index.html" />
     <Content Include="lib\angularJs\angular.min.js" />
     <Content Include="lib\angularJs\ui-bootstrap-tpls-1.3.2.min.js" />
@@ -35,6 +37,10 @@
     <Content Include="lib\bootstrap-3.3.6-dist\js\bootstrap.min.js" />
     <Content Include="lib\bootstrap-3.3.6-dist\js\npm.js" />
     <Content Include="lib\dateFormat.js" />
+    <Content Include="lib\font-awesome-4.6.1\css\font-awesome.css" />
+    <Content Include="lib\font-awesome-4.6.1\css\font-awesome.min.css" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.svg" />
+    <Content Include="lib\font-awesome-4.6.1\HELP-US-OUT.txt" />
     <Content Include="lib\mdl\material.css" />
     <Content Include="lib\mdl\material.js" />
     <Content Include="lib\mdl\material.min.css" />
@@ -55,8 +61,13 @@
     <Content Include="lib\goodideaLib.js.map" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="lib\angularJs\angular-ui-bootstrap.d.ts" />
+    <TypeScriptCompile Include="lib\angularJs\angular.d.ts" />
+    <TypeScriptCompile Include="lib\jquery\jquery.d.ts" />
+    <TypeScriptCompile Include="lib\mdl\material-design-lite.d.ts" />
     <TypeScriptCompile Include="lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="lib\goodideaLib.d.ts" />
+    <TypeScriptCompile Include="lib\sweetalert\sweetalert.d.ts" />
     <TypeScriptCompile Include="scripts\index.ts" />
     <TypeScriptCompile Include="scripts\main.ts" />
   </ItemGroup>
@@ -80,6 +91,39 @@
     <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="lib\bootstrap-3.3.6-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.eot" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.ttf" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.woff" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\fontawesome-webfont.woff2" />
+    <Content Include="lib\font-awesome-4.6.1\fonts\FontAwesome.otf" />
+    <Content Include="lib\font-awesome-4.6.1\less\animated.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\bordered-pulled.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\core.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\fixed-width.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\font-awesome.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\icons.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\larger.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\list.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\mixins.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\path.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\rotated-flipped.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\screen-reader.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\stacked.less" />
+    <Content Include="lib\font-awesome-4.6.1\less\variables.less" />
+    <Content Include="lib\font-awesome-4.6.1\scss\font-awesome.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_animated.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_bordered-pulled.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_core.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_fixed-width.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_icons.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_larger.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_list.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_mixins.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_path.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_rotated-flipped.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_screen-reader.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_stacked.scss" />
+    <Content Include="lib\font-awesome-4.6.1\scss\_variables.scss" />
     <None Include="web.Debug.config">
       <DependentUpon>web.config</DependentUpon>
     </None>
