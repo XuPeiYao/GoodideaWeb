@@ -1,4 +1,4 @@
-﻿var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
@@ -198,7 +198,7 @@ var nativeExtensions;
     nativeExtensions.HttpResponse = HttpResponse;
 })(nativeExtensions || (nativeExtensions = {}));
 var HttpClient = nativeExtensions.HttpClient;
-function include() {
+function includeAsync() {
     return __awaiter(this, void 0, Promise, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
@@ -214,12 +214,13 @@ function include() {
                     includeTag.setAttribute("id", Math.uuid());
                     var fileSrc = includeTag.getAttribute("src");
                     if (!fileSrc)
-                        return;
+                        continue;
                     var client = new HttpClient();
                     var response = yield client.getAsync(fileSrc);
                     parseHTML(response.result).body.childNodes.toArray().forEach((x) => {
                         includeTag.parentNode.insertBefore(x, includeTag);
                     });
+                    console.info("include " + fileSrc);
                     includeTag.parentNode.removeChild(includeTag);
                 }
                 yield include(); //Deep
@@ -230,6 +231,29 @@ function include() {
             resolve();
         }));
     });
+}
+function include() {
+    var includeTags = document.getElementsByTagName("include")
+        .toArray();
+    if (includeTags.length == 0) {
+        return;
+    }
+    for (var i = 0; i < includeTags.length; i++) {
+        var includeTag = includeTags[i];
+        includeTag.setAttribute("id", Math.uuid());
+        var fileSrc = includeTag.getAttribute("src");
+        if (!fileSrc)
+            continue;
+        var client = new XMLHttpRequest(); //請求用物件
+        client.open('GET', fileSrc, false);
+        client.send();
+        parseHTML(client.response).body.childNodes.toArray().forEach((x) => {
+            includeTag.parentNode.insertBefore(x, includeTag);
+        });
+        console.info("include " + fileSrc);
+        includeTag.parentNode.removeChild(includeTag);
+    }
+    include(); //Deep
 }
 Math.uuid = function () {
     function s4() {

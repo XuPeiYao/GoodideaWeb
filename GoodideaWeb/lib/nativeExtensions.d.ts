@@ -41,7 +41,8 @@ declare module nativeExtensions {
     }
 }
 declare var HttpClient: typeof nativeExtensions.HttpClient;
-declare function include(): Promise<void>;
+declare function includeAsync(): Promise<void>;
+declare function include(): void;
 interface Math {
     uuid(): string;
 }
