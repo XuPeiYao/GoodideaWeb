@@ -28,14 +28,13 @@
             return result;
         }
 
-        public static async getNewsList(): Promise<Class[]> {
-            var result = [];
-            var responseJSON = await postAsync('api/class/list');
+        public static async getNewsList(): Promise<PageResult<News>> {
+            var result = new PageResult<News>(goodidea.News);
+            result.length = 5;
+            result.url = 'api/news/list';
+            await result.load();
 
-            for (var i = 0; i < responseJSON['Result'].length; i++) {
-                result.push(Class.loadFromJSON(responseJSON['Result'][i]));
-            }
-
+            
             return result;
         }
     }

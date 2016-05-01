@@ -20,7 +20,7 @@
         public async load(): Promise<void> {
             var data = {
                 index: this.index,
-                length : this.index
+                length: this.length
             };
             for (var key in this.params) data[key] = this.params[key];
 
@@ -28,18 +28,12 @@
 
             this.count = responseJSON['Count'];
             this.result = [];
-            for (var i = 0; i < data['length']; i++) {
-                this.result.push(this.type['loadFromJSON'](data[i]));
+            for (var i = 0; i < responseJSON['Result'].length; i++) {
+                this.result.push(this.type['loadFromJSON'](responseJSON['Result'][i]));
             }
         }
 
         public async nextPage(): Promise<PageResult<T>> {
-            var data = {
-                index: this.index,
-                length: this.index
-            };
-            for (var key in this.params) data[key] = this.params[key];
-
             var result = new PageResult<T>(this.type);
             result.index = this.index + this.length;
             result.length = this.length;
@@ -53,8 +47,8 @@
         public static loadFromJSON<T>(type : any,data: JSON): PageResult<T> {
             var result = new PageResult<T>(type);
             result.result = [];
-            for (var i = 0; i < data['length']; i++) {            
-                result.result.push(type['loadFromJSON'](data[i]));
+            for (var i = 0; i < data['Result'].length; i++) {            
+                result.result.push(type['loadFromJSON'](data['Result'][i]));
             }
 
             return result;

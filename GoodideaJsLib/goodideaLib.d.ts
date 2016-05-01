@@ -206,7 +206,7 @@ declare module goodidea {
         content: string;
         files: FileInfo[];
         static loadFromJSON(data: JSON): News;
-        static getNewsList(): Promise<Class[]>;
+        static getNewsList(): Promise<PageResult<News>>;
     }
 }
 declare module goodidea {

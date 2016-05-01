@@ -388,11 +388,10 @@ var goodidea;
         }
         static getNewsList() {
             return __awaiter(this, void 0, Promise, function* () {
-                var result = [];
-                var responseJSON = yield goodidea.postAsync('api/class/list');
-                for (var i = 0; i < responseJSON['Result'].length; i++) {
-                    result.push(goodidea.Class.loadFromJSON(responseJSON['Result'][i]));
-                }
+                var result = new goodidea.PageResult(goodidea.News);
+                result.length = 5;
+                result.url = 'api/news/list';
+                yield result.load();
                 return result;
             });
         }
@@ -415,26 +414,20 @@ var goodidea;
             return __awaiter(this, void 0, Promise, function* () {
                 var data = {
                     index: this.index,
-                    length: this.index
+                    length: this.length
                 };
                 for (var key in this.params)
                     data[key] = this.params[key];
                 var responseJSON = yield goodidea.postAsync(this.url, null, data);
                 this.count = responseJSON['Count'];
                 this.result = [];
-                for (var i = 0; i < data['length']; i++) {
-                    this.result.push(this.type['loadFromJSON'](data[i]));
+                for (var i = 0; i < responseJSON['Result'].length; i++) {
+                    this.result.push(this.type['loadFromJSON'](responseJSON['Result'][i]));
                 }
             });
         }
         nextPage() {
             return __awaiter(this, void 0, Promise, function* () {
-                var data = {
-                    index: this.index,
-                    length: this.index
-                };
-                for (var key in this.params)
-                    data[key] = this.params[key];
                 var result = new PageResult(this.type);
                 result.index = this.index + this.length;
                 result.length = this.length;
@@ -447,8 +440,8 @@ var goodidea;
         static loadFromJSON(type, data) {
             var result = new PageResult(type);
             result.result = [];
-            for (var i = 0; i < data['length']; i++) {
-                result.result.push(type['loadFromJSON'](data[i]));
+            for (var i = 0; i < data['Result'].length; i++) {
+                result.result.push(type['loadFromJSON'](data['Result'][i]));
             }
             return result;
         }
