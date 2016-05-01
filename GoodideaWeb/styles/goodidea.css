@@ -16,6 +16,12 @@
 a{
     text-decoration:none !important;
 }
+.nkfust-banner-background {
+    position: absolute;
+    height: 100%;
+    width:100%;
+}
+
 .browserSupport{
     color:white;
 }

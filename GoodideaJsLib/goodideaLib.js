@@ -10,7 +10,7 @@ var goodidea;
 (function (goodidea) {
     class Banner {
         static loadFromJSON(data) {
-            var result = new goodidea.Link();
+            var result = new Banner();
             result.id = data['Id'];
             result.url = data['Url'];
             return result;

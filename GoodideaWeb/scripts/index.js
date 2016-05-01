@@ -6,9 +6,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments)).next());
     });
 };
-function pageInit() {
+app.controller('bannerPlayer', function ($scope, $sce, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
+        $scope.banners = yield goodidea.Banner.getBannerList();
+        $scope.banners.map((x, i) => {
+            x.index = $scope.banners.length - i - 1;
+            return x;
+        });
+        $scope.active = 0;
+        $scope.$apply(); //通知$scope更新
+        var bannerPlayer = document.querySelector('[ng-controller="bannerPlayer"]');
+        bannerPlayer.querySelectorAll('.carousel-control')
+            .toArray()
+            .forEach((x) => x.parentNode.removeChild(x)); //移除上一頁與下一頁按鈕
     });
-}
-;
+});
 //# sourceMappingURL=index.js.map

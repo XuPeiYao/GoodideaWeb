@@ -1,7 +1,7 @@
 ﻿<div ng-controller="nav_top" class="android-header mdl-layout__header mdl-layout__header--waterfall">
     <div class="mdl-layout__header-row">
         <span id="nav_top_logo" class="android-title mdl-layout-title">
-            <img class="android-logo-image" src="images/nav-top-logo.png">
+            <a href="index.html"><img class="android-logo-image" src="images/nav-top-logo.png"/></a>
         </span>
         <div class="mdl-tooltip" for="nav_top_logo">返回首頁</div>
         <!-- Add spacer, to align navigation to the right in desktop -->
@@ -48,28 +48,28 @@
 
 <div ng-controller="nav_left" class="android-drawer mdl-layout__drawer">
     <span class="mdl-layout-title">
-        <img class="android-logo-image" src="images/nva-left-logo.png">
+        <a href="index.html"><img class="android-logo-image" src="images/nva-left-logo.png"/></a>
     </span>
+    <div class="mdl-tooltip" for="nav_left_logo">返回首頁</div>
     <nav class="mdl-navigation">
-        <a class="mdl-navigation__link" href="">所有提案</a>
-        <a class="mdl-navigation__link" href="">團隊媒合</a>
-        <a class="mdl-navigation__link" href="">競賽資訊</a>
-        <a class="mdl-navigation__link" href="">進階搜尋</a>
+        <a id="nav_left_project_list" class="mdl-navigation__link" href="">所有提案</a>
+        <a id="nav_left_project_request" class="mdl-navigation__link" href="">團隊媒合</a>
+        <a id="nav_left_competition" class="mdl-navigation__link" href="">競賽資訊</a>
+        <a id="nav_left_search" class="mdl-navigation__link" href="">進階搜尋</a>
         <div class="android-drawer-separator"></div>
         <span class="mdl-navigation__link" href="">選項</span>
-        <a class="mdl-navigation__link" href="">Lollipop 5.0</a>
-        <a class="mdl-navigation__link" href="">KitKat 4.4</a>
-        <a class="mdl-navigation__link" href="">Jelly Bean 4.3</a>
-        <a class="mdl-navigation__link" href="">Android history</a>
+        <a class="mdl-navigation__link" href="">個人資訊</a>
+        <a class="mdl-navigation__link" href="">提案管理</a>
+        <a class="mdl-navigation__link" href="">登入</a>
+        <a class="mdl-navigation__link" href="">登出</a>
         <div class="android-drawer-separator"></div>
-        <span class="mdl-navigation__link" href="">Resources</span>
-        <a class="mdl-navigation__link" href="">Official blog</a>
-        <a class="mdl-navigation__link" href="">Android on Google+</a>
-        <a class="mdl-navigation__link" href="">Android on Twitter</a>
-        <div class="android-drawer-separator"></div>
-        <span class="mdl-navigation__link" href="">For developers</span>
-        <a class="mdl-navigation__link" href="">App developer resources</a>
-        <a class="mdl-navigation__link" href="">Android Open Source Project</a>
-        <a class="mdl-navigation__link" href="">Android SDK</a>
+        <span class="mdl-navigation__link" href="">相關連結</span>
+        <a class="mdl-navigation__link" ng-repeat="t in urls" href="{{t.url}}">{{t.name}}</a>
+        
+        <div class="mdl-tooltip" for="nav_left_login">發佈或參與提案、投票等操作前必須要登入本系統</div>
+        <div class="mdl-tooltip" for="nav_left_project_list">檢視目前平台中已發佈的提案</div>
+        <div class="mdl-tooltip" for="nav_left_project_request">檢視目前平台中提案對人員有需求的項目</div>
+        <div class="mdl-tooltip" for="nav_left_competition">檢視目前平台中所有的競賽</div>
+        <div class="mdl-tooltip" for="nav_left_search">使用關鍵字與限制條件搜尋平台中所有公開的提案</div>
     </nav>
 </div>
