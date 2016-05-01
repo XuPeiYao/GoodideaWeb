@@ -4,7 +4,7 @@
         public url: string;
 
         public static loadFromJSON(data: JSON): Banner {
-            var result = new Link();
+            var result = new Banner();
             result.id = data['Id'];
             result.url = data['Url'];
             return result;
