@@ -18,7 +18,40 @@ app.controller('bannerPlayer', function ($scope, $sce, $uibModal) {
         var bannerPlayer = document.querySelector('[ng-controller="bannerPlayer"]');
         bannerPlayer.querySelectorAll('.carousel-control')
             .toArray()
-            .forEach((x) => x.parentNode.removeChild(x)); //移除上一頁與下一頁按鈕
+            .forEach((x) => x.parentNode.removeChild(x)); //移除上一張圖與下一張圖按鈕
+    });
+});
+app.controller('newsViewer', function ($scope, $sce, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.newsList = [];
+        $scope.lastPage = yield goodidea.News.getNewsList();
+        $scope.nowPage = 0;
+        $scope.newsList.push($scope.lastPage.result);
+        $scope.news = $scope.newsList[$scope.nowPage];
+        $scope.previous = function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                if ($scope.nowPage == 0)
+                    return;
+                $scope.nowPage--;
+                ;
+                $scope.news = [];
+                $scope.news = $scope.newsList[$scope.nowPage];
+                componentHandler.upgradeDom();
+            });
+        };
+        $scope.forward = function () {
+            return __awaiter(this, void 0, void 0, function* () {
+                $scope.nowPage++;
+                if ($scope.nowPage >= $scope.newsList.length) {
+                    $scope.lastPage = yield $scope.lastPage.nextPage();
+                    $scope.newsList.push($scope.lastPage.result);
+                }
+                $scope.news = [];
+                $scope.news = $scope.newsList[$scope.nowPage];
+                $scope.$apply();
+            });
+        };
+        $scope.$apply();
     });
 });
 //# sourceMappingURL=index.js.map

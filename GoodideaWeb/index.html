@@ -37,15 +37,46 @@
         <div class="android-content mdl-layout__content">
             <a name="top"></a>
             <div class="android-wear-section">
+                <!--#region Banner輪播器-->
                 <div ng-controller="bannerPlayer" class="nkfust-banner-background">
                     <uib-carousel style="height:100%" active="active" interval="4000" no-wrap="false">
                         <uib-slide ng-repeat="banner in banners track by banner.id" index="banner.index" style="height:700px">
                             <div style="background: url({{banner.url}}) center / cover;height:100%;width:100%"></div>
-                            <!--<img ng-src="{{banner.url}}" style="margin:0;">-->
                         </uib-slide>
                     </uib-carousel>
                 </div>
+                <!--#endregion-->
 
+                <div ng-controller="newsViewer">
+                    <table class="nkfust-news-table mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-data-table mdl-js-data-table mdl-shadow--2dp is-upgraded" data-upgraded=",MaterialDataTable">
+                        <thead>
+                            <tr>
+                                <th class="mdl-data-table__cell--non-numeric">最新消息</th>
+                                <th>發佈時間</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="t in news" id="news_item_{{t.id}}" class="nkfust-news-item ng-scope" ng-click="openNews()">
+                                <td class="nkfust-news-title mdl-data-table__cell--non-numeric ng-binding">{{t.title}}</td>
+                                <td class="ng-binding">{{t.timeString.split('T')[0]}}</td>
+                            </tr>
+                            <tr id="gg">
+                                <td colspan="2" style="text-align:center;padding-bottom:10px">
+                                    <button ng-click="previous()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+                                        上一頁
+                                        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+                                    </button>
+                                    <span class="ng-binding">第 {{nowPage+1}} 頁</span>
+                                    <button ng-click="forward()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
+                                        下一頁
+                                        <span class="mdl-button__ripple-container"><span class="mdl-ripple"></span></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div ng-repeat="t in news" class="mdl-tooltip" for="news_item_{{t.id}}">{{t.title}}</div>
+                </div>
                 <div class="android-wear-band">
                     <div class="android-wear-band-text">
                         <div class="mdl-typography--display-2 mdl-typography--font-thin segmentFont">人人都是設計師</div>
@@ -61,15 +92,15 @@
                     </div>
                 </div>
             </div>
-            
+
             <include src="footer.html"></include>
         </div>
-        
+
     </div>
     <!--#region script-->
     <script src="lib/nativeExtensions.js"></script>
     <script src="lib/goodideaLib.js"></script>
-       
+
     <script src="lib/mdl/material.min.js"></script>
 
     <script src="lib/angularJs/angular.min.js"></script>
@@ -80,7 +111,7 @@
     <script src="scripts/index.js"></script>
 
     <script src="scripts/googleAnalytics.js"></script>
-    
+
 
     <!--#endregion-->
 
