@@ -33,8 +33,6 @@ app.controller('newsViewer', function ($scope, $sce, $uibModal) {
                 if ($scope.nowPage == 0)
                     return;
                 $scope.nowPage--;
-                ;
-                $scope.news = [];
                 $scope.news = $scope.newsList[$scope.nowPage];
                 componentHandler.upgradeDom();
             });
@@ -43,10 +41,10 @@ app.controller('newsViewer', function ($scope, $sce, $uibModal) {
             return __awaiter(this, void 0, void 0, function* () {
                 $scope.nowPage++;
                 if ($scope.nowPage >= $scope.newsList.length) {
+                    $scope.news = [];
                     $scope.lastPage = yield $scope.lastPage.nextPage();
                     $scope.newsList.push($scope.lastPage.result);
                 }
-                $scope.news = [];
                 $scope.news = $scope.newsList[$scope.nowPage];
                 $scope.$apply();
             });

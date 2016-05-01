@@ -52,15 +52,15 @@
                         <thead>
                             <tr>
                                 <th class="mdl-data-table__cell--non-numeric">最新消息</th>
-                                <th>發佈時間</th>
+                                <th class="nkfust-news-item-time">發佈時間</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="t in news" id="news_item_{{t.id}}" class="nkfust-news-item ng-scope" ng-click="openNews()">
-                                <td class="nkfust-news-title mdl-data-table__cell--non-numeric ng-binding">{{t.title}}</td>
-                                <td class="ng-binding">{{t.timeString.split('T')[0]}}</td>
+                                <td class="nkfust-news-item-title mdl-data-table__cell--non-numeric ng-binding">{{t.title}}</td>
+                                <td class="nkfust-news-item-time">{{t.timeString.split('T')[0]}}</td>
                             </tr>
-                            <tr id="gg">
+                            <tr>
                                 <td colspan="2" style="text-align:center;padding-bottom:10px">
                                     <button ng-click="previous()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" data-upgraded=",MaterialButton,MaterialRipple">
                                         上一頁

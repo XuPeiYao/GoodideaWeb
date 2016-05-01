@@ -25,7 +25,7 @@ a{
     top:32px;
     left:32px;
     font-size:12pt;
-    max-width: calc(100% / 3);
+    width: 440px;
     opacity:0.85;
 }
 .nkfust-news-table th{
@@ -37,6 +37,15 @@ a{
 }
 .nkfust-news-item{
     cursor: pointer;
+}
+.nkfust-news-item-title{
+    overflow : hidden;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+    max-width: 310px !important;
+}
+.nkfust-news-item-time{
+    width:130px !important;
 }
 @media(max-width: 840px){
     .nkfust-news-table {

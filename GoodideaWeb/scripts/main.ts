@@ -27,6 +27,9 @@ var navController = async function ($scope, $sce, $uibModal) {
 
     $scope.urls = await goodidea.Link.getLinkList();
     $scope.$apply();
+
+    $scope.loginUser = await goodidea.User.getLoginUser();
+    $scope.$apply();
 }
 app.controller('nav_top', navController);
 app.controller('nav_left', navController);

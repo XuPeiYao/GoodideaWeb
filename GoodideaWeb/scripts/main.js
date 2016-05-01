@@ -26,6 +26,8 @@ var navController = function ($scope, $sce, $uibModal) {
         console.info(`目前登入帳戶: ${(loginUser ? loginUser.id : "<未登入>")}`);
         $scope.urls = yield goodidea.Link.getLinkList();
         $scope.$apply();
+        $scope.loginUser = yield goodidea.User.getLoginUser();
+        $scope.$apply();
     });
 };
 app.controller('nav_top', navController);

@@ -23,21 +23,19 @@ app.controller('newsViewer', async function ($scope, $sce, $uibModal) {
 
     $scope.previous = async function () {
         if ($scope.nowPage == 0) return;
-        $scope.nowPage--; ;
-        $scope.news = [];
+        $scope.nowPage--; 
         $scope.news = $scope.newsList[$scope.nowPage];
         componentHandler.upgradeDom();
     }
     $scope.forward = async function () {
         $scope.nowPage++;
         if ($scope.nowPage >= $scope.newsList.length) {
+            $scope.news = [];
             $scope.lastPage = await $scope.lastPage.nextPage();
             $scope.newsList.push($scope.lastPage.result);
         }
-        $scope.news = [];
         $scope.news = $scope.newsList[$scope.nowPage];
         $scope.$apply();
     }
     $scope.$apply();
-    
 });

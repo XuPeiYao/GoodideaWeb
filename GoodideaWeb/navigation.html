@@ -36,10 +36,10 @@
         </button>
         <div class="mdl-tooltip" for="more-button">更多操作選項，登入後可進行更多操作</div>
         <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
-            <li ng-click="test()" class="mdl-menu__item">個人資訊</li>
-            <li class="mdl-menu__item">提案管理</li>
-            <li disabled class="mdl-menu__item">登入</li>
-            <li class="mdl-menu__item">登出</li>
+            <li ng-show="loginUser" class="mdl-menu__item">個人資訊</li>
+            <li ng-show="loginUser" class="mdl-menu__item">提案管理</li>
+            <li ng-hide="loginUser" class="mdl-menu__item">登入</li>
+            <li ng-show="loginUser" class="mdl-menu__item">登出</li>
         </ul>
     </div>
 </div>
@@ -56,10 +56,10 @@
         <a id="nav_left_search" class="mdl-navigation__link" href="">進階搜尋</a>
         <div class="android-drawer-separator"></div>
         <span class="mdl-navigation__link" href="">使用者操作</span>
-        <a class="mdl-navigation__link" href="">個人資訊</a>
-        <a class="mdl-navigation__link" href="">提案管理</a>
-        <a class="mdl-navigation__link" href="">登入</a>
-        <a class="mdl-navigation__link" href="">登出</a>
+        <a ng-show="loginUser" class="mdl-navigation__link" href="">個人資訊</a>
+        <a ng-show="loginUser" class="mdl-navigation__link" href="">提案管理</a>
+        <a ng-hide="loginUser" class="mdl-navigation__link" href="">登入</a>
+        <a ng-show="loginUser" class="mdl-navigation__link" href="">登出</a>
         <div class="android-drawer-separator"></div>
         <span class="mdl-navigation__link" href="">相關連結</span>
         <a class="mdl-navigation__link" ng-repeat="t in urls" href="{{t.url}}">{{t.name}}</a>
