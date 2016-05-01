@@ -28,10 +28,28 @@ var navController = function ($scope, $sce, $uibModal) {
         $scope.$apply();
         $scope.loginUser = yield goodidea.User.getLoginUser();
         $scope.$apply();
+        $scope.login = function () {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/login.html',
+                controller: 'loginModal',
+                size: 'sm',
+                resolve: {}
+            }).rendered.then(() => {
+                componentHandler.upgradeDom();
+            });
+        };
     });
 };
 app.controller('nav_top', navController);
 app.controller('nav_left', navController);
 console.info("導覽列功能初始化完成");
-//#endregion 
+//#endregion
+app.controller('loginModal', function ($scope, $sce, $uibModalInstance, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.ok = function () {
+        };
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
 //# sourceMappingURL=main.js.map

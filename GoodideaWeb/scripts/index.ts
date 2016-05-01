@@ -1,11 +1,12 @@
-﻿app.controller('bannerPlayer', async function ($scope, $sce, $uibModal) {
+﻿//背景圖片輪播器
+app.controller('bannerPlayer', async function ($scope, $sce, $uibModal) {
     $scope.banners = await goodidea.Banner.getBannerList();
     $scope.banners.map((x,i) => {
         x.index = $scope.banners.length - i - 1;
         return x;
     });
     $scope.active = 0;
-    $scope.$apply();//通知$scope更新
+    $scope.$apply();//通知更新
     
     var bannerPlayer = document.querySelector('[ng-controller="bannerPlayer"]');
     bannerPlayer.querySelectorAll('.carousel-control')
@@ -13,10 +14,13 @@
         .forEach((x: Node) => x.parentNode.removeChild(x));//移除上一張圖與下一張圖按鈕
 });
 
+//最新消息檢視器
 app.controller('newsViewer', async function ($scope, $sce, $uibModal) {
     $scope.newsList = [];
 
     $scope.lastPage = await goodidea.News.getNewsList();
+    $scope.$apply();//通知更新
+
     $scope.nowPage = 0;
     $scope.newsList.push($scope.lastPage.result);
     $scope.news = $scope.newsList[$scope.nowPage];
@@ -35,7 +39,6 @@ app.controller('newsViewer', async function ($scope, $sce, $uibModal) {
             $scope.newsList.push($scope.lastPage.result);
         }
         $scope.news = $scope.newsList[$scope.nowPage];
-        $scope.$apply();
+        $scope.$apply();//通知更新
     }
-    $scope.$apply();
 });

@@ -68,8 +68,12 @@ a{
 
 body {
     margin: 0;
-    font-family:Microsoft JhengHei;/**字體**/
 }
+body, h1, h2, h3, h4, h5, h6{
+    font-family:'Microsoft JhengHei' !important;/**字體**/
+}
+
+
 
 /* Disable ugly boxes around images in IE10 */
 a img {

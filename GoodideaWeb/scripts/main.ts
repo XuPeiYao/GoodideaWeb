@@ -30,8 +30,26 @@ var navController = async function ($scope, $sce, $uibModal) {
 
     $scope.loginUser = await goodidea.User.getLoginUser();
     $scope.$apply();
+
+    $scope.login = function () {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/login.html',
+            controller: 'loginModal',
+            size: 'sm',
+            resolve: {}
+        }).rendered.then(() => {
+            componentHandler.upgradeDom();
+        });
+    }
 }
 app.controller('nav_top', navController);
 app.controller('nav_left', navController);
 console.info("導覽列功能初始化完成");
 //#endregion
+app.controller('loginModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, $uibModal) {
+    $scope.ok = function () {
+        
+    }
+    $scope.cancel = () => $uibModalInstance.close();
+});
