@@ -120,21 +120,8 @@ declare module goodidea {
          * @param project 指定提案的ID或Project物件
          * @param teamOnly 是否為團隊訊息(必須為團隊成員)
          */
-        static getForumList(project: Project | string, teamOnly: boolean): Promise<ForumResultPage>;
+        static getForumList(project: Project | string, teamOnly: boolean): Promise<PageResult<Forum>>;
         static loadFromJSON(data: JSON): Forum;
-    }
-}
-declare module goodidea {
-    class ForumResultPage {
-        index: number;
-        length: number;
-        count: number;
-        team: boolean;
-        url: string;
-        result: Forum[];
-        hasNext(): boolean;
-        nextPage(): Promise<ProjectResultPage>;
-        static loadFromJSON(data: JSON): ForumResultPage;
     }
 }
 declare module goodidea {
@@ -207,6 +194,35 @@ declare module goodidea {
         id: string;
         value: string;
         static loadFromJSON(data: JSON): MemberRequestSpecialty;
+    }
+}
+declare module goodidea {
+    class News {
+        id: string;
+        title: string;
+        timeString: any;
+        time: Date;
+        views: number;
+        content: string;
+        files: FileInfo[];
+        static loadFromJSON(data: JSON): News;
+        static getNewsList(): Promise<Class[]>;
+    }
+}
+declare module goodidea {
+    class PageResult<T> {
+        params: any;
+        url: string;
+        count: number;
+        index: number;
+        length: number;
+        result: T[];
+        private type;
+        constructor(type: any);
+        hasNext(): boolean;
+        load(): Promise<void>;
+        nextPage(): Promise<PageResult<T>>;
+        static loadFromJSON<T>(type: any, data: JSON): PageResult<T>;
     }
 }
 declare module goodidea {
@@ -372,14 +388,14 @@ declare module goodidea {
          * @param competition 競賽
          * @param order 排序
          */
-        static getProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<ProjectResultPage>;
+        static getProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>;
         /**
          * 取得目前系統中有徵人公開提案清單
          * @param _class 分類
          * @param competition 競賽
          * @param order 排序
          */
-        static getRequestProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<ProjectResultPage>;
+        static getRequestProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>;
         /**
          * 搜尋目前系統中公開提案
          * @param keyword 關鍵字
@@ -387,23 +403,7 @@ declare module goodidea {
          * @param competition 競賽
          * @param order 排序
          */
-        static search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<ProjectResultPage>;
-    }
-}
-declare module goodidea {
-    class ProjectResultPage {
-        index: number;
-        length: number;
-        count: number;
-        competition: Competition;
-        class: Class;
-        order: OrderBy;
-        keyword: string;
-        url: string;
-        result: Project[];
-        hasNext(): boolean;
-        nextPage(): Promise<ProjectResultPage>;
-        static loadFromJSON(data: JSON): ProjectResultPage;
+        static search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>;
     }
 }
 declare module goodidea {

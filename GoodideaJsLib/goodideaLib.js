@@ -208,17 +208,14 @@ var goodidea;
         static getForumList(project, teamOnly) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = project['id'] || project;
-                var responseJSON = yield goodidea.postAsync('api/forum/list', null, {
-                    project: id,
-                    length: 10,
-                    team: teamOnly
-                });
-                var result = goodidea.ForumResultPage.loadFromJSON(responseJSON['Result']);
-                result.index = 0;
-                result.length = 10;
-                result.team = teamOnly;
+                var result = new goodidea.PageResult(goodidea.Forum);
                 result.url = 'api/forum/list';
-                result.count = responseJSON['Count'];
+                result.length = 10;
+                result.params = {
+                    project: id,
+                    team: teamOnly
+                };
+                yield result.load();
                 return result;
             });
         }
@@ -236,42 +233,6 @@ var goodidea;
         }
     }
     goodidea.Forum = Forum;
-})(goodidea || (goodidea = {}));
-var goodidea;
-(function (goodidea) {
-    class ForumResultPage {
-        constructor() {
-            this.index = 0;
-        }
-        hasNext() {
-            return this.index < this.count;
-        }
-        nextPage() {
-            return __awaiter(this, void 0, Promise, function* () {
-                var data = {
-                    length: this.length,
-                    index: this.index + this.length,
-                    team: this.team
-                };
-                var responseJSON = yield goodidea.postAsync(this.url, null, data);
-                var result = goodidea.ProjectResultPage.loadFromJSON(responseJSON);
-                result.url = this.url;
-                result.index = data.index;
-                result.length = data.length;
-                result.count = responseJSON['Count'];
-                return result;
-            });
-        }
-        static loadFromJSON(data) {
-            var result = new ForumResultPage();
-            result.result = [];
-            for (var i = 0; i < data['length']; i++) {
-                result.result.push(goodidea.Forum.loadFromJSON(data[i]));
-            }
-            return result;
-        }
-    }
-    goodidea.ForumResultPage = ForumResultPage;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
@@ -402,6 +363,97 @@ var goodidea;
         }
     }
     goodidea.MemberRequestSpecialty = MemberRequestSpecialty;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class News {
+        static loadFromJSON(data) {
+            var result = new News();
+            result.id = data['Id'];
+            result.title = data['Title'];
+            result.views = data['Views'];
+            result.timeString = data['Time'];
+            if (!result.timeString['substring']) {
+                result.time = new Date(result.timeString);
+            }
+            if (data['Content'])
+                result.content = data['Content'];
+            if (data['Files']) {
+                result.files = [];
+                for (var i = 0; i < data['Files'].length; i++) {
+                    result.files.push(goodidea.FileInfo.loadFromJSON(data['Files'][i]));
+                }
+            }
+            return result;
+        }
+        static getNewsList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var result = [];
+                var responseJSON = yield goodidea.postAsync('api/class/list');
+                for (var i = 0; i < responseJSON['Result'].length; i++) {
+                    result.push(goodidea.Class.loadFromJSON(responseJSON['Result'][i]));
+                }
+                return result;
+            });
+        }
+    }
+    goodidea.News = News;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class PageResult {
+        constructor(type) {
+            this.params = {};
+            this.count = 0;
+            this.index = 0;
+            this.type = type;
+        }
+        hasNext() {
+            return this.index + this.length < this.count;
+        }
+        load() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = {
+                    index: this.index,
+                    length: this.index
+                };
+                for (var key in this.params)
+                    data[key] = this.params[key];
+                var responseJSON = yield goodidea.postAsync(this.url, null, data);
+                this.count = responseJSON['Count'];
+                this.result = [];
+                for (var i = 0; i < data['length']; i++) {
+                    this.result.push(this.type['loadFromJSON'](data[i]));
+                }
+            });
+        }
+        nextPage() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = {
+                    index: this.index,
+                    length: this.index
+                };
+                for (var key in this.params)
+                    data[key] = this.params[key];
+                var result = new PageResult(this.type);
+                result.index = this.index + this.length;
+                result.length = this.length;
+                result.params = this.params;
+                result.url = this.url;
+                yield result.load();
+                return result;
+            });
+        }
+        static loadFromJSON(type, data) {
+            var result = new PageResult(type);
+            result.result = [];
+            for (var i = 0; i < data['length']; i++) {
+                result.result.push(type['loadFromJSON'](data[i]));
+            }
+            return result;
+        }
+    }
+    goodidea.PageResult = PageResult;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
@@ -650,22 +702,15 @@ var goodidea;
          */
         static getRequestProjectList(_class, competition, order) {
             return __awaiter(this, void 0, Promise, function* () {
-                var api = 'api/project/requestList';
-                var data = {
-                    length: 10,
+                var result = new goodidea.PageResult(goodidea.Project);
+                result.url = 'api/project/requestList';
+                result.params = {
                     class: _class ? _class.id : 'N',
                     competition: competition ? competition.id : 'N',
                     order: OrderBy[order]
                 };
-                var responseJSON = yield goodidea.postAsync(api, null, data);
-                var result = goodidea.ProjectResultPage.loadFromJSON(responseJSON);
-                result.url = api;
-                result.index = 0;
                 result.length = 10;
-                result.competition = competition;
-                result.class = _class;
-                result.order = order;
-                result.count = responseJSON['Count'];
+                result.load();
                 return result;
             });
         }
@@ -678,76 +723,24 @@ var goodidea;
          */
         static search(keyword, _class, competition, order) {
             return __awaiter(this, void 0, Promise, function* () {
-                var api = 'api/project/list';
-                var data = {
-                    length: 10,
+                var result = new goodidea.PageResult(goodidea.Project);
+                result.url = 'api/project/requestList';
+                result.params = {
                     class: _class ? _class.id : 'N',
                     competition: competition ? competition.id : 'N',
                     order: OrderBy[order]
                 };
                 if (keyword != null) {
-                    api = 'api/project/search';
-                    data['q'] = keyword;
+                    result.url = 'api/project/search';
+                    result.params['q'] = keyword;
                 }
-                var responseJSON = yield goodidea.postAsync(api, null, data);
-                var result = goodidea.ProjectResultPage.loadFromJSON(responseJSON);
-                result.url = api;
-                result.index = 0;
                 result.length = 10;
-                result.competition = competition;
-                result.class = _class;
-                result.keyword = keyword;
-                result.order = order;
-                result.count = responseJSON['Count'];
+                result.load();
                 return result;
             });
         }
     }
     goodidea.Project = Project;
-})(goodidea || (goodidea = {}));
-var goodidea;
-(function (goodidea) {
-    class ProjectResultPage {
-        constructor() {
-            this.index = 0;
-        }
-        hasNext() {
-            return this.index < this.count;
-        }
-        nextPage() {
-            return __awaiter(this, void 0, Promise, function* () {
-                var data = {
-                    length: this.length,
-                    index: this.index + this.length,
-                    class: this.class ? this.class.id : 'N',
-                    competition: this.competition ? this.competition.id : 'N',
-                    order: goodidea.OrderBy[this.order]
-                };
-                if (this.keyword)
-                    data['q'] = this.keyword;
-                var responseJSON = yield goodidea.postAsync(this.url, null, data);
-                var result = ProjectResultPage.loadFromJSON(responseJSON);
-                result.url = this.url;
-                result.index = data.index;
-                result.length = data.length;
-                result.competition = this.competition;
-                result.class = this.class;
-                result.keyword = this.keyword;
-                result.order = this.order;
-                result.count = responseJSON['Count'];
-                return result;
-            });
-        }
-        static loadFromJSON(data) {
-            var result = new ProjectResultPage();
-            result.result = [];
-            for (var i = 0; i < data['Result'].length; i++) {
-                result.result.push(goodidea.Project.loadFromJSON(data['Result'][i]));
-            }
-            return result;
-        }
-    }
-    goodidea.ProjectResultPage = ProjectResultPage;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {

@@ -39,20 +39,18 @@
          * @param project 指定提案的ID或Project物件
          * @param teamOnly 是否為團隊訊息(必須為團隊成員)
          */
-        public static async getForumList(project: Project | string,teamOnly: boolean): Promise<ForumResultPage> {
+        public static async getForumList(project: Project | string, teamOnly: boolean): Promise<PageResult<Forum>> {
             var id = project['id'] || project;
-            var responseJSON = await postAsync('api/forum/list', null, {
-                project: id,
-                length: 10,
-                team: teamOnly
-            });
-            
-            var result = ForumResultPage.loadFromJSON(responseJSON['Result']);
-            result.index = 0;
-            result.length = 10;
-            result.team = teamOnly;
+            var result = new PageResult<Forum>(goodidea.Forum);
             result.url = 'api/forum/list';
-            result.count = responseJSON['Count'];
+            result.length = 10;
+            result.params = {
+                project: id,
+                team: teamOnly
+            };
+
+            await result.load();
+
             return result;
         }
 

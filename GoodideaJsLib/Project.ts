@@ -293,7 +293,7 @@
          * @param competition 競賽
          * @param order 排序
          */
-        public static async getProjectList(_class:Class,competition:Competition,order:OrderBy):Promise<ProjectResultPage>{
+        public static async getProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>{
             return Project.search(null,_class,competition,order);
         }
 
@@ -303,25 +303,16 @@
          * @param competition 競賽
          * @param order 排序
          */
-        public static async getRequestProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<ProjectResultPage> {
-            var api = 'api/project/requestList';
-            var data = {
-                length: 10,
+        public static async getRequestProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>> {
+            var result = new PageResult<Project>(goodidea.Project);
+            result.url = 'api/project/requestList';
+            result.params = {
                 class: _class ? _class.id : 'N',
                 competition: competition ? competition.id : 'N',
                 order: OrderBy[order]
             };
-
-            var responseJSON = await postAsync(api, null, data);
-
-            var result = ProjectResultPage.loadFromJSON(responseJSON);
-            result.url = api;
-            result.index = 0;
             result.length = 10;
-            result.competition = competition;
-            result.class = _class;
-            result.order = order;
-            result.count = responseJSON['Count'];
+            result.load();
             return result;
         }
         
@@ -332,30 +323,20 @@
          * @param competition 競賽
          * @param order 排序
          */
-        public static async search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<ProjectResultPage>{
-            var api = 'api/project/list';
-            var data = {
-                length: 10,
+        public static async search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>{
+            var result = new PageResult<Project>(goodidea.Project);
+            result.url = 'api/project/requestList';
+            result.params = {
                 class: _class ? _class.id : 'N',
                 competition: competition ? competition.id : 'N',
                 order: OrderBy[order]
             };
             if (keyword != null) {
-                api = 'api/project/search';
-                data['q'] = keyword;
+                result.url = 'api/project/search';
+                result.params['q'] = keyword;
             }
-
-            var responseJSON = await postAsync(api, null, data);
-
-            var result = ProjectResultPage.loadFromJSON(responseJSON);
-            result.url = api;
-            result.index = 0;
             result.length = 10;
-            result.competition = competition;
-            result.class = _class;
-            result.keyword = keyword;
-            result.order = order;
-            result.count = responseJSON['Count'];
+            result.load();
             return result;
         }
     }
