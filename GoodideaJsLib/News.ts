@@ -6,7 +6,15 @@
         public time: Date;
         public views: number;
         public content: string;
-        public files: FileInfo[];
+        public files: DocumentInfo[];
+
+        public static async getNewsById(id:string) : Promise<News> {
+            var responseJSON = await postAsync('api/news/get', null, {
+                news: id
+            });
+            return News.loadFromJSON(responseJSON['Result']);
+        }
+
         public static loadFromJSON(data: JSON): News {
             var result = new News();
             result.id = data['Id'];
@@ -21,7 +29,7 @@
             if (data['Files']) {
                 result.files = [];
                 for (var i = 0; i < data['Files'].length; i++) {
-                    result.files.push(FileInfo.loadFromJSON(data['Files'][i]));
+                    result.files.push(DocumentInfo.loadFromJSON(data['Files'][i]));
                 }
             }
 

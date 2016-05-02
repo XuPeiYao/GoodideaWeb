@@ -367,6 +367,14 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class News {
+        static getNewsById(id) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/news/get', null, {
+                    news: id
+                });
+                return News.loadFromJSON(responseJSON['Result']);
+            });
+        }
         static loadFromJSON(data) {
             var result = new News();
             result.id = data['Id'];
@@ -381,7 +389,7 @@ var goodidea;
             if (data['Files']) {
                 result.files = [];
                 for (var i = 0; i < data['Files'].length; i++) {
-                    result.files.push(goodidea.FileInfo.loadFromJSON(data['Files'][i]));
+                    result.files.push(goodidea.DocumentInfo.loadFromJSON(data['Files'][i]));
                 }
             }
             return result;

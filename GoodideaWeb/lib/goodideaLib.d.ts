@@ -204,7 +204,8 @@ declare module goodidea {
         time: Date;
         views: number;
         content: string;
-        files: FileInfo[];
+        files: DocumentInfo[];
+        static getNewsById(id: string): Promise<News>;
         static loadFromJSON(data: JSON): News;
         static getNewsList(): Promise<PageResult<News>>;
     }
