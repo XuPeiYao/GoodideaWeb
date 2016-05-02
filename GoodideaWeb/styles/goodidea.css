@@ -21,41 +21,6 @@ a{
     height: 100%;
     width:100%;
 }
-.nkfust-news-table {
-    top:32px;
-    left:32px;
-    font-size:12pt;
-    width: 440px;
-    opacity:0.85;
-}
-.nkfust-news-table th{
-    font-size:12pt;
-    font-weight:bold;
-    background-color:#37474f;
-    opacity:0.9;
-    color:white;
-}
-.nkfust-news-item{
-    cursor: pointer;
-}
-.nkfust-news-item-title{
-    overflow : hidden;
-    text-overflow : ellipsis;
-    white-space : nowrap;
-    max-width: 310px !important;
-}
-.nkfust-news-item-time{
-    width:130px !important;
-}
-@media(max-width: 840px){
-    .nkfust-news-table {
-        top:8px;
-        left:0px;
-        max-width: 100%;
-    }
-
-}
-
 .browserSupport{
     color:white;
 }
