@@ -18,7 +18,7 @@ goodidea.origin = location.origin;//設定允許域
 console.info(`允許域設定為: ${goodidea.origin}`);
 
 //初始化應用程式範圍
-var app = angular.module('app', ['ngAnimate','ui.bootstrap']);
+var app = angular.module('app', ['ngAnimate', 'ui.bootstrap']);
 
 //#region 導覽列控制器
 var navController = async function ($scope, $sce, $uibModal) {
@@ -42,14 +42,69 @@ var navController = async function ($scope, $sce, $uibModal) {
             componentHandler.upgradeDom();
         });
     }
+
+    $scope.logout = async function () {
+        swal({
+            type: "warning",
+            title: "登出確認",
+            text: "您是否真的要進行登出動作?登出前請確認所作變更已經儲存",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消"
+        }, async function (isConfirm) {
+            if (isConfirm) {
+                swal({
+                    title: "登出中",
+                    text: "系統正在執行登出操作，操作完成後本視窗自動關閉",
+                    showConfirmButton: false
+                });
+                await goodidea.User.logout();
+                location.reload();
+            }
+        });
+    }
 }
 app.controller('nav_top', navController);
 app.controller('nav_left', navController);
 console.info("導覽列功能初始化完成");
 //#endregion
 app.controller('loginModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, $uibModal) {
-    $scope.ok = function () {
-        
+    $scope.loading = false;
+    $scope.id = ""; $scope.pwd = "";
+    $scope.login = async function () {
+        if (!$scope.id || !$scope.id.length || !$scope.pwd || !$scope.pwd.length) {
+            swal({
+                type: 'error',
+                title: "資料缺漏",
+                text: "使用者帳號與密碼為必填項目",
+                confirmButtonText: "確定"
+            });
+            return;
+        }
+        $scope.loading = true;
+        swal({
+            title: "登入中",
+            text: "系統正在驗證您的資訊，成功登入後本視窗自動關閉",
+            showConfirmButton: false
+        });
+        try {
+            await goodidea.User.login($scope.id, $scope.pwd);//嘗試登入
+            $scope.loading = false;
+            $scope.$apply();//通知更新
+            location.reload();
+        } catch (e) {//登入失敗
+            swal({
+                type: 'error',
+                title: e.name,
+                text: e.message,
+                confirmButtonText: "確定"
+            }, (value) => {
+                $scope.loading = false;
+                $scope.$apply();//通知更新
+            });
+        }
+
     }
+    
     $scope.cancel = () => $uibModalInstance.close();
 });

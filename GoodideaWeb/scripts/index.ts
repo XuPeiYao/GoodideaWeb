@@ -16,29 +16,33 @@ app.controller('bannerPlayer', async function ($scope, $sce, $uibModal) {
 
 //最新消息檢視器
 app.controller('newsViewer', async function ($scope, $sce, $uibModal) {
-    $scope.newsList = [];
-
-    $scope.lastPage = await goodidea.News.getNewsList();
-    $scope.$apply();//通知更新
-
+    $scope.lastPageResult = null;
+    $scope.newsPageList = [];
     $scope.nowPage = 0;
-    $scope.newsList.push($scope.lastPage.result);
-    $scope.news = $scope.newsList[$scope.nowPage];
+    $scope.loading = false;
+
+    $scope.loadPage = async (page) => {
+        $scope.loading = true;
+        if (page == 0 && $scope.newsPageList.length == 0) {
+            $scope.lastPageResult = await goodidea.News.getNewsList();
+            $scope.newsPageList.push($scope.lastPageResult.result);        
+        } else if (page >= $scope.newsPageList.length) {//load new page
+            $scope.lastPageResult = await $scope.lastPageResult.nextPage();
+            $scope.newsPageList.push($scope.lastPageResult.result);        
+        }
+        $scope.news = $scope.newsPageList[page];
+        $scope.nowPage = page;
+        $scope.loading = false;
+    };
+
+    $scope.loadPage(0);
 
     $scope.previous = async function () {
         if ($scope.nowPage == 0) return;
-        $scope.nowPage--; 
-        $scope.news = $scope.newsList[$scope.nowPage];
-        componentHandler.upgradeDom();
+        await $scope.loadPage($scope.nowPage - 1);
     }
     $scope.forward = async function () {
-        $scope.nowPage++;
-        if ($scope.nowPage >= $scope.newsList.length) {
-            $scope.news = [];
-            $scope.lastPage = await $scope.lastPage.nextPage();
-            $scope.newsList.push($scope.lastPage.result);
-        }
-        $scope.news = $scope.newsList[$scope.nowPage];
+        await $scope.loadPage($scope.nowPage + 1);
         $scope.$apply();//通知更新
     }
 });
