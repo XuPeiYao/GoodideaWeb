@@ -192,26 +192,28 @@
          * 使用Facebook權杖登入
          * @param fbToken Facebook權杖
          */
-        public static async login(fbToken: string): Promise<User>;
+        public static async fblogin(fbToken: string): Promise<User> {
+            var apiPath = "api/user/fblogin";
+            var postData = {
+                token: fbToken
+            };
+
+            var responseJSON: JSON = await postAsync(apiPath, null, postData);
+
+            return await User.getUserById(responseJSON['Result'].Id);
+        }
 
         /**
          * 使用學校信箱登入
          * @param id 帳號
          * @param password 密碼
          */
-        public static async login(id: string, password: string): Promise<User>;
-        public static async login(id: string, password?: string): Promise<User> {
+        public static async login(id: string, password: string): Promise<User> {
             var apiPath = "api/user/login";
             var postData: any = {
                 id: id,
                 pwd: password
             };
-            if (!password) {
-                apiPath = "api/user/fblogin";
-                postData = {
-                    token: id
-                };
-            }
 
             var responseJSON: JSON = await postAsync(apiPath, null, postData);
 

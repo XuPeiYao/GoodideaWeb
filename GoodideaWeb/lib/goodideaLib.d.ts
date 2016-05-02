@@ -514,7 +514,7 @@ declare module goodidea {
          * 使用Facebook權杖登入
          * @param fbToken Facebook權杖
          */
-        static login(fbToken: string): Promise<User>;
+        static fblogin(fbToken: string): Promise<User>;
         /**
          * 使用學校信箱登入
          * @param id 帳號

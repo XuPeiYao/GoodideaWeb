@@ -959,6 +959,27 @@ var goodidea;
                 this.isLinkFB = false;
             });
         }
+        //#endregion
+        //#region 帳號狀態
+        /**
+         * 使用Facebook權杖登入
+         * @param fbToken Facebook權杖
+         */
+        static fblogin(fbToken) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var apiPath = "api/user/fblogin";
+                var postData = {
+                    token: fbToken
+                };
+                var responseJSON = yield goodidea.postAsync(apiPath, null, postData);
+                return yield User.getUserById(responseJSON['Result'].Id);
+            });
+        }
+        /**
+         * 使用學校信箱登入
+         * @param id 帳號
+         * @param password 密碼
+         */
         static login(id, password) {
             return __awaiter(this, void 0, Promise, function* () {
                 var apiPath = "api/user/login";
@@ -966,12 +987,6 @@ var goodidea;
                     id: id,
                     pwd: password
                 };
-                if (!password) {
-                    apiPath = "api/user/fblogin";
-                    postData = {
-                        token: id
-                    };
-                }
                 var responseJSON = yield goodidea.postAsync(apiPath, null, postData);
                 return yield User.getUserById(responseJSON['Result'].Id);
             });
