@@ -37,12 +37,33 @@ app.controller('newsViewer', async function ($scope, $sce, $uibModal) {
 
     $scope.loadPage(0);
 
-    $scope.previous = async function () {
+    $scope.previous = async () => {
         if ($scope.nowPage == 0) return;
         await $scope.loadPage($scope.nowPage - 1);
     }
-    $scope.forward = async function () {
+    $scope.forward = async () => {
         await $scope.loadPage($scope.nowPage + 1);
         $scope.$apply();//通知更新
     }
+    $scope.openNews = async (t) => {
+        $scope.loading = true;
+        var news = await goodidea.News.getNewsById(t.id);
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/newsView.html',
+            controller: 'newsViewModal',
+            resolve: {
+                news: () => news
+            }
+        }).rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+});
+app.controller('newsViewModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, news, $uibModal) {
+    for (var key in news) $scope[key] = news[key];
+    $scope.files = $scope.files.filter(x => x.file.type != goodidea.FileType.Image);
+
+    $scope.cancel = () => $uibModalInstance.close();
 });

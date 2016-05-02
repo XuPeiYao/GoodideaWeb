@@ -44,19 +44,38 @@ app.controller('newsViewer', function ($scope, $sce, $uibModal) {
             $scope.loading = false;
         });
         $scope.loadPage(0);
-        $scope.previous = function () {
-            return __awaiter(this, void 0, void 0, function* () {
-                if ($scope.nowPage == 0)
-                    return;
-                yield $scope.loadPage($scope.nowPage - 1);
+        $scope.previous = () => __awaiter(this, void 0, void 0, function* () {
+            if ($scope.nowPage == 0)
+                return;
+            yield $scope.loadPage($scope.nowPage - 1);
+        });
+        $scope.forward = () => __awaiter(this, void 0, void 0, function* () {
+            yield $scope.loadPage($scope.nowPage + 1);
+            $scope.$apply(); //通知更新
+        });
+        $scope.openNews = (t) => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            var news = yield goodidea.News.getNewsById(t.id);
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/newsView.html',
+                controller: 'newsViewModal',
+                resolve: {
+                    news: () => news
+                }
+            }).rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
             });
-        };
-        $scope.forward = function () {
-            return __awaiter(this, void 0, void 0, function* () {
-                yield $scope.loadPage($scope.nowPage + 1);
-                $scope.$apply(); //通知更新
-            });
-        };
+        });
+    });
+});
+app.controller('newsViewModal', function ($scope, $sce, $uibModalInstance, news, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        for (var key in news)
+            $scope[key] = news[key];
+        $scope.files = $scope.files.filter(x => x.file.type != goodidea.FileType.Image);
+        $scope.cancel = () => $uibModalInstance.close();
     });
 });
 //# sourceMappingURL=index.js.map

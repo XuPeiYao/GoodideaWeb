@@ -57,8 +57,8 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="t in news" id="news_item_{{t.id}}" class="nkfust-news-item ng-scope" ng-click="openNews()">
-                                <td class="nkfust-news-item-title mdl-data-table__cell--non-numeric ng-binding">{{t.title}}</td>
+                            <tr ng-repeat="t in news" id="news_item_{{t.id}}" class="nkfust-news-item mdl-button--raised" ng-click="openNews(t)">
+                                <td class="nkfust-news-item-title mdl-data-table__cell--non-numeric">{{t.title}}</td>
                                 <td class="nkfust-news-item-time">{{t.timeString.split('T')[0]}}</td>
                             </tr>
                             <tr>

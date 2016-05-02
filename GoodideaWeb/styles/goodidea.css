@@ -30,7 +30,6 @@ a{
 .segmentFont{
     font-family:Microsoft JhengHei !important;/**字體**/
 }
-
 body {
     margin: 0;
 }
@@ -38,6 +37,42 @@ body, h1, h2, h3, h4, h5, h6{
     font-family:'Microsoft JhengHei' !important;/**字體**/
 }
 
+.nkfust-news-item{
+    cursor:pointer;
+}
+.nkfust-news-item-time{
+    width: 130px !important;/*強制設定日期欄位寬度*/
+}
+.nkfust-news-item-title{
+    width: calc(100% - 16px - 130px) !important;
+    max-width: 166px;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.nkfust-news-table{
+    opacity:0.85;
+    border:0;
+}
+.nkfust-news-table > thead > tr{   
+    background-color:#37474f;
+}
+.nkfust-news-table th{
+    font-size:14pt !important;
+    color:white;
+}
+.nkfust-news-table td{
+    font-size:12pt;
+}
+@media(min-width:840px){
+    .nkfust-news-table{
+        width:400px !important;
+        top:32px;
+        left:32px;
+    }
+}
+
+/****以上為創創平台專用****/
 
 
 /* Disable ugly boxes around images in IE10 */
