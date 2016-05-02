@@ -749,8 +749,12 @@ var goodidea;
                 data = {};
             data['origin'] = goodidea.origin;
             var response = JSON.parse((yield request.postAsync(url, header, data, user, password, progressCallback)).resultText);
-            if (!response.Success)
-                throw response.Result;
+            if (!response.Success) {
+                var exception = {};
+                for (var key in response.Result)
+                    exception[firstToLowerCase(key)] = response.Result[key];
+                throw exception;
+            }
             return response;
         });
     }

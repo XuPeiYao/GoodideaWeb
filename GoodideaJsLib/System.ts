@@ -11,7 +11,11 @@
         data['origin'] = origin;
 
         var response: any = JSON.parse((await request.postAsync(url, header, data, user, password, progressCallback)).resultText);
-        if (!response.Success) throw response.Result;
+        if (!response.Success) {
+            var exception = {};
+            for (var key in response.Result) exception[firstToLowerCase(key)] = response.Result[key];
+            throw exception;
+        }
         return response;
     }
 
