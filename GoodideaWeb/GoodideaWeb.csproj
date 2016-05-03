@@ -22,7 +22,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="footer.html" />
+    <Content Include="projectList.html" />
+    <Content Include="pages\footer.html" />
     <Content Include="images\nav-top-logo.png" />
     <Content Include="images\nva-left-logo.png" />
     <Content Include="index.html" />
@@ -60,7 +61,7 @@
     <Content Include="lib\sweetalert\themes\twitter\twitter.css" />
     <Content Include="modals\newsView.html" />
     <Content Include="modals\login.html" />
-    <Content Include="navigation.html" />
+    <Content Include="pages\navigation.html" />
     <Content Include="scripts\googleAnalytics.js" />
     <Content Include="styles\goodidea.css" />
   </ItemGroup>
@@ -78,9 +79,7 @@
     <TypeScriptCompile Include="lib\sweetalert\sweetalert.d.ts" />
     <TypeScriptCompile Include="scripts\index.ts" />
     <TypeScriptCompile Include="scripts\main.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="web.config" />
+    <TypeScriptCompile Include="scripts\projectList.ts" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="lib\sweetalert\themes\facebook\facebook.scss" />
@@ -133,12 +132,6 @@
     <Content Include="lib\jquery\font-awesome-4.6.1\scss\_stacked.scss" />
     <Content Include="lib\jquery\font-awesome-4.6.1\scss\_variables.scss" />
     <Content Include="lib\jquery\jquery.1.11.3.js" />
-    <None Include="web.Debug.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
-    <None Include="web.Release.config">
-      <DependentUpon>web.config</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\font-awesome-4.6.1\" />

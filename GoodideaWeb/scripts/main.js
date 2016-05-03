@@ -39,6 +39,7 @@ var markdown = {
 markdown.init();
 include();
 componentHandler.upgradeAllRegistered();
+//componentHandler.upgradeDom();
 console.clear();
 console.log3D("創意創新雲端平台");
 console.info("SDK版本: " + goodidea.version);

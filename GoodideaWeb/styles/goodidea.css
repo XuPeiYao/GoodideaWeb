@@ -80,6 +80,15 @@ body, h1, h2, h3, h4, h5, h6{
 .markdown-video-div{
     height:400px;
 }
+.android-more-section {
+    padding: 20px 0 !important;
+}
+.listController{
+    margin:0 20px !important;
+}
+.pageTitle{
+    font-family:'Microsoft JhengHei' !important;
+}
 
 
 /****以上為創創平台專用****/

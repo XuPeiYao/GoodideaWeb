@@ -36,6 +36,7 @@ markdown.init();
 
 include();
 componentHandler.upgradeAllRegistered();
+//componentHandler.upgradeDom();
 
 console.clear();
 console.log3D("創意創新雲端平台");
