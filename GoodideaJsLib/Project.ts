@@ -325,7 +325,7 @@
          */
         public static async search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>{
             var result = new PageResult<Project>(goodidea.Project);
-            result.url = 'api/project/requestList';
+            result.url = 'api/project/list';
             result.params = {
                 class: _class ? _class.id : 'N',
                 competition: competition ? competition.id : 'N',

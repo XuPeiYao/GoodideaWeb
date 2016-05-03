@@ -725,7 +725,7 @@ var goodidea;
         static search(keyword, _class, competition, order) {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = new goodidea.PageResult(goodidea.Project);
-                result.url = 'api/project/requestList';
+                result.url = 'api/project/list';
                 result.params = {
                     class: _class ? _class.id : 'N',
                     competition: competition ? competition.id : 'N',
