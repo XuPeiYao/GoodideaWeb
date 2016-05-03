@@ -54,6 +54,8 @@ app.controller('newsViewer', function ($scope, $sce, $uibModal) {
             $scope.$apply(); //通知更新
         });
         $scope.openNews = (t) => __awaiter(this, void 0, void 0, function* () {
+            if ($scope.loading)
+                return;
             $scope.loading = true;
             var news = yield goodidea.News.getNewsById(t.id);
             $uibModal.open({
@@ -74,7 +76,11 @@ app.controller('newsViewModal', function ($scope, $sce, $uibModalInstance, news,
     return __awaiter(this, void 0, void 0, function* () {
         for (var key in news)
             $scope[key] = news[key];
-        $scope.files = $scope.files.filter(x => x.file.type != goodidea.FileType.Image);
+        $scope.files = $scope.files.map(x => {
+            x.typeString = x.file.type == goodidea.FileType.Image ? "圖片" : "文件";
+            return x;
+        });
+        $scope.contentHtml = $sce.trustAsHtml(markdown.toHtml($scope.content));
         $scope.cancel = () => $uibModalInstance.close();
     });
 });

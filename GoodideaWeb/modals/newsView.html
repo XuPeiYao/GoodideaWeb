@@ -3,14 +3,18 @@
     <h5 class="modal-title">{{title}}</h5>
 </div>
 <div class="modal-body">
-    {{content}}
+    <div ng-bind-html="contentHtml">
+
+    </div>
     <div ng-show="files.length">
         <hr />
         <p><strong>附檔：</strong></p>
-        <p ng-repeat="t in files"><a href="{{t.file.url}}">{{t.name || t.file.name}}</a></p>
+        <p ng-repeat="t in files"><a href="{{t.file.url}}">[{{t.typeString}}]{{t.name || t.file.name}}</a></p>
     </div>
 </div>
 <div class="modal-footer">
+    <label>發佈時間:</label>{{time.format("yyyy-mm-dd HH:MM:ss")}},
+    <label>瀏覽人次:</label>{{views}},
     <button ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         關閉
     </button>

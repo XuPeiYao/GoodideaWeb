@@ -43,6 +43,9 @@
     <Content Include="lib\jquery\font-awesome-4.6.1\fonts\fontawesome-webfont.svg" />
     <Content Include="lib\jquery\font-awesome-4.6.1\HELP-US-OUT.txt" />
     <Content Include="lib\jquery\jquery-1.12.3.min.js" />
+    <Content Include="lib\markdown\markdown-it-video.js" />
+    <Content Include="lib\markdown\markdown-it-sub.js" />
+    <Content Include="lib\markdown\markdown-it-sup.js" />
     <Content Include="lib\mdl\material.css" />
     <Content Include="lib\mdl\material.js" />
     <Content Include="lib\mdl\material.min.css" />
@@ -68,6 +71,7 @@
     <TypeScriptCompile Include="lib\angularJs\angular-ui-bootstrap.d.ts" />
     <TypeScriptCompile Include="lib\angularJs\angular.d.ts" />
     <TypeScriptCompile Include="lib\jquery\jquery.d.ts" />
+    <Content Include="lib\markdown\markdown-it.js" />
     <TypeScriptCompile Include="lib\mdl\material-design-lite.d.ts" />
     <TypeScriptCompile Include="lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="lib\goodideaLib.d.ts" />

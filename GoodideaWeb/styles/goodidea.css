@@ -71,6 +71,16 @@ body, h1, h2, h3, h4, h5, h6{
         left:32px;
     }
 }
+.modal-body img{
+    max-width:100%;
+}
+.markdown-video{
+    padding-bottom:0 !important;
+}
+.markdown-video-div{
+    height:400px;
+}
+
 
 /****以上為創創平台專用****/
 
