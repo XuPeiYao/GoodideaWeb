@@ -711,7 +711,7 @@ var goodidea;
                     order: OrderBy[order]
                 };
                 result.length = 10;
-                result.load();
+                yield result.load();
                 return result;
             });
         }
@@ -736,7 +736,7 @@ var goodidea;
                     result.params['q'] = keyword;
                 }
                 result.length = 10;
-                result.load();
+                yield result.load();
                 return result;
             });
         }

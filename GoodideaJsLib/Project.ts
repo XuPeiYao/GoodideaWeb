@@ -312,7 +312,7 @@
                 order: OrderBy[order]
             };
             result.length = 10;
-            result.load();
+            await result.load();
             return result;
         }
         
@@ -336,7 +336,7 @@
                 result.params['q'] = keyword;
             }
             result.length = 10;
-            result.load();
+            await result.load();
             return result;
         }
     }
