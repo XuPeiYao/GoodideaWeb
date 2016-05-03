@@ -23,7 +23,27 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
             { id: goodidea.OrderBy.awardsFirst, name: '獲獎者在前' }
         ];
         $scope.order = goodidea.OrderBy.lastEditTime.toString();
-        $scope.$apply();
+        $scope.$apply(); //通知更新
+        $scope.lastPageResult = null;
+        $scope.projectList = [];
+        $scope.loadNextPage = () => __awaiter(this, void 0, void 0, function* () {
+            if ($scope.lastPageResult == null) {
+                $scope.lastPageResult = yield goodidea.Project.getProjectList($scope.class, $scope.competition, parseInt($scope.order));
+            }
+            else {
+                $scope.lastPageResult = yield $scope.lastPageResult.nextPage();
+            }
+            $scope.lastPageResult.result.forEach(x => $scope.projectList.push(x));
+            $scope.$apply(); //通知更新    
+        });
+        $scope.reload = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.lastPageResult = null;
+            $scope.projectList = [];
+            yield $scope.loadNextPage();
+            $scope.$apply(); //通知更新  
+        });
+        yield $scope.reload();
+        $scope.$apply(); //通知更新  
     });
 });
 //# sourceMappingURL=projectList.js.map

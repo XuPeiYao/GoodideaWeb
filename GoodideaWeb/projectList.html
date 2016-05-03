@@ -43,7 +43,7 @@
                         <div class="navbar-header mdl-grid listController">
                             <div class="mdl-cell mdl-cell--4-col">
                                 <div id="class" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <select class="mdl-textfield__input" ng-model="class">
+                                    <select class="mdl-textfield__input" ng-model="class" ng-change="reload()">
                                         <option ng-repeat="t in classOptions" value="{{t.id}}">{{t.name}}</option>
                                     </select>
                                     <label class="mdl-textfield__label">分類</label>
@@ -51,7 +51,7 @@
                             </div>
                             <div class="mdl-cell mdl-cell--4-col">
                                 <div id="competition" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <select class="mdl-textfield__input" ng-model="competition">
+                                    <select class="mdl-textfield__input" ng-model="competition" ng-change="reload()">
                                         <option ng-repeat="t in competitionOptions" value="{{t.id}}">{{t.name}}</option>
                                     </select>
                                     <label class="mdl-textfield__label">競賽</label>
@@ -59,7 +59,7 @@
                             </div>
                             <div class="mdl-cell mdl-cell--4-col">
                                 <div id="order" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                    <select class="mdl-textfield__input" ng-model="order">
+                                    <select class="mdl-textfield__input" ng-model="order" ng-change="reload()">
                                         <option ng-repeat="t in orderOptions" value="{{t.id}}">{{t.name}}</option>
                                     </select>
                                     <label class="mdl-textfield__label">排序</label>
@@ -73,12 +73,12 @@
                 </div>
 
                 <div class="android-card-container mdl-grid">
-                    <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+                    <div ng-repeat="t in projectList" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
                         <div class="mdl-card__media">
                             <img src="images/more-from-1.png">
                         </div>
                         <div class="mdl-card__title">
-                            <h4 class="mdl-card__title-text">Get going on Android</h4>
+                            <h4 class="mdl-card__title-text">{{t.name}}</h4>
                         </div>
                         <div class="mdl-card__supporting-text">
                             <span class="mdl-typography--font-light mdl-typography--subhead">Four tips to make your switch to Android quick and easy</span>
@@ -89,6 +89,9 @@
                                 <i class="material-icons">chevron_right</i>
                             </a>
                         </div>
+                    </div>
+                    <div class="mdl-cell mdl-cell--12-col" style="text-align:center">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="width:100%" ng-click="loadNextPage()">讀取更多</button>
                     </div>
                 </div>
             </div>

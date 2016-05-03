@@ -10,6 +10,27 @@
     $scope.orderOptions = [
         { id: goodidea.OrderBy.lastEditTime, name: '最後更新時間' },        { id: goodidea.OrderBy.name, name: '提案名稱' },        { id: goodidea.OrderBy.class, name: '提案分類' },        { id: goodidea.OrderBy.views, name: '瀏覽人次' },        { id: goodidea.OrderBy.votes, name: '得票數' },        { id: goodidea.OrderBy.awardsFirst, name: '獲獎者在前' }    ];
     $scope.order = goodidea.OrderBy.lastEditTime.toString();
-    $scope.$apply();
-    
+    $scope.$apply();//通知更新
+
+    $scope.lastPageResult = null;
+    $scope.projectList = [];
+    $scope.loadNextPage = async () => {
+        if ($scope.lastPageResult == null) {
+            $scope.lastPageResult = await goodidea.Project.getProjectList($scope.class, $scope.competition, parseInt($scope.order));
+        } else {
+            $scope.lastPageResult = await $scope.lastPageResult.nextPage();
+        }
+        
+        $scope.lastPageResult.result.forEach(x => $scope.projectList.push(x));
+
+        $scope.$apply();//通知更新    
+    }
+    $scope.reload =async () => {
+        $scope.lastPageResult = null;
+        $scope.projectList = [];
+        await $scope.loadNextPage();
+        $scope.$apply();//通知更新  
+    }
+    await $scope.reload();
+    $scope.$apply();//通知更新  
 });
