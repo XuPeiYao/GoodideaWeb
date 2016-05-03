@@ -34,13 +34,17 @@
         <button class="android-more-button mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect" id="more-button">
             <i class="material-icons">account_circle</i>
         </button>
-        <div class="mdl-tooltip" for="more-button">使用者操作選項</div>
+        <div class="mdl-tooltip" for="more-button">{{loginUser?("目前登入使用者 " + loginUser.name):"使用者操作選項"}}</div>
         <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
-            <li ng-show="loginUser" class="mdl-menu__item">個人資訊</li>
-            <li ng-show="loginUser" class="mdl-menu__item">提案管理</li>
-            <li ng-hide="loginUser" ng-click="login()" class="mdl-menu__item">登入</li>
-            <li ng-show="loginUser" ng-click="logout()" class="mdl-menu__item">登出</li>
+            <li id="nav_top_about" ng-show="loginUser" class="mdl-menu__item">個人資訊</li>
+            <li id="nav_top_project_mang" ng-show="loginUser" class="mdl-menu__item">提案管理</li>
+            <li id="nav_top_login" ng-hide="loginUser" ng-click="login()" class="mdl-menu__item">登入</li>
+            <li id="nav_top_logout" ng-show="loginUser" ng-click="logout()" class="mdl-menu__item">登出</li>            
         </ul>
+        <div class="mdl-tooltip" for="nav_top_about">檢視或編輯使用者個人資訊</div>
+        <div class="mdl-tooltip" for="nav_top_project_mang">管理使用者參與或提出的提案</div>
+        <div class="mdl-tooltip" for="nav_top_login">登入系統進行使用者操作</div>
+        <div class="mdl-tooltip" for="nav_top_logout">登出系統結束使用者操作</div>
     </div>
 </div>
 
@@ -56,10 +60,10 @@
         <a id="nav_left_search" class="mdl-navigation__link" href="">進階搜尋</a>
         <div class="android-drawer-separator"></div>
         <span class="mdl-navigation__link" href="">使用者操作</span>
-        <a ng-show="loginUser" class="mdl-navigation__link" href="">個人資訊</a>
-        <a ng-show="loginUser" class="mdl-navigation__link" href="">提案管理</a>
-        <a ng-hide="loginUser" ng-click="login()" class="mdl-navigation__link" href="">登入</a>
-        <a ng-show="loginUser" ng-click="logout()" class="mdl-navigation__link" href="">登出</a>
+        <a id="nav_left_about" ng-show="loginUser" class="mdl-navigation__link" href="">個人資訊</a>
+        <a id="nav_left_project_mang" ng-show="loginUser" class="mdl-navigation__link" href="">提案管理</a>
+        <a id="nav_left_login" ng-hide="loginUser" ng-click="login()" class="mdl-navigation__link" href="">登入</a>
+        <a id="nav_left_logout" ng-show="loginUser" ng-click="logout()" class="mdl-navigation__link" href="">登出</a>
         <div class="android-drawer-separator"></div>
         <span class="mdl-navigation__link" href="">相關連結</span>
         <a class="mdl-navigation__link" ng-repeat="t in urls" href="{{t.url}}">{{t.name}}</a>
@@ -69,5 +73,13 @@
         <div class="mdl-tooltip" for="nav_left_project_request">檢視目前平台中提案對人員有需求的項目</div>
         <div class="mdl-tooltip" for="nav_left_competition">檢視目前平台中所有的競賽</div>
         <div class="mdl-tooltip" for="nav_left_search">使用關鍵字與限制條件搜尋平台中所有公開的提案</div>
+
+        <div class="mdl-tooltip" for="nav_left_about">檢視或編輯使用者個人資訊</div>
+        <div class="mdl-tooltip" for="nav_left_project_mang">管理使用者參與或提出的提案</div>
+        <div class="mdl-tooltip" for="nav_left_login">登入系統進行使用者操作</div>
+        <div class="mdl-tooltip" for="nav_left_logout">登出系統結束使用者操作</div>
     </nav>
 </div>
+<!--#region FB JS SDK Unit-->
+<div id="fb-root"></div>
+<!--#endregion-->

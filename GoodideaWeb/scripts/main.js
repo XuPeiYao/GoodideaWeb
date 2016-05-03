@@ -96,46 +96,90 @@ var navController = function ($scope, $sce, $uibModal) {
 app.controller('nav_top', navController);
 app.controller('nav_left', navController);
 console.info("導覽列功能初始化完成");
+(function (d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id))
+        return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&version=v2.6&appId=1688408974746241";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
 //#endregion
 app.controller('loginModal', function ($scope, $sce, $uibModalInstance, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.loading = false;
         $scope.id = "";
         $scope.pwd = "";
-        $scope.login = function () {
-            return __awaiter(this, void 0, void 0, function* () {
-                if (!$scope.id || !$scope.id.length || !$scope.pwd || !$scope.pwd.length) {
-                    swal({
-                        type: 'error',
-                        title: "資料缺漏",
-                        text: "使用者帳號與密碼為必填項目",
-                        confirmButtonText: "確定"
-                    });
-                    return;
-                }
-                $scope.loading = true;
+        $scope.login = () => __awaiter(this, void 0, void 0, function* () {
+            if (!$scope.id || !$scope.id.length || !$scope.pwd || !$scope.pwd.length) {
                 swal({
-                    title: "登入中",
-                    text: "系統正在驗證您的資訊，成功登入後本視窗自動關閉",
-                    showConfirmButton: false
+                    type: 'error',
+                    title: "資料缺漏",
+                    text: "使用者帳號與密碼為必填項目",
+                    confirmButtonText: "確定"
                 });
-                try {
-                    yield goodidea.User.login($scope.id, $scope.pwd); //嘗試登入
+                return;
+            }
+            $scope.loading = true;
+            swal({
+                title: "登入中",
+                text: "系統正在驗證您的資訊，成功登入後本視窗自動關閉",
+                showConfirmButton: false
+            });
+            try {
+                yield goodidea.User.login($scope.id, $scope.pwd); //嘗試登入
+                $scope.loading = false;
+                $scope.$apply(); //通知更新
+                location.reload();
+            }
+            catch (e) {
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                }, (value) => {
                     $scope.loading = false;
                     $scope.$apply(); //通知更新
-                    location.reload();
-                }
-                catch (e) {
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    }, (value) => {
-                        $scope.loading = false;
-                        $scope.$apply(); //通知更新
-                    });
-                }
+                });
+            }
+        });
+        $scope.facebookLogin = () => {
+            FB.login(function (response) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (response.authResponse) {
+                        console.log('Facebook登入成功');
+                        $scope.loading = true;
+                        swal({
+                            title: "登入中",
+                            text: "系統正在驗證您的資訊，成功登入後本視窗自動關閉",
+                            showConfirmButton: false
+                        });
+                        try {
+                            yield goodidea.User.fblogin(response.authResponse.accessToken); //嘗試登入
+                            $scope.loading = false;
+                            $scope.$apply(); //通知更新
+                            location.reload();
+                        }
+                        catch (e) {
+                            swal({
+                                type: 'error',
+                                title: e.name,
+                                text: e.message,
+                                confirmButtonText: "確定"
+                            }, (value) => {
+                                $scope.loading = false;
+                                $scope.$apply(); //通知更新
+                            });
+                        }
+                    }
+                    else {
+                        console.log('使用者取消Facebook登入');
+                    }
+                });
+            }, {
+                scope: 'public_profile'
             });
         };
         $scope.cancel = () => $uibModalInstance.close();
