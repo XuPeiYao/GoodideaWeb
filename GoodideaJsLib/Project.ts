@@ -252,6 +252,9 @@
                     result.memberRequest.push(MemberRequest.loadFromJSON(data['MemberRequest'][i]));
                 }
             }
+            if (data['Cover']) {
+                result.cover = FileInfo.loadFromJSON(data['Cover']);
+            }
             if (data['LastEditTime']) {
                 result.lastEditTime = new Date(data['LastEditTime']);
             }
@@ -307,8 +310,8 @@
             var result = new PageResult<Project>(goodidea.Project);
             result.url = 'api/project/requestList';
             result.params = {
-                class: _class ? _class.id : 'N',
-                competition: competition ? competition.id : 'N',
+                class: _class ? (_class.id || _class) : 'N',
+                competition: competition ? (competition.id || competition) : 'N',
                 order: OrderBy[order]
             };
             result.length = 10;
@@ -327,8 +330,8 @@
             var result = new PageResult<Project>(goodidea.Project);
             result.url = 'api/project/list';
             result.params = {
-                class: _class ? _class.id : 'N',
-                competition: competition ? competition.id : 'N',
+                class: _class ? (_class.id || _class) : 'N',
+                competition: competition ? (competition.id || competition) : 'N',
                 order: OrderBy[order]
             };
             if (keyword != null) {

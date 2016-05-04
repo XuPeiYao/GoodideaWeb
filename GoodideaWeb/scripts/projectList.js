@@ -28,7 +28,7 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
         $scope.projectList = [];
         $scope.loadNextPage = () => __awaiter(this, void 0, void 0, function* () {
             if ($scope.lastPageResult == null) {
-                $scope.lastPageResult = yield goodidea.Project.getProjectList($scope.class, $scope.competition, parseInt($scope.order));
+                $scope.lastPageResult = yield goodidea.Project.getProjectList($scope.class == 'N' ? null : $scope.class, $scope.competition == 'N' ? null : $scope.competition, parseInt($scope.order));
             }
             else {
                 $scope.lastPageResult = yield $scope.lastPageResult.nextPage();
