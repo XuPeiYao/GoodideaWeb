@@ -1,4 +1,6 @@
 ﻿app.controller('projectList', async function ($scope, $sce, $uibModal) {
+    $scope.bannerList = await goodidea.Banner.getBannerList();
+
     $scope.classOptions = [{ id: 'N', name: '不分類' }];
     $scope.class = 'N';
     (await goodidea.Class.getClassList()).forEach(x => $scope.classOptions.push(x));
@@ -31,9 +33,19 @@
             $scope.lastPageResult = await $scope.lastPageResult.nextPage();
         }
         
-        $scope.lastPageResult.result.forEach(x => $scope.projectList.push(x));
+        $scope.lastPageResult.result.forEach(x => {
+            if (!x.cover) x.cover = $scope.bannerList[0];
+            x.idString = x.id.replace(/\-/g, '');
+            $scope.projectList.push(x);
+        });
 
         $scope.$apply();//通知更新    
+        document.getElementsByClassName('project-tooltip').toArray().forEach((x: HTMLElement) => {
+            x.removeAttribute('data-upgraded');
+        });
+        document.getElementsByClassName('project-tooltip').toArray().forEach((x: HTMLElement) => {
+            componentHandler.upgradeElement(x);
+        });
     }
     $scope.reload =async () => {
         $scope.lastPageResult = null;

@@ -89,7 +89,47 @@ body, h1, h2, h3, h4, h5, h6{
 .pageTitle{
     font-family:'Microsoft JhengHei' !important;
 }
+.nkfust-ribbon {/*獲獎條*/
+    background: red;
+    height: 30px;
+    color: white;
+    line-height: 30px;
+    font-size: 10pt;
+    transform: rotate(-45deg);
+    position: absolute;
+    width: 150px;
+    top: 28px;
+    text-align: center;
+    left: -33px;
+    box-shadow: 1px 1px 12px black;
+}
 
+.nkfust-list-card-image{/*Project List 圖片*/
+    height:180px !important;
+    max-height:180px;
+    padding:0;
+}
+.nkfust-list-imageTitle {
+    overflow : hidden;
+    width:100%;
+    background-color:rgba(0,0,0,0.4);
+    padding:5px;
+}
+.nkfust-list-imageTitle >a {
+    overflow : hidden;
+    text-overflow : ellipsis;
+    white-space : nowrap;
+    width:100%;
+}
+.nkfust-list-card-content{
+    padding:5px !important;
+    width: 100%;
+    height:100%;
+}
+.nkfust-list-card-summary{
+    border-top:1px dotted #767777;
+    
+}
 
 /****以上為創創平台專用****/
 

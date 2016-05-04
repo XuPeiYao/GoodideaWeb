@@ -8,6 +8,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 app.controller('projectList', function ($scope, $sce, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
+        $scope.bannerList = yield goodidea.Banner.getBannerList();
         $scope.classOptions = [{ id: 'N', name: '不分類' }];
         $scope.class = 'N';
         (yield goodidea.Class.getClassList()).forEach(x => $scope.classOptions.push(x));
@@ -33,8 +34,19 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
             else {
                 $scope.lastPageResult = yield $scope.lastPageResult.nextPage();
             }
-            $scope.lastPageResult.result.forEach(x => $scope.projectList.push(x));
+            $scope.lastPageResult.result.forEach(x => {
+                if (!x.cover)
+                    x.cover = $scope.bannerList[0];
+                x.idString = x.id.replace(/\-/g, '');
+                $scope.projectList.push(x);
+            });
             $scope.$apply(); //通知更新    
+            document.getElementsByClassName('project-tooltip').toArray().forEach((x) => {
+                x.removeAttribute('data-upgraded');
+            });
+            document.getElementsByClassName('project-tooltip').toArray().forEach((x) => {
+                componentHandler.upgradeElement(x);
+            });
         });
         $scope.reload = () => __awaiter(this, void 0, void 0, function* () {
             $scope.lastPageResult = null;

@@ -16,13 +16,16 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button tabindex="4" ng-disabled="loading" ng-click="facebookLogin()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+    <button id="fblogin" tabindex="4" ng-disabled="loading" ng-click="facebookLogin()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         <i class="fa fa-facebook-square" aria-hidden="true"></i> FB登入
     </button>
-    <button tabindex="3" ng-disabled="loading" ng-click="login()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+    <button id="login" tabindex="3" ng-disabled="loading" ng-click="login()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         登入
     </button>
-    <button tabindex="5" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    <button id="cancelLogin" tabindex="5" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         取消
     </button>
 </div>
+<div class="mdl-tooltip" for="fblogin">使用Facebook進行登入</div>
+<div class="mdl-tooltip" for="login">使用學校信箱進行登入</div>
+<div class="mdl-tooltip" for="cancelLogin">關閉登入視窗</div>
