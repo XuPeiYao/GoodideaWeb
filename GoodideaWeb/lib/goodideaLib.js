@@ -647,6 +647,12 @@ var goodidea;
                     result.memberRequest.push(goodidea.MemberRequest.loadFromJSON(data['MemberRequest'][i]));
                 }
             }
+            if (data['Class']) {
+                result.class = goodidea.Class.loadFromJSON(data['Class']);
+            }
+            if (data['Competition']) {
+                result.competition = goodidea.Competition.loadFromJSON(data['Competition']);
+            }
             if (data['Cover']) {
                 result.cover = goodidea.FileInfo.loadFromJSON(data['Cover']);
             }

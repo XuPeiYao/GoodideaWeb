@@ -35,7 +35,7 @@
         public isPublish:boolean;
         
         /**
-         * 取得提案內容
+         * 取得提案獎項
          */
         public awards:string;
         
@@ -251,6 +251,12 @@
                 for (var i = 0; i < data['MemberRequest'].length; i++) {
                     result.memberRequest.push(MemberRequest.loadFromJSON(data['MemberRequest'][i]));
                 }
+            }
+            if (data['Class']) {
+                result.class = Class.loadFromJSON(data['Class']);
+            }
+            if (data['Competition']) {
+                result.competition = goodidea.Competition.loadFromJSON(data['Competition']);
             }
             if (data['Cover']) {
                 result.cover = FileInfo.loadFromJSON(data['Cover']);

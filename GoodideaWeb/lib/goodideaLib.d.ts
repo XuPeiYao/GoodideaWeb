@@ -261,7 +261,7 @@ declare module goodidea {
          */
         isPublish: boolean;
         /**
-         * 取得提案內容
+         * 取得提案獎項
          */
         awards: string;
         /**
