@@ -7,6 +7,13 @@
 
     $scope.keyword = '';
 
+    $scope.loginUser = await goodidea.User.getLoginUser();
+    $scope.loadLoginUserSpecialty = function () {
+        $scope.keyword = $scope.loginUser.specialty.map(x => x.value);
+        document.getElementById("keyword").classList.add("is-dirty");
+        $scope.reload();
+    }
+
     $scope.orderOptions = [
         { id: goodidea.OrderBy.lastEditTime, name: '最後更新時間' },
         { id: goodidea.OrderBy.name, name: '提案名稱' },

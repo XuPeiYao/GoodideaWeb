@@ -13,6 +13,12 @@ app.controller('requestList', function ($scope, $sce, $uibModal) {
         $scope.class = 'N';
         (yield goodidea.Class.getClassList()).forEach(x => $scope.classOptions.push(x));
         $scope.keyword = '';
+        $scope.loginUser = yield goodidea.User.getLoginUser();
+        $scope.loadLoginUserSpecialty = function () {
+            $scope.keyword = $scope.loginUser.specialty.map(x => x.value);
+            document.getElementById("keyword").classList.add("is-dirty");
+            $scope.reload();
+        };
         $scope.orderOptions = [
             { id: goodidea.OrderBy.lastEditTime, name: '最後更新時間' },
             { id: goodidea.OrderBy.name, name: '提案名稱' },

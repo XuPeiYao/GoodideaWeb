@@ -46,6 +46,7 @@
                                     <input class="mdl-textfield__input ng-pristine ng-untouched ng-valid" ng-change="reload()" type="text" id="keyword" ng-model="keyword">
                                     <label class="mdl-textfield__label">專長(以「,」分割)</label>
                                 </div>
+                                <button id="loadLoginUserSpecialty" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored" ng-click="loadLoginUserSpecialty()" ng-show="loginUser">讀取我的專長</button>
                             </div>
                             <div class="mdl-cell mdl-cell--4-col">
                                 <div id="class" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
@@ -63,6 +64,7 @@
                                     <label class="mdl-textfield__label">排序</label>
                                 </div>
                             </div>
+                            <div class="mdl-tooltip" for="loadLoginUserSpecialty">將目前登入使用者的專長作為搜尋條件</div>
                             <div class="mdl-tooltip" for="keyword">使用提案分類進行篩選</div>
                             <div class="mdl-tooltip" for="competition">使用提案參與的競賽進行篩選</div>
                             <div class="mdl-tooltip" for="order">使用指定方式將篩選結果進行排序</div>
