@@ -3,6 +3,6 @@
 
 本方案包含兩個子專案，以下分別對兩者進行簡單說明：
 
-1. GoodideaJsLib：為創新創意平台之JavaScript/TypeScript語言SDK
+1. GoodideaJsLib：為創意創新雲端平台之JavaScript/TypeScript語言SDK
 
-2. GoodideaWeb：為客戶端網頁應用程式主程式專案
+2. GoodideaWeb(未完成)：下一版的創意創新雲端平台前端
