@@ -312,12 +312,12 @@
          * @param competition 競賽
          * @param order 排序
          */
-        public static async getRequestProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>> {
+        public static async getRequestProjectList(keyword:string,_class: Class, order: OrderBy): Promise<PageResult<Project>> {
             var result = new PageResult<Project>(goodidea.Project);
             result.url = 'api/project/requestList';
             result.params = {
+                q:keyword,
                 class: _class ? (_class.id || _class) : 'N',
-                competition: competition ? (competition.id || competition) : 'N',
                 order: OrderBy[order]
             };
             result.length = 10;

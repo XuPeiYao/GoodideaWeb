@@ -396,7 +396,7 @@ declare module goodidea {
          * @param competition 競賽
          * @param order 排序
          */
-        static getRequestProjectList(_class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>;
+        static getRequestProjectList(keyword: string, _class: Class, order: OrderBy): Promise<PageResult<Project>>;
         /**
          * 搜尋目前系統中公開提案
          * @param keyword 關鍵字

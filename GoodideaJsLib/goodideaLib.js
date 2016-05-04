@@ -710,13 +710,13 @@ var goodidea;
          * @param competition 競賽
          * @param order 排序
          */
-        static getRequestProjectList(_class, competition, order) {
+        static getRequestProjectList(keyword, _class, order) {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = new goodidea.PageResult(goodidea.Project);
                 result.url = 'api/project/requestList';
                 result.params = {
+                    q: keyword,
                     class: _class ? (_class.id || _class) : 'N',
-                    competition: competition ? (competition.id || competition) : 'N',
                     order: OrderBy[order]
                 };
                 result.length = 10;
