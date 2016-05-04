@@ -27,7 +27,9 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
         $scope.$apply(); //通知更新
         $scope.lastPageResult = null;
         $scope.projectList = [];
+        $scope.loading = false;
         $scope.loadNextPage = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
             if ($scope.lastPageResult == null) {
                 $scope.lastPageResult = yield goodidea.Project.getProjectList($scope.class == 'N' ? null : $scope.class, $scope.competition == 'N' ? null : $scope.competition, parseInt($scope.order));
             }
@@ -40,6 +42,7 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
                 x.idString = x.id.replace(/\-/g, '');
                 $scope.projectList.push(x);
             });
+            $scope.loading = false;
             $scope.$apply(); //通知更新    
             document.getElementsByClassName('project-tooltip').toArray().forEach((x) => {
                 x.removeAttribute('data-upgraded');

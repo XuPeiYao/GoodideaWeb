@@ -33,10 +33,10 @@
     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <include src="pages/navigation.html"></include>
 
-        <div class="android-content mdl-layout__content">
+        <div ng-controller="projectList" class="android-content mdl-layout__content">
             <a name="top"></a>
-
-            <div ng-controller="projectList" class="android-more-section">
+            <div style="width:100%;{{loading?'':'visibility: collapse'}}" class="nkfust-page-progress mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <div class="android-more-section">
                 <div class="pageTitle android-section-title mdl-typography--display-1-color-contrast">所有提案</div>
                 <div class="navbar navbar-default">
                     <div class="container-fluid">
