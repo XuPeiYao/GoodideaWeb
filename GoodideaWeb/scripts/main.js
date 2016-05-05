@@ -66,6 +66,16 @@ function fixMdlTextfields(area) {
 include();
 componentHandler.upgradeAllRegistered();
 //componentHandler.upgradeDom();
+var queryString = {};
+(function () {
+    if (!location.search)
+        return;
+    var keyvaluePairs = location.search.substring(1).split('&');
+    for (var i = 0; i < keyvaluePairs.length; i++) {
+        var keyvalue = keyvaluePairs[i].split('=').map(x => decodeURIComponent(x));
+        queryString[keyvalue[0].toLowerCase()] = keyvalue[1];
+    }
+})();
 console.clear();
 console.log3D("創意創新雲端平台");
 console.info("SDK版本: " + goodidea.version);
