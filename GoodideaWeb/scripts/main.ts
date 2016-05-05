@@ -61,7 +61,6 @@ function fixMdlTextfields(area: Element) {
         });
 }
 
-
 include();
 componentHandler.upgradeAllRegistered();
 //componentHandler.upgradeDom();

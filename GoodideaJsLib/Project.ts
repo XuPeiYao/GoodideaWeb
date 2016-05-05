@@ -105,6 +105,13 @@
                 this[fields[i]] = temp[fields[i]];
             }
         }
+
+        /**
+         * 取得提案Markdown的章節剖析物件
+         */
+        public getContentSegments(): MarkdownSegment {
+            return new MarkdownSegment(this.content);
+        }
         
         /**
          * 更新提案內容
