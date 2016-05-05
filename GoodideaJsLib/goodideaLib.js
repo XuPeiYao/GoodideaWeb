@@ -281,6 +281,7 @@ var goodidea;
     class MarkdownSegment {
         constructor(content) {
             this.content = content;
+            this.level = 0;
         }
         get segments() {
             var temp = MarkdownSegment.parse(this.content);

@@ -141,6 +141,20 @@ declare module goodidea {
     }
 }
 declare module goodidea {
+    /**
+     * markdown章節剖析
+     */
+    class MarkdownSegment {
+        level: number;
+        title: string;
+        content: string;
+        private contentIndex;
+        constructor(content: string);
+        segments: MarkdownSegment[];
+        static parse(content: string, level?: number): MarkdownSegment[];
+    }
+}
+declare module goodidea {
     class MemberRequest {
         projectId: string;
         id: string;
@@ -312,6 +326,10 @@ declare module goodidea {
          * 讀取提案內容
          */
         load(): Promise<void>;
+        /**
+         * 取得提案Markdown的章節剖析物件
+         */
+        getContentSegments(): MarkdownSegment;
         /**
          * 更新提案內容
          */

@@ -10,6 +10,7 @@
 
         constructor(content: string) {
             this.content = content;
+            this.level = 0;
         }
 
         public get segments(): MarkdownSegment[] {
