@@ -323,6 +323,14 @@ declare module goodidea {
          */
         summary: string;
         /**
+         * 是否可編輯
+         */
+        editable: boolean;
+        /**
+         * 是否可進行設定
+         */
+        setable: boolean;
+        /**
          * 讀取提案內容
          */
         load(): Promise<void>;

@@ -93,7 +93,17 @@
          * 取得提案摘要
          */
         public summary:string;
-        
+
+        /**
+         * 是否可編輯
+         */
+        public editable: boolean;
+
+        /**
+         * 是否可進行設定
+         */
+        public setable: boolean;
+
         /**
          * 讀取提案內容
          */
