@@ -37,7 +37,10 @@ var markdown = {
     }
 };
 markdown.init();
-var p;
+/**
+ * 修正指定區域內的mdl輸入欄位再有數值的情況下無isDirty問題
+ * @param area 指定區域
+ */
 function fixMdlTextfields(area) {
     area
         .getElementsByClassName('mdl-textfield')

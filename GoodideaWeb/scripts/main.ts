@@ -33,8 +33,12 @@ var markdown = {
     }
 }
 markdown.init();
-var p;
-function fixMdlTextfields(area: Element) {//修正自動填入的值在MDL出現的問題
+
+/**
+ * 修正指定區域內的mdl輸入欄位再有數值的情況下無isDirty問題
+ * @param area 指定區域
+ */
+function fixMdlTextfields(area: Element) {
     area
         .getElementsByClassName('mdl-textfield')
         .toArray()
