@@ -8,8 +8,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 app.controller('project', function ($scope, $sce, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
-        $scope.project = yield goodidea.Project.getProjectById(queryString['id']);
-        $scope.project.contentSegments = $scope.project.getContentSegments().segments;
+        $scope.project = null;
+        $scope.load = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            $scope.project = yield goodidea.Project.getProjectById(queryString['id']);
+            $scope.$apply();
+            if (!$scope.project.cover)
+                $scope.project.cover = (yield goodidea.Banner.getBannerList())[0];
+            console.log($scope.project);
+            $scope.loading = false;
+            $scope.$apply(); //通知更新
+        });
+        yield $scope.load();
         $scope.$apply();
     });
 });
