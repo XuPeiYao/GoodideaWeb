@@ -37,6 +37,29 @@ var markdown = {
     }
 };
 markdown.init();
+var p;
+function fixMdlTextfields(area) {
+    area
+        .getElementsByClassName('mdl-textfield')
+        .toArray()
+        .forEach((x) => {
+        var inputs = x.getElementsByTagName('input').toArray();
+        var selects = x.getElementsByTagName('select').toArray();
+        var target = null;
+        if (inputs.length) {
+            target = inputs[0];
+        }
+        else if (selects.length) {
+            target = selects[0];
+        }
+        else {
+            return;
+        }
+        if (target.value.length) {
+            x.classList.add('is-dirty');
+        }
+    });
+}
 include();
 componentHandler.upgradeAllRegistered();
 //componentHandler.upgradeDom();

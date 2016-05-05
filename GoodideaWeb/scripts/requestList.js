@@ -14,11 +14,12 @@ app.controller('requestList', function ($scope, $sce, $uibModal) {
         (yield goodidea.Class.getClassList()).forEach(x => $scope.classOptions.push(x));
         $scope.keyword = '';
         $scope.loginUser = yield goodidea.User.getLoginUser();
-        $scope.loadLoginUserSpecialty = function () {
+        $scope.loadLoginUserSpecialty = () => __awaiter(this, void 0, void 0, function* () {
             $scope.keyword = $scope.loginUser.specialty.map(x => x.value);
-            document.getElementById("keyword").classList.add("is-dirty");
-            $scope.reload();
-        };
+            yield $scope.reload();
+            $scope.$apply();
+            fixMdlTextfields(document.getElementsByClassName('listController')[0]);
+        });
         $scope.orderOptions = [
             { id: goodidea.OrderBy.lastEditTime, name: '最後更新時間' },
             { id: goodidea.OrderBy.name, name: '提案名稱' },
@@ -62,6 +63,7 @@ app.controller('requestList', function ($scope, $sce, $uibModal) {
         });
         yield $scope.reload();
         $scope.$apply(); //通知更新  
+        fixMdlTextfields(document.getElementsByClassName('listController')[0]);
     });
 });
 //# sourceMappingURL=requestList.js.map

@@ -58,7 +58,8 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
             $scope.$apply(); //通知更新  
         });
         yield $scope.reload();
-        $scope.$apply(); //通知更新  
+        $scope.$apply(); //通知更新 
+        fixMdlTextfields(document.getElementsByClassName('listController')[0]);
     });
 });
 //# sourceMappingURL=projectList.js.map

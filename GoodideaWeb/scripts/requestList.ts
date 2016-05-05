@@ -8,10 +8,11 @@
     $scope.keyword = '';
 
     $scope.loginUser = await goodidea.User.getLoginUser();
-    $scope.loadLoginUserSpecialty = function () {
+    $scope.loadLoginUserSpecialty =async ()=> {
         $scope.keyword = $scope.loginUser.specialty.map(x => x.value);
-        document.getElementById("keyword").classList.add("is-dirty");
-        $scope.reload();
+        await $scope.reload();
+        $scope.$apply();
+        fixMdlTextfields(document.getElementsByClassName('listController')[0]);
     }
 
     $scope.orderOptions = [
@@ -60,4 +61,5 @@
     }
     await $scope.reload();
     $scope.$apply();//通知更新  
+    fixMdlTextfields(document.getElementsByClassName('listController')[0]);
 });

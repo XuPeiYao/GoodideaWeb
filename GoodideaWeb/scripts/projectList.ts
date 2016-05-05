@@ -56,5 +56,6 @@
         $scope.$apply();//通知更新  
     }
     await $scope.reload();
-    $scope.$apply();//通知更新  
+    $scope.$apply();//通知更新 
+    fixMdlTextfields(document.getElementsByClassName('listController')[0]);
 });

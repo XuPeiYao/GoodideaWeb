@@ -33,6 +33,30 @@ var markdown = {
     }
 }
 markdown.init();
+var p;
+function fixMdlTextfields(area: Element) {//修正自動填入的值在MDL出現的問題
+    area
+        .getElementsByClassName('mdl-textfield')
+        .toArray()
+        .forEach((x: HTMLElement) => {
+            var inputs: HTMLInputElement[] = <HTMLInputElement[]>x.getElementsByTagName('input').toArray();
+            var selects: HTMLSelectElement[] = <HTMLSelectElement[]>x.getElementsByTagName('select').toArray();
+            
+            var target = null;
+            if (inputs.length) {
+                target = inputs[0];
+            } else if (selects.length) {
+                target = selects[0];
+            } else {
+                return;
+            }
+            
+            if (target.value.length) {
+                x.classList.add('is-dirty');
+            }
+        });
+}
+
 
 include();
 componentHandler.upgradeAllRegistered();
