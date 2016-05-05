@@ -36,6 +36,7 @@
     <TypeScriptCompile Include="KeyValue.ts" />
     <TypeScriptCompile Include="Lib\nativeExtensions.d.ts" />
     <TypeScriptCompile Include="Link.ts" />
+    <TypeScriptCompile Include="MarkdownSegment.ts" />
     <TypeScriptCompile Include="MemberRequest.ts" />
     <TypeScriptCompile Include="MemberRequestSpecialty.ts" />
     <TypeScriptCompile Include="News.ts" />

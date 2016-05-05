@@ -22,6 +22,7 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="project.html" />
     <Content Include="requestList.html" />
     <Content Include="projectList.html" />
     <Content Include="pages\footer.html" />
@@ -80,6 +81,7 @@
     <TypeScriptCompile Include="lib\sweetalert\sweetalert.d.ts" />
     <TypeScriptCompile Include="scripts\index.ts" />
     <TypeScriptCompile Include="scripts\main.ts" />
+    <TypeScriptCompile Include="scripts\project.ts" />
     <TypeScriptCompile Include="scripts\requestList.ts" />
     <TypeScriptCompile Include="scripts\projectList.ts" />
   </ItemGroup>
