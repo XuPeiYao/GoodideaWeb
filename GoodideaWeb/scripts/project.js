@@ -9,9 +9,27 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 app.controller('project', function ($scope, $sce, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.project = null;
+        $scope.loginUser = null;
+        $scope.voteQuota = 0;
         $scope.load = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;
-            $scope.project = yield goodidea.Project.getProjectById(queryString['id']);
+            $scope.projectId = queryString['id'];
+            try {
+                $scope.loginUser = yield goodidea.User.getLoginUser();
+                $scope.project = yield goodidea.Project.getProjectById($scope.projectId);
+                if ($scope.loginUser && $scope.project.competition) {
+                    $scope.voteQuota = yield goodidea.Competition.getLoginUserQuota($scope.project.competition);
+                }
+            }
+            catch (e) {
+                swal({
+                    type: 'error',
+                    title: "無效的提案ID",
+                    text: "您目前的檢視頁面連結是無效的，這可能是因為該提案並未公開且您目前的身分無法檢視(或登入逾時)或已經刪除",
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
             $scope.$apply();
             if (!$scope.project.cover)
                 $scope.project.cover = (yield goodidea.Banner.getBannerList())[0];

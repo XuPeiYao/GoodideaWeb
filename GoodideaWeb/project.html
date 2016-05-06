@@ -48,6 +48,13 @@
                         <div class="mdl-tooltip" for="project_pid">
                             參賽編號(<strong>{{project.competition.name}}</strong>)
                         </div>
+                        <div id="project_vote" class="mdl-badge nkfust-project-header-vote nkfust-project-votes-fix" style="width:50px;" data-badge="{{project.votes}}" ng-show="project.competition">
+                            <button ng-disabled="!project.competition.canVote || !loginUser || !voteQuota"
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                                投票
+                            </button>
+                        </div>
+                        <div class="mdl-tooltip" for="project_vote">競賽中的得票數，目前登入用戶的剩餘可投票數為{{voteQuota}}</div>
                     </div>
 
                     <div class="mdl-tabs__tab-bar nkfust-project-header-tab">
