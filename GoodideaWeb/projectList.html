@@ -34,8 +34,9 @@
         <include src="pages/navigation.html"></include>
 
         <div ng-controller="projectList" class="android-content mdl-layout__content">
-            <a name="top"></a>
             <div style="width:100%;{{loading?'':'visibility: collapse'}}" class="nkfust-page-progress mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+            <a name="top"></a>
+
             <div class="android-more-section">
                 <div class="pageTitle android-section-title mdl-typography--display-1-color-contrast">所有提案</div>
                 <div class="navbar navbar-default">
@@ -97,7 +98,7 @@
                 </div>
 
                 <div class="mdl-tooltip project-tooltip" ng-repeat="t in projectList" for="project_{{t.idString}}">{{t.name}}</div>
-               
+
             </div>
 
             <include src="pages/footer.html"></include>
