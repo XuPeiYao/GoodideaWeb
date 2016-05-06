@@ -50,7 +50,8 @@
                         </div>
                         <div id="project_vote" class="mdl-badge nkfust-project-header-vote nkfust-project-votes-fix" style="width:50px;" data-badge="{{project.votes}}" ng-show="project.competition">
                             <button ng-disabled="!project.competition.canVote || !loginUser || !voteQuota"
-                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                                    ng-click="vote()">
                                 投票
                             </button>
                         </div>

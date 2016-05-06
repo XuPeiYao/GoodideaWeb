@@ -29,8 +29,30 @@
         
         $scope.$apply();//通知更新
     } 
-
+    $scope.vote = async () => {
+        try {
+            $scope.voteQuota = (await $scope.project.vote());
+        } catch (e) {
+            swal({
+                type: 'error',
+                title: e.name,
+                text: e.message,
+                confirmButtonText: "確定"
+            });
+            return;
+        }
+        await $scope.load();
+        $scope.$apply();
+        swal({
+            type: 'success',
+            title: "投票成功",
+            text: `您已經成功的在競賽「${$scope.project.competition.name}」中針對此提案「${$scope.project.name}」進行投票`,
+            confirmButtonText: "確定"
+        });
+    }
     await $scope.load();
+
+    
 
     $scope.$apply();
 
