@@ -2,6 +2,7 @@
     $scope.project = null;
     $scope.loginUser = null;
     $scope.voteQuota = 0;
+    $scope.loading = false;
     $scope.load = async () => {
         $scope.loading = true;
         $scope.projectId = queryString['id'];
@@ -30,9 +31,11 @@
         $scope.$apply();//通知更新
     } 
     $scope.vote = async () => {
+        $scope.loading = true;
         try {
             $scope.voteQuota = (await $scope.project.vote());
         } catch (e) {
+            $scope.loading = false;
             swal({
                 type: 'error',
                 title: e.name,
@@ -41,7 +44,8 @@
             });
             return;
         }
-        await $scope.load();
+        await $scope.load();//更新提案資訊
+        $scope.loading = false;
         $scope.$apply();
         swal({
             type: 'success',
@@ -51,9 +55,6 @@
         });
     }
     await $scope.load();
-
     
-
     $scope.$apply();
-
 });

@@ -261,6 +261,26 @@ body, h1, h2, h3, h4, h5, h6{
 .mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
     background: #FFFFFF;
 }
+.mdl-tabs__panel{
+    width:100%;
+}
+.project-edit-nav{
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin-top:-1px;
+    margin-right: auto;
+    margin-left: auto;
+    background-color:#F3F3F3;
+    border-color:#9E9E9E;
+    border-radius:0 0 5px 5px;
+    border-style: solid;
+    border-width: thin;
+    width: 100% !important;
+}
+
+
 /****以上為創創平台專用****/
 
 

@@ -11,6 +11,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         $scope.project = null;
         $scope.loginUser = null;
         $scope.voteQuota = 0;
+        $scope.loading = false;
         $scope.load = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;
             $scope.projectId = queryString['id'];
@@ -40,10 +41,12 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             $scope.$apply(); //通知更新
         });
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
             try {
                 $scope.voteQuota = (yield $scope.project.vote());
             }
             catch (e) {
+                $scope.loading = false;
                 swal({
                     type: 'error',
                     title: e.name,
@@ -52,7 +55,8 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 });
                 return;
             }
-            yield $scope.load();
+            yield $scope.load(); //更新提案資訊
+            $scope.loading = false;
             $scope.$apply();
             swal({
                 type: 'success',
