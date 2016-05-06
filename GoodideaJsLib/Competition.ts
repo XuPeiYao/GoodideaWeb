@@ -44,7 +44,7 @@ module goodidea {
             var responseJSON = await postAsync('api/Competition/getuserquota', null, {
                 Competition: id
             });
-            return responseJSON['Result']['Quota'];
+            return responseJSON['Result'];
         }
     }
 }

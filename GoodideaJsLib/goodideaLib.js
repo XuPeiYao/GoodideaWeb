@@ -93,7 +93,7 @@ var goodidea;
                 var responseJSON = yield goodidea.postAsync('api/Competition/getuserquota', null, {
                     Competition: id
                 });
-                return responseJSON['Result']['Quota'];
+                return responseJSON['Result'];
             });
         }
     }
