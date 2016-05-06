@@ -290,6 +290,7 @@ body, h1, h2, h3, h4, h5, h6{
     position: fixed;
     top: 60px;
     margin-left: -140px;
+    max-width: 140px;
 }
 @media(max-width:1320px){
     .nkfust-project-segments{

@@ -39,7 +39,14 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             console.log($scope.project);
             $scope.loading = false;
             $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
-            $scope.project.segments = $scope.project.getContentSegments().segments.map(x => parseNode(markdown.toHtml(x.title)).innerText);
+            $scope.project.segments = $scope.project.getContentSegments().segments;
+            if ($scope.project.segments) {
+                $scope.project.segments = $scope.project.segments.map(x => {
+                    var element = parseNode(markdown.toHtml(x.title));
+                    if (element)
+                        return element.innerText;
+                });
+            }
             $scope.$apply(); //通知更新
             var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
             for (var i = 1; i <= 6; i++) {

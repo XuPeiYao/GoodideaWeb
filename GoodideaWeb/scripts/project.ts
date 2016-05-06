@@ -29,7 +29,13 @@
         $scope.loading = false;
         $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
         
-        $scope.project.segments = (<goodidea.Project>$scope.project).getContentSegments().segments.map(x => (<HTMLElement>parseNode(markdown.toHtml(x.title))).innerText);
+        $scope.project.segments = (<goodidea.Project>$scope.project).getContentSegments().segments;
+        if ($scope.project.segments) {
+            $scope.project.segments = $scope.project.segments.map(x => {
+                var element = (<HTMLElement>parseNode(markdown.toHtml(x.title)));
+                if (element) return element.innerText;
+            });
+        }
         
         $scope.$apply();//通知更新
 
