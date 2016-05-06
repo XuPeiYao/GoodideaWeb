@@ -150,12 +150,51 @@ body, h1, h2, h3, h4, h5, h6{
     margin-top :-20px;
     margin-left:0;
     margin-right:0;
+    margin-bottom:0;
     position:relative;
     overflow:hidden;
 }
 
 .nkfust-project-header-banner{
     height: calc(100% - 48px);
+}
+
+@media(max-width:840px){
+    .nkfust-project-header{
+        width:100%;
+        height:348px;
+        margin-top :-20px;
+        margin-left:0;
+        margin-right:0;
+        margin-bottom:0;
+        position:relative;
+        overflow:hidden;
+    }
+    .nkfust-project-header-banner{
+        height: calc(100% - 96px);
+    }
+    .nkfust-project-header-tab{
+        height: 96px;
+    }
+}
+
+@media(max-width:480px){
+    .nkfust-project-header{
+        width:100%;
+        height:396px;
+        margin-top :-20px;
+        margin-left:0;
+        margin-right:0;
+        margin-bottom:0;
+        position:relative;
+        overflow:hidden;
+    }
+    .nkfust-project-header-banner{
+        height: calc(100% - 144px);
+    }
+    .nkfust-project-header-tab{
+        height: 144px;
+    }
 }
 
 .nkfust-project-header-title{
@@ -189,6 +228,13 @@ body, h1, h2, h3, h4, h5, h6{
 
 .nkfust-project-header-tab{
     background-color: rgba(0,0,0,0.75);
+    padding: 0;
+}
+.nkfust-project-header-tab > a{
+    font-size: 12pt;
+    font-weight:bold;
+    color: #fff;
+    margin: 0 !important;
 }
 
 .nkfust-project-header-vote{
@@ -205,6 +251,16 @@ body, h1, h2, h3, h4, h5, h6{
     background-color: #dddddd !important;
 }
 
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active {
+    color: rgba(185, 249, 111, 0.87);
+}
+.mdl-tabs.is-upgraded .mdl-tabs__tab.is-active:after{
+    height:5px;
+    background:rgba(185, 249, 111, 0.87) !important;
+}
+.mdl-tabs__tab .mdl-tabs__ripple-container .mdl-ripple {
+    background: #FFFFFF;
+}
 /****以上為創創平台專用****/
 
 

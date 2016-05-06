@@ -37,7 +37,7 @@
             <a name="top"></a>
             <div style="width:100%;{{loading?'':'visibility: collapse'}}" class="nkfust-page-progress mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 
-            <div class="mdl-grid android-more-section">
+            <div class="mdl-grid android-more-section mdl-tabs mdl-js-tabs mdl-js-ripple-effect">
                 <div class="nkfust-project-header mdl-cell mdl-cell--12-col" style="background: url({{project.cover.url}}) center / cover;">
                     <div class="nkfust-project-header-banner">
                         <div class="nkfust-project-header-title mdl-badge nkfust-project-views-fix" data-badge="瀏覽人次:{{project.views}}">
@@ -57,14 +57,32 @@
                         <div class="mdl-tooltip" for="project_vote">競賽中的得票數，目前登入用戶的剩餘可投票數為{{voteQuota}}</div>
                     </div>
 
-                    <div class="mdl-tabs__tab-bar nkfust-project-header-tab">
-                        <a href="#Content-Panel" class="mdl-tabs__tab is-active">正文<span class="mdl-tabs__ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-                        <a href="#Team-Panel" class="mdl-tabs__tab">團隊<span class="mdl-tabs__ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-                        <a href="#Document-Panel" class="mdl-tabs__tab">文件<span class="mdl-tabs__ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-                        <a href="#Info-Panel" class="mdl-tabs__tab nkfust-project-tab-hidden-phone">資訊<span class="mdl-tabs__ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-                        <a href="#Forum-Panel" class="mdl-tabs__tab">討論<span class="mdl-tabs__ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
-                        <a href="#Setting-Panel" class="mdl-tabs__tab nkfust-project-tab-hidden-phone ng-hide">設定<span class="mdl-tabs__ripple-container mdl-js-ripple-effect" data-upgraded=",MaterialRipple"><span class="mdl-ripple"></span></span></a>
+                    <div class="mdl-grid mdl-tabs__tab-bar nkfust-project-header-tab">
+                        <a href="#Content-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab is-active">內文</a>
+                        <a href="#Team-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab">團隊</a>
+                        <a href="#Document-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab">文件</a>
+                        <a href="#Info-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab">資訊</a>
+                        <a href="#Forum-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab">討論</a>
+                        <a href="#Setting-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab">設定</a>
                     </div>
+                </div>
+                <div class="mdl-tabs__panel is-active" id="Content-Panel">
+                    內文
+                </div>
+                <div class="mdl-tabs__panel" id="Team-Panel">
+                    團隊
+                </div>
+                <div class="mdl-tabs__panel" id="Document-Panel">
+                    文件
+                </div>
+                <div class="mdl-tabs__panel" id="Info-Panel">
+                    資訊
+                </div>
+                <div class="mdl-tabs__panel" id="Forum-Panel">
+                    討論
+                </div>
+                <div class="mdl-tabs__panel" id="Setting-Panel">
+                    設定
                 </div>
             </div>
 
