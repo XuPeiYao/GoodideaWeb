@@ -280,6 +280,22 @@ body, h1, h2, h3, h4, h5, h6{
     width: 100% !important;
 }
 
+.nkfust-project-content img{
+    max-width:100%;
+    display: block;
+    margin: auto;
+}
+
+.nkfust-project-segments{
+    position: fixed;
+    top: 60px;
+    margin-left: -140px;
+}
+@media(max-width:1320px){
+    .nkfust-project-segments{
+        display:none;
+    }
+}
 
 /****以上為創創平台專用****/
 

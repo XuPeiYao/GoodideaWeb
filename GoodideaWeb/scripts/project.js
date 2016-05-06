@@ -38,7 +38,18 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.project.cover = (yield goodidea.Banner.getBannerList())[0];
             console.log($scope.project);
             $scope.loading = false;
+            $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
+            $scope.project.segments = $scope.project.getContentSegments().segments.map(x => parseNode(markdown.toHtml(x.title)).innerText);
             $scope.$apply(); //通知更新
+            var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
+            for (var i = 1; i <= 6; i++) {
+                contentElement.getElementsByTagName('h' + i.toString()).toArray().forEach((x) => {
+                    var aTag = document.createElement('a');
+                    aTag.name = x.innerText;
+                    contentElement.insertBefore(aTag, x);
+                });
+            }
+            //console.log(document.getElementsByTagName("h3"));
         });
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;

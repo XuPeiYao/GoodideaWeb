@@ -27,8 +27,21 @@
         if (!$scope.project.cover) $scope.project.cover = (await goodidea.Banner.getBannerList())[0]
         console.log($scope.project)
         $scope.loading = false;
+        $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
+        
+        $scope.project.segments = (<goodidea.Project>$scope.project).getContentSegments().segments.map(x => (<HTMLElement>parseNode(markdown.toHtml(x.title))).innerText);
         
         $scope.$apply();//通知更新
+
+        var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
+        for (var i = 1; i <= 6; i++) {
+            contentElement.getElementsByTagName('h' + i.toString()).toArray().forEach((x: HTMLElement) => {
+                var aTag = document.createElement('a');
+                aTag.name = x.innerText;
+                contentElement.insertBefore(aTag, x);
+            });
+        }
+        //console.log(document.getElementsByTagName("h3"));
     } 
     $scope.vote = async () => {
         $scope.loading = true;

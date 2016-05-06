@@ -6,3 +6,12 @@
         返回
     </button>
 </div>
+<div class="nkfust-project-segments">
+    <h4>章節列表</h4>
+    <ol style="padding-left:30px">
+        <li ng-repeat="t in project.segments"><a href="#{{t}}">{{t}}</a></li>
+    </ol>
+</div>
+<div class="nkfust-project-content" ng-bind-html="project.htmlContent">
+
+</div>
