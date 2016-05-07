@@ -33,21 +33,63 @@
         if ($scope.project.segments) {
             $scope.project.segments = $scope.project.segments.map(x => {
                 var element = (<HTMLElement>parseNode(markdown.toHtml(x.title)));
-                if (element) return element.innerText;
+                if (element) return {
+                    active: false,
+                    text : element.innerText
+                }
             });
         }
         
         $scope.$apply();//通知更新
 
         var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
+        $scope.tags = [];
         for (var i = 1; i <= 6; i++) {
             contentElement.getElementsByTagName('h' + i.toString()).toArray().forEach((x: HTMLElement) => {
                 var aTag = document.createElement('a');
                 aTag.name = x.innerText;
+                $scope.tags.push(aTag);
                 contentElement.insertBefore(aTag, x);
             });
         }
-        //console.log(document.getElementsByTagName("h3"));
+
+        //#region Segment剖析
+        
+        //#endregion
+
+        var mdlContentElement: HTMLDivElement = <HTMLDivElement>(document.getElementsByClassName('mdl-layout__content')[0]);
+        mdlContentElement.onscroll = function () {
+            //#region 更新Segment座標資訊
+            for (var i = 0; i < $scope.project.segments.length; i++) {
+                var text = $scope.project.segments[i].text;
+                console.log(text)
+                var element = contentElement.querySelector(`a[name="${text}"]`);
+                $scope.project.segments[i].element = element;
+                $scope.project.segments[i].start = element.getBoundingClientRect().top + mdlContentElement.scrollTop;
+            }
+            for (var i = 0; i < $scope.project.segments.length; i++) {
+                if (i == $scope.project.segments.length - 1) {
+                    $scope.project.segments[i].end = Number.MAX_SAFE_INTEGER;
+                    continue;
+                }
+                $scope.project.segments[i].end = $scope.project.segments[i + 1].start;
+            }
+            //#endregion
+
+            var visableStart = this.scrollTop;
+            var visableEnd = this.scrollTop + document.body.clientHeight;
+            console.log($scope.project.segments);
+            for (var i = 0; i < $scope.project.segments.length; i++) {
+                var segment = $scope.project.segments[i];
+                if (segment.start <= visableStart && segment.end >= visableEnd) segment.active = true;
+                else if (segment.start >= visableStart && segment.start <= visableEnd) segment.active = true;
+                else if (segment.end >= visableEnd && segment.end <= visableEnd) segment.active = true;
+                else if (segment.start >= visableStart && segment.end <= visableEnd) segment.active = true;                
+                else segment.active = false;
+            }
+            $scope.$apply();
+        };
+        mdlContentElement.onscroll(null);
     } 
     $scope.vote = async () => {
         $scope.loading = true;

@@ -10,7 +10,7 @@
     <h4>章節列表</h4>
     <ol style="padding-left:30px">
         <li ng-hide="project.segments && project.segments.length">無章節</li>
-        <li ng-repeat="t in project.segments"><a href="#{{t}}">{{t || "未命名章節"}}</a></li>
+        <li ng-repeat="t in project.segments"><a href="#{{t.text}}" style="{{t.active ? 'color: #337ab7;': ''}}">{{t.text || "未命名章節"}}</a></li>
     </ol>
 </div>
 <div class="nkfust-project-content" ng-bind-html="project.htmlContent">
