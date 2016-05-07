@@ -99,7 +99,10 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 $scope.$apply();
             };
-            mdlContentElement.onscroll(null);
+            contentElement.getElementsByTagName("img")
+                .toArray().forEach((x) => {
+                x.onload = mdlContentElement.onscroll;
+            });
         });
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;

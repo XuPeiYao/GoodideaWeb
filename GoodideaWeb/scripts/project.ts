@@ -89,7 +89,10 @@
             }
             $scope.$apply();
         };
-        mdlContentElement.onscroll(null);
+        contentElement.getElementsByTagName("img")
+            .toArray().forEach((x:HTMLElement) => {
+                x.onload = mdlContentElement.onscroll
+            });
     } 
     $scope.vote = async () => {
         $scope.loading = true;
