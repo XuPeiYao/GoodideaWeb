@@ -39,9 +39,11 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             console.log($scope.project);
             $scope.loading = false;
             $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
+            //#region 篩選各類別的團隊成員
             $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
             $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
             $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
+            //#endregion
             //#region Segment剖析
             $scope.project.segments = $scope.project.getContentSegments().segments;
             if ($scope.project.segments) {
@@ -55,16 +57,19 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 });
             }
             $scope.$apply(); //通知更新
+            fixMdlButton(document.getElementsByClassName('android-more-section')[0]); //修復UI中的MDL按鈕效果
+            //取得Markdown主要內容區塊
             var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
-            $scope.tags = [];
+            $scope.tags = []; //標籤集合
             for (var i = 1; i <= 6; i++) {
                 contentElement.getElementsByTagName('h' + i.toString()).toArray().forEach((x) => {
                     var aTag = document.createElement('a');
                     aTag.name = x.innerText;
-                    $scope.tags.push(aTag);
+                    $scope.tags.push(aTag); //加入標籤集合
                     contentElement.insertBefore(aTag, x);
                 });
             }
+            //取得頁面主要區塊
             var mdlContentElement = (document.getElementsByClassName('mdl-layout__content')[0]);
             mdlContentElement.onscroll = function () {
                 //#region 更新Segment座標資訊
@@ -109,9 +114,9 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             };
             contentElement.getElementsByTagName("img")
                 .toArray().forEach((x) => {
-                x.onload = mdlContentElement.onscroll;
+                x.onload = mdlContentElement.onscroll; //當圖片讀取完畢，更新章節座標
             });
-            mdlContentElement.onscroll(null);
+            mdlContentElement.onscroll(null); //初始化章節列表
             //#endregion
         });
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
@@ -139,7 +144,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 confirmButtonText: "確定"
             });
         });
-        yield $scope.load();
+        yield $scope.load(); //初始化頁面
         $scope.$apply();
     });
 });

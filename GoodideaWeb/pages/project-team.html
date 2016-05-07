@@ -101,22 +101,31 @@
     </button>
     <div class="mdl-tooltip" for="project_request_add">新增成員需求</div>
     <div class="android-card-container mdl-grid">
-        <div ng-repeat="t in project.team.assistant" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
-            <div class="nkfust-memberList-card-image mdl-card__title mdl-card--expand" style="background: url({{t.user.photo.url}}) center / cover;">
-                <div class="nkfust-list-pid">助教</div>
+        <div ng-repeat="t in project.memberRequest" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="nkfust-list-card-image mdl-card__title mdl-card--expand" style="max-height:42px;">
+                <div class="nkfust-list-pid">
+                    <button type="button" class="close">
+                        <span aria-hidden="true" style="color:white">&times;</span>
+                    </button>
+                </div>
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
-                    <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
+                    <a style="color:white">{{t.isTeacher ? "指導教授" : "團隊成員"}}</a>
                 </h2>
             </div>
             <div class="mdl-card__supporting-text nkfust-list-card-content">
-                <label>學號:</label>{{t.user.studentId}}<br />
-                <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
-                <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
-                <label>專長:</label>
-                <span ng-hide="t.user.specialty.length">未填寫</span>
-                <span ng-repeat="t2 in t.user.specialty">
-                    <span ng-show="t2 != t.user.specialty[0]">、</span>{{t2}}
-                </span>
+                <label>所需專長:</label>
+                <ul>
+                    <li ng-hide="t.specialty.length">無限制</li>
+                    <li ng-repeat="t2 in t.specialty">{{t2.value}}</li>
+                </ul>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    應徵
+                </button>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    Button
+                </button>
             </div>
         </div>
     </div>

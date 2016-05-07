@@ -60,7 +60,17 @@ function fixMdlTextfields(area: Element) {
             }
         });
 }
-
+function fixMdlButton(area: Element) {
+    console.log(area)
+    area
+        .getElementsByClassName('mdl-button')
+        .toArray()
+        .forEach((x: HTMLElement) => {
+            console.log(x);
+            x.attributes.removeNamedItem('data-upgraded');
+            componentHandler.upgradeElement(x);
+        });
+}
 include();
 componentHandler.upgradeAllRegistered();
 //componentHandler.upgradeDom();
