@@ -109,6 +109,11 @@ body, h1, h2, h3, h4, h5, h6{
     max-height:180px;
     padding:0;
 }
+.nkfust-memberList-card-image{/*Member List 圖片*/
+    height:230px !important;
+    max-height:230px;
+    padding:0;
+}
 .nkfust-list-imageTitle {
     overflow : hidden;
     width:100%;
@@ -278,6 +283,27 @@ body, h1, h2, h3, h4, h5, h6{
     border-style: solid;
     border-width: thin;
     width: 100% !important;
+}
+
+.project-member{
+    padding-right: 15px;
+    padding-left: 15px;
+    padding-top:5px;
+    padding-bottom:5px;
+    margin-top:-1px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top:20px;
+    background-color:#F3F3F3;
+    border-color:#9E9E9E;
+    border-radius:5px;;
+    border-style: solid;
+    border-width: thin;
+    width: 100% !important;
+}
+.project-member-add{
+    float: right;
+    top: -85px;
 }
 
 .nkfust-project-content img{

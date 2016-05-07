@@ -23,6 +23,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="pages\project-content.html" />
+    <Content Include="pages\project-team.html" />
     <Content Include="pages\project-information.html" />
     <Content Include="project.html" />
     <Content Include="requestList.html" />

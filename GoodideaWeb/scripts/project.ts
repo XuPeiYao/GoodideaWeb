@@ -3,6 +3,7 @@
     $scope.loginUser = null;
     $scope.voteQuota = 0;
     $scope.loading = false;
+
     $scope.load = async () => {
         $scope.loading = true;
         $scope.projectId = queryString['id'];
@@ -28,7 +29,14 @@
         console.log($scope.project)
         $scope.loading = false;
         $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
+
+
+        $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
+        $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
+        $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
         
+
+        //#region Segment剖析
         $scope.project.segments = (<goodidea.Project>$scope.project).getContentSegments().segments;
         if ($scope.project.segments) {
             $scope.project.segments = $scope.project.segments.map(x => {
@@ -53,18 +61,19 @@
             });
         }
 
-        //#region Segment剖析
         var mdlContentElement: HTMLDivElement = <HTMLDivElement>(document.getElementsByClassName('mdl-layout__content')[0]);
         mdlContentElement.onscroll = function () {
             //#region 更新Segment座標資訊
             for (var i = 0; i < $scope.project.segments.length; i++) {
+                if (!$scope.project.segments[i]) continue;
                 var text = $scope.project.segments[i].text;
-                console.log(text)
                 var element = contentElement.querySelector(`a[name="${text}"]`);
+                if (!element) continue;
                 $scope.project.segments[i].element = element;
                 $scope.project.segments[i].start = element.getBoundingClientRect().top + mdlContentElement.scrollTop;
             }
             for (var i = 0; i < $scope.project.segments.length; i++) {
+                if (!$scope.project.segments[i]) continue;
                 if (i == $scope.project.segments.length - 1) {
                     $scope.project.segments[i].end = Number.MAX_SAFE_INTEGER;
                     continue;
@@ -75,8 +84,8 @@
 
             var visableStart = this.scrollTop;
             var visableEnd = this.scrollTop + document.body.clientHeight;
-            console.log($scope.project.segments);
             for (var i = 0; i < $scope.project.segments.length; i++) {
+                if (!$scope.project.segments[i]) continue;
                 var segment = $scope.project.segments[i];
                 if (segment.start <= visableStart && segment.end >= visableEnd) segment.active = true;
                 else if (segment.start >= visableStart && segment.start <= visableEnd) segment.active = true;

@@ -1,0 +1,96 @@
+﻿<h4>
+    團隊名稱: {{project.team.name || "未命名團隊"}}
+    <button ng-show="project.setable" id="project-teamName-edit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        <i class="fa fa-pencil" aria-hidden="true"></i>變更團隊名稱
+    </button>
+</h4>
+<div class="project-member">
+    <h5>團隊成員</h5>
+    <button id="project_member_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored project-member-add">
+        <i class="material-icons">add</i>
+    </button>
+    <div class="mdl-tooltip" for="project_member_add">新增團隊成員</div>
+    <div class="android-card-container mdl-grid">
+        <div class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="nkfust-memberList-card-image mdl-card__title mdl-card--expand" style="background: url({{project.owner.photo.url}}) center / cover;">
+                <div class="nkfust-list-pid">隊長</div>
+                <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
+                    <a style="color:white" href="about.html?id={{project.owner.id}}" target="_blank">{{project.owner.name}}</a>
+                </h2>
+            </div>
+            <div class="mdl-card__supporting-text nkfust-list-card-content">
+                <label>學號:</label>{{project.owner.studentId}}<br />
+                <label>學院:</label>{{project.owner.department.college.name || '未填寫'}}<br />
+                <label>系所:</label>{{project.owner.department.name || "未填寫"}}<br />
+                <label>專長:</label>
+                <span ng-hide="project.owner.specialty.length">未填寫</span>
+                <span ng-repeat="t in project.owner.specialty">
+                    <span ng-show="t != project.owner.specialty[0]">、</span>{{t}}
+                </span>
+            </div>
+        </div>
+        <div ng-repeat="t in project.team.member" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="nkfust-memberList-card-image mdl-card__title mdl-card--expand" style="background: url({{t.user.photo.url}}) center / cover;">
+                <div class="nkfust-list-pid">隊員</div>
+                <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
+                    <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
+                </h2>
+            </div>
+            <div class="mdl-card__supporting-text nkfust-list-card-content">
+                <label>學號:</label>{{t.user.studentId}}<br />
+                <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
+                <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
+                <label>專長:</label>
+                <span ng-hide="t.user.specialty.length">未填寫</span>
+                <span ng-repeat="t2 in t.user.specialty">
+                    <span ng-show="t2 != t.user.specialty[0]">、</span>{{t2}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="project-member">
+    <h5>課程成員</h5>
+    <button id="project_member_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-button--colored project-member-add">
+        <i class="material-icons">add</i>
+    </button>
+    <div class="mdl-tooltip" for="project_member_add">新增課程成員</div>
+    <div class="android-card-container mdl-grid">
+        <div ng-repeat="t in project.team.teacher" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="nkfust-memberList-card-image mdl-card__title mdl-card--expand" style="background: url({{t.user.photo.url}}) center / cover;">
+                <div class="nkfust-list-pid">指導教授</div>
+                <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
+                    <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
+                </h2>
+            </div>
+            <div class="mdl-card__supporting-text nkfust-list-card-content">
+                <label>學號:</label>{{t.user.studentId}}<br />
+                <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
+                <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
+                <label>專長:</label>
+                <span ng-hide="t.user.specialty.length">未填寫</span>
+                <span ng-repeat="t2 in t.user.specialty">
+                    <span ng-show="t2 != t.user.specialty[0]">、</span>{{t2}}
+                </span>
+            </div>
+        </div>
+        <div ng-repeat="t in project.team.assistant" class="mdl-cell mdl-cell--3-col mdl-cell--4-col-tablet mdl-cell--4-col-phone mdl-card mdl-shadow--3dp">
+            <div class="nkfust-memberList-card-image mdl-card__title mdl-card--expand" style="background: url({{t.user.photo.url}}) center / cover;">
+                <div class="nkfust-list-pid">助教</div>
+                <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
+                    <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
+                </h2>
+            </div>
+            <div class="mdl-card__supporting-text nkfust-list-card-content">
+                <label>學號:</label>{{t.user.studentId}}<br />
+                <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
+                <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
+                <label>專長:</label>
+                <span ng-hide="t.user.specialty.length">未填寫</span>
+                <span ng-repeat="t2 in t.user.specialty">
+                    <span ng-show="t2 != t.user.specialty[0]">、</span>{{t2}}
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
