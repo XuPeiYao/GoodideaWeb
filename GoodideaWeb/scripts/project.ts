@@ -54,9 +54,6 @@
         }
 
         //#region Segment剖析
-        
-        //#endregion
-
         var mdlContentElement: HTMLDivElement = <HTMLDivElement>(document.getElementsByClassName('mdl-layout__content')[0]);
         mdlContentElement.onscroll = function () {
             //#region 更新Segment座標資訊
@@ -93,6 +90,8 @@
             .toArray().forEach((x:HTMLElement) => {
                 x.onload = mdlContentElement.onscroll
             });
+        mdlContentElement.onscroll(null);
+        //#endregion
     } 
     $scope.vote = async () => {
         $scope.loading = true;

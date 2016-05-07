@@ -62,7 +62,6 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 });
             }
             //#region Segment剖析
-            //#endregion
             var mdlContentElement = (document.getElementsByClassName('mdl-layout__content')[0]);
             mdlContentElement.onscroll = function () {
                 //#region 更新Segment座標資訊
@@ -103,6 +102,8 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 .toArray().forEach((x) => {
                 x.onload = mdlContentElement.onscroll;
             });
+            mdlContentElement.onscroll(null);
+            //#endregion
         });
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;
