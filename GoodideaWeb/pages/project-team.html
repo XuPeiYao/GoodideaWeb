@@ -1,12 +1,13 @@
 ﻿<h4>
     團隊名稱: {{project.team.name || "未命名團隊"}}
-    <button ng-show="project.setable" id="project-teamName-edit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    <button ng-style="unSetableStyle" id="project-teamName-edit" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         <i class="fa fa-pencil" aria-hidden="true"></i>變更團隊名稱
     </button>
 </h4>
 <div class="nkfust-project-member">
     <h5>團隊成員</h5>
-    <button id="project_member_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
+    <!--加入新隊員的按鈕只有可進行新增成員的人可以看到-->
+    <button ng-style="unSetableStyle" id="project_member_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
         <i class="material-icons">add</i>
     </button>
     <div class="mdl-tooltip" for="project_member_add">新增團隊成員</div>
@@ -19,7 +20,7 @@
                 </h2>
             </div>
             <div class="mdl-card__supporting-text nkfust-list-card-content">
-                <label>學號:</label>{{project.owner.studentId}}<br />
+                <label>學號:</label>{{project.owner.studentId || '未填寫'}}<br />
                 <label>學院:</label>{{project.owner.department.college.name || '未填寫'}}<br />
                 <label>系所:</label>{{project.owner.department.name || "未填寫"}}<br />
                 <label>專長:</label>
@@ -35,14 +36,14 @@
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
                     <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
 
-                    <button id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-style="unSetableStyle" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_member_delete_{{t.id}}">刪除</div>
                 </h2>
             </div>
             <div class="mdl-card__supporting-text nkfust-list-card-content">
-                <label>學號:</label>{{t.user.studentId}}<br />
+                <label>學號:</label>{{t.user.studentId || '未填寫'}}<br />
                 <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
                 <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
                 <label>專長:</label>
@@ -54,9 +55,10 @@
         </div>
     </div>
 </div>
-<div class="nkfust-project-member">
+<!--課程成員只有在成員數量大於0才顯示或者是可進行新增成員的人-->
+<div class="nkfust-project-member" ng-show="project.setable || project.team.assistant.length + project.team.teacher.length > 0">
     <h5>課程成員</h5>
-    <button id="project_member_course_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
+    <button ng-style="unSetableStyle" id="project_member_course_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
         <i class="material-icons">add</i>
     </button>
     <div class="mdl-tooltip" for="project_member_course_add">新增課程成員</div>
@@ -67,14 +69,13 @@
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
                     <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
 
-                    <button id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-style="unSetableStyle" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_member_delete_{{t.id}}">刪除</div>
                 </h2>
             </div>
             <div class="mdl-card__supporting-text nkfust-list-card-content">
-                <label>學號:</label>{{t.user.studentId}}<br />
                 <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
                 <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
                 <label>專長:</label>
@@ -90,14 +91,14 @@
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
                     <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
 
-                    <button id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-style="unSetableStyle" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_member_delete_{{t.id}}">刪除</div>
                 </h2>
             </div>
             <div class="mdl-card__supporting-text nkfust-list-card-content">
-                <label>學號:</label>{{t.user.studentId}}<br />
+                <label>學號:</label>{{t.user.studentId || '未填寫'}}<br />
                 <label>學院:</label>{{t.user.department.college.name || '未填寫'}}<br />
                 <label>系所:</label>{{t.user.department.name || "未填寫"}}<br />
                 <label>專長:</label>
@@ -109,9 +110,11 @@
         </div>
     </div>
 </div>
-<div class="nkfust-project-member">
+
+<!--成員需求只有在需求數量大於0才顯示或者是可進行公告需求的人-->
+<div class="nkfust-project-member" ng-show="project.setable || project.memberRequest.length > 0">
     <h5>成員需求</h5>
-    <button id="project_request_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
+    <button ng-style="unSetableStyle" id="project_request_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
         <i class="material-icons">add</i>
     </button>
     <div class="mdl-tooltip" for="project_request_add">新增成員需求</div>
@@ -121,7 +124,7 @@
                 <h2 class="mdl-card__title-text nkfust-list-imageTitle">
                     <span style="color:white">{{t.isTeacher ? "指導教授" : "團隊成員"}}</span>
 
-                    <button id="project_memberRequest_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-style="unSetableStyle" id="project_memberRequest_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_memberRequest_delete_{{t.id}}">刪除</div>
@@ -135,13 +138,13 @@
                 </ul>
             </div>
             <div class="nkfust-project-member-action mdl-card__actions mdl-card--border mdl-grid">
-                <button class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                <button ng-hide="project.editable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                     應徵
                 </button>
-                <button class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     列表
                 </button>
-                <button class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     編輯
                 </button>
             </div>

@@ -43,6 +43,12 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
             $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
             $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
+            //產生隱藏STYLE
+            if (!$scope.project.setable) {
+                $scope.unSetableStyle = {
+                    'visibility': 'collapse'
+                };
+            }
             //#endregion
             //#region Segment剖析
             $scope.project.segments = $scope.project.getContentSegments().segments;
