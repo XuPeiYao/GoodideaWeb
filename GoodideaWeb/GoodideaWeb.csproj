@@ -24,6 +24,7 @@
   <ItemGroup>
     <Content Include="images\user.png" />
     <Content Include="pages\project-content.html" />
+    <Content Include="pages\project-document.html" />
     <Content Include="pages\project-team.html" />
     <Content Include="pages\project-information.html" />
     <Content Include="project.html" />
