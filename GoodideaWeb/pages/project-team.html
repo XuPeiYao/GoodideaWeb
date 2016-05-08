@@ -36,7 +36,7 @@
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
                     <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
 
-                    <button ng-style="unSetableStyle" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-show="project.setable || t.user.id == loginUser.id" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_member_delete_{{t.id}}">刪除</div>
@@ -69,7 +69,7 @@
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
                     <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
 
-                    <button ng-style="unSetableStyle" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-show="project.setable || t.user.id == loginUser.id" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_member_delete_{{t.id}}">刪除</div>
@@ -91,7 +91,7 @@
                 <h2 style="cursor:pointer" class="mdl-card__title-text nkfust-list-imageTitle">
                     <a style="color:white" href="about.html?id={{t.user.id}}" target="_blank">{{t.user.name}}</a>
 
-                    <button ng-style="unSetableStyle" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-show="project.setable || t.user.id == loginUser.id" id="project_member_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_member_delete_{{t.id}}">刪除</div>
