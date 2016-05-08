@@ -138,8 +138,11 @@
                 </ul>
             </div>
             <div class="nkfust-project-member-action mdl-card__actions mdl-card--border mdl-grid">
-                <button ng-hide="project.editable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                <button ng-hide="project.editable || !t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                     應徵
+                </button>
+                <button ng-hide="project.editable || t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                    取消應徵
                 </button>
                 <button ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     列表
