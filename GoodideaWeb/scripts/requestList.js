@@ -48,12 +48,7 @@ app.controller('requestList', function ($scope, $sce, $uibModal) {
             });
             $scope.loading = false;
             $scope.$apply(); //通知更新    
-            document.getElementsByClassName('project-tooltip').toArray().forEach((x) => {
-                x.removeAttribute('data-upgraded');
-            });
-            document.getElementsByClassName('project-tooltip').toArray().forEach((x) => {
-                componentHandler.upgradeElement(x);
-            });
+            fixMdlTooltip(document.getElementsByClassName('android-content')[0]);
         });
         $scope.reload = () => __awaiter(this, void 0, void 0, function* () {
             $scope.lastPageResult = null;

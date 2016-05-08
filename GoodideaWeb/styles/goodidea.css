@@ -269,7 +269,7 @@ body, h1, h2, h3, h4, h5, h6{
 .mdl-tabs__panel{
     width:100%;
 }
-.project-edit-nav{
+.nkfust-project-edit-nav{
     padding-right: 15px;
     padding-left: 15px;
     padding-top:5px;
@@ -285,7 +285,7 @@ body, h1, h2, h3, h4, h5, h6{
     width: 100% !important;
 }
 
-.project-member{
+.nkfust-project-member{
     padding-right: 15px;
     padding-left: 15px;
     padding-top:5px;
@@ -301,9 +301,33 @@ body, h1, h2, h3, h4, h5, h6{
     border-width: thin;
     width: 100% !important;
 }
-.project-member-add{
+.nkfust-project-member .mdl-grid{
+    width:100%;
+}
+.nkfust-project-member > h5{
+    margin-bottom: -40px;
+}
+.nkfust-project-member-add{
     float: right;
-    top: -85px;
+    /*top: -85px;*/
+    top:-30px;
+}
+.nkfust-project-member-action > button{
+    margin:4px;
+}
+.nkfust-project-member-close{
+    position: absolute;
+    right: 2px;
+    margin-top: -2px;
+    color: white;
+    font-size: 22pt;
+    padding: 0px;
+    min-width: 36px !important;
+    width: 36px;
+}
+
+.nkfust-memberList-card-image > h2>a{
+    width:calc(100% - 36px);
 }
 
 .nkfust-project-content img{

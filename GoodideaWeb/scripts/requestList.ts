@@ -46,12 +46,7 @@
         });
         $scope.loading = false;
         $scope.$apply();//通知更新    
-        document.getElementsByClassName('project-tooltip').toArray().forEach((x: HTMLElement) => {
-            x.removeAttribute('data-upgraded');
-        });
-        document.getElementsByClassName('project-tooltip').toArray().forEach((x: HTMLElement) => {
-            componentHandler.upgradeElement(x);
-        });
+        fixMdlTooltip(document.getElementsByClassName('android-content')[0]);
     }
     $scope.reload =async () => {
         $scope.lastPageResult = null;

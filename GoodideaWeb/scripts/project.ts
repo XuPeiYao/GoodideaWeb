@@ -49,6 +49,7 @@
         }
         
         $scope.$apply();//通知更新
+        fixMdlTooltip(document.getElementsByClassName('android-content')[0]);//修復UI中的MDL說明文字效果
         fixMdlButton(document.getElementsByClassName('android-more-section')[0]);//修復UI中的MDL按鈕效果
 
         //取得Markdown主要內容區塊
