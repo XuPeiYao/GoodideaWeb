@@ -675,6 +675,21 @@ var goodidea;
             });
         }
         /**
+         * 取得目前提案的編輯紀錄
+         */
+        getProjectUpdateLogList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var result = new goodidea.PageResult(goodidea.ProjectUpdateLog);
+                result.url = 'api/project/requestList';
+                result.params = {
+                    project: this.id
+                };
+                result.length = 10;
+                yield result.load();
+                return result;
+            });
+        }
+        /**
          * 新增提案
          * @param name 提案名稱
          * @param _class 提案分類ID或Class物件
@@ -817,6 +832,20 @@ var goodidea;
         }
     }
     goodidea.Project = Project;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class ProjectUpdateLog {
+        static loadFromJSON(data) {
+            var result = new ProjectUpdateLog();
+            result.id = data['Id'];
+            result.user = goodidea.User.loadFromJSON(data['User']);
+            result.content = data['Content'];
+            result.time = new Date(data['Time']);
+            return result;
+        }
+    }
+    goodidea.ProjectUpdateLog = ProjectUpdateLog;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {

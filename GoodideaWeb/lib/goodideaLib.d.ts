@@ -388,6 +388,10 @@ declare module goodidea {
          */
         delete(): Promise<void>;
         /**
+         * 取得目前提案的編輯紀錄
+         */
+        getProjectUpdateLogList(): Promise<PageResult<ProjectUpdateLog>>;
+        /**
          * 新增提案
          * @param name 提案名稱
          * @param _class 提案分類ID或Class物件
@@ -431,6 +435,15 @@ declare module goodidea {
          * @param order 排序
          */
         static search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>;
+    }
+}
+declare module goodidea {
+    class ProjectUpdateLog {
+        id: string;
+        user: User;
+        content: string;
+        time: Date;
+        static loadFromJSON(data: JSON): ProjectUpdateLog;
     }
 }
 declare module goodidea {

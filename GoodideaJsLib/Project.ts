@@ -233,6 +233,20 @@
         }
 
         /**
+         * 取得目前提案的編輯紀錄
+         */
+        public async getProjectUpdateLogList(): Promise<PageResult<ProjectUpdateLog>> {
+            var result = new PageResult<ProjectUpdateLog>(goodidea.ProjectUpdateLog);
+            result.url = 'api/project/requestList';
+            result.params = {
+                project: this.id
+            };
+            result.length = 10;
+            await result.load();
+            return result;
+        }
+
+        /**
          * 新增提案
          * @param name 提案名稱
          * @param _class 提案分類ID或Class物件
@@ -312,7 +326,7 @@
         public static async getLoginUserProjects():Promise<UserProjectList> {
             return Project.getUserProjects("me");
         }
-
+        
         /**
          * 取得目前系統中公開提案清單
          * @param _class 分類
