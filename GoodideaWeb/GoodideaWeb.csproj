@@ -23,6 +23,87 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="images\user.png" />
+    <Content Include="lib\tinymce\changelog.txt" />
+    <Content Include="lib\tinymce\js\tinymce\jquery.tinymce.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\license.txt" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\advlist\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\anchor\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\autolink\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\autoresize\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\autosave\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\bbcode\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\charmap\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\codesample\css\prism.css" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\codesample\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\code\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\colorpicker\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\contextmenu\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\directionality\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-cool.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-cry.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-embarassed.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-foot-in-mouth.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-frown.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-innocent.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-kiss.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-laughing.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-money-mouth.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-sealed.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-smile.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-surprised.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-tongue-out.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-undecided.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-wink.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\img\smiley-yell.gif" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\emoticons\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\example\dialog.html" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\example\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\example_dependency\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\fullpage\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\fullscreen\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\hr\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\imagetools\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\image\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\importcss\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\insertdatetime\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\layer\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\legacyoutput\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\link\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\lists\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\media\moxieplayer.swf" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\media\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\nonbreaking\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\noneditable\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\pagebreak\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\paste\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\preview\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\print\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\save\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\searchreplace\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\spellchecker\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\tabfocus\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\table\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\template\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\textcolor\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\textpattern\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\visualblocks\css\visualblocks.css" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\visualblocks\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\visualchars\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\plugins\wordcount\plugin.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\content.inline.min.css" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\content.min.css" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.svg" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.svg" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\img\anchor.gif" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\img\loader.gif" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\img\object.gif" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\img\trans.gif" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\skin.ie7.min.css" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\skin.min.css" />
+    <Content Include="lib\tinymce\js\tinymce\themes\modern\theme.min.js" />
+    <Content Include="lib\tinymce\js\tinymce\tinymce.min.js" />
+    <Content Include="lib\tinymce\LICENSE.TXT" />
+    <Content Include="modals\addMember.html" />
     <Content Include="pages\project-content.html" />
     <Content Include="pages\project-document.html" />
     <Content Include="pages\project-team.html" />
@@ -144,6 +225,15 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="lib\font-awesome-4.6.1\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="lib\tinymce\js\tinymce\langs\readme.md" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.eot" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.ttf" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce-small.woff" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.eot" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
+    <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>

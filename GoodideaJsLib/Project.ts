@@ -296,7 +296,7 @@
                 result.lastEditTime = new Date(data['LastEditTime']);
             }
             if (data['Team']) {
-                result.team = Team.loadFromJSON(data['Team']);
+                result.team = Team.loadFromJSON(data['Team']);                
             }
             return result;
         }
