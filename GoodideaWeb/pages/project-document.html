@@ -1,3 +1,8 @@
 ﻿<ul style="font-size:12pt">
-    <li ng-repeat="t in project.files">{{t.name || t.file.name}}</li>
+    <li ng-repeat="t in project.files">
+        <button ng-show="project.editable" style="font-size: 22pt;" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            ×
+        </button>
+        <a target="_blank" href="{{t.file.url}}">{{t.name || t.file.name}}</a>
+    </li>
 </ul>
