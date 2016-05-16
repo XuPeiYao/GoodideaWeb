@@ -167,18 +167,21 @@
         });
     }
     $scope.addTeamMember = (isMember: boolean) => {
-        $uibModal.open({
+        var addTeamMember = $uibModal.open({
             animation: true,
             templateUrl: 'modals/addMember.html',
             controller: 'addMemberModal',
             size: 'sm',
             resolve: {
                 project: () => $scope.project,
-                isMember: ()=> isMember,
+                isMember: () => isMember,
             }
-        }).rendered.then(() => {
+        });
+        addTeamMember.rendered.then(() => {
             $scope.loading = false;
             componentHandler.upgradeDom();
+        });
+        addTeamMember.closed.then(() => {//當視窗關閉
         });
     }
     $scope.removeTeamMember = async () => {
@@ -196,6 +199,11 @@ app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance
     } else {
         $scope.typeName = "課程成員";
     }
-
+    $scope.idChange = () => {//自動補足信箱
+        if (!$scope.id || !$scope.id.length) return;
+        var index = $scope.id.indexOf('@');
+        if (index != $scope.id.length - 1) return;
+        $scope.id += "nkfust.edu.tw";
+    }
     $scope.cancel = () => $uibModalInstance.close();
 });

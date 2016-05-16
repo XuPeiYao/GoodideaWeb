@@ -5,10 +5,14 @@
 <div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 <div class="modal-body">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input tabindex="1" ng-disabled="loading" class="mdl-textfield__input" type="text" ng-model="id"/>
+        <input tabindex="1" ng-change="idChange()" ng-disabled="loading" class="mdl-textfield__input" type="text" ng-model="id"/>
         <label class="mdl-textfield__label">使用者帳號(學校信箱)</label>
         <span class="mdl-textfield__error">帳號不該為空</span>
     </div>
+    <label ng-hide="isMember" class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input ng-model="Active" type="checkbox" class="mdl-checkbox__input" checked />
+        <span class="mdl-checkbox__label">設為指導教授(否則為助教)</span>
+    </label>
 </div>
 <div class="modal-footer">
     <button id="getTeacherMail" tabindex="2" ng-hide="isMember" ng-disabled="loading" ng-click="getTeacherMail()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
