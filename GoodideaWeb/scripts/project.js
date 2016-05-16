@@ -151,8 +151,67 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 confirmButtonText: "確定"
             });
         });
+        $scope.changeProjectName = () => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "變更團隊名稱",
+                text: "請輸入新的團隊名稱",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                inputPlaceholder: "團隊名稱",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }, (inputValue) => __awaiter(this, void 0, void 0, function* () {
+                if (inputValue === false)
+                    return false;
+                if (inputValue === "") {
+                    swal.showInputError("團隊名稱不該為空");
+                    return false;
+                }
+                $scope.project.team.name = inputValue;
+                $scope.loading = true;
+                yield $scope.project.update();
+                $scope.loading = false;
+                swal({
+                    type: 'success',
+                    title: "團隊名稱變更成功",
+                    text: `您已經成功的將本提案團隊名稱變更為「${$scope.project.team.name}」`,
+                    confirmButtonText: "確定"
+                });
+                $scope.$apply();
+            }));
+        });
+        $scope.addTeamMember = (isMember) => {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/addMember.html',
+                controller: 'addMemberModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    isMember: () => isMember,
+                }
+            }).rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
+        $scope.removeTeamMember = () => __awaiter(this, void 0, void 0, function* () {
+        });
         yield $scope.load(); //初始化頁面
         $scope.$apply();
+    });
+});
+app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, project, isMember, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.isMember = isMember;
+        if (isMember) {
+            $scope.typeName = "一般隊員";
+        }
+        else {
+            $scope.typeName = "課程成員";
+        }
+        $scope.cancel = () => $uibModalInstance.close();
     });
 });
 //# sourceMappingURL=project.js.map

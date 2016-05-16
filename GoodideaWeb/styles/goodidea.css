@@ -13,6 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+.fix-searchBox{
+    background: white;
+    z-index:999;
+}
 a{
     text-decoration:none !important;
 }

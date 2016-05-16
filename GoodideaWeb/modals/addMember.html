@@ -1,0 +1,23 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">新增團隊成員 - {{typeName}}</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <input tabindex="1" ng-disabled="loading" class="mdl-textfield__input" type="text" ng-model="id"/>
+        <label class="mdl-textfield__label">使用者帳號(學校信箱)</label>
+        <span class="mdl-textfield__error">帳號不該為空</span>
+    </div>
+</div>
+<div class="modal-footer">
+    <button id="getTeacherMail" tabindex="2" ng-hide="isMember" ng-disabled="loading" ng-click="getTeacherMail()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        取得教授信箱
+    </button>
+    <button id="addMember" tabindex="3" ng-disabled="loading" ng-click="addMember()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        新增
+    </button>
+    <button id="cancelAddMember" tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>

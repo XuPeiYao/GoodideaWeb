@@ -24,12 +24,12 @@
             return;
         }
         $scope.$apply();
-        
+
         if (!$scope.project.cover) $scope.project.cover = (await goodidea.Banner.getBannerList())[0]
         console.log($scope.project)
         $scope.loading = false;
         $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
-        
+
         //#region 篩選各類別的團隊成員
         $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
         $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
@@ -51,11 +51,11 @@
                 var element = (<HTMLElement>parseNode(markdown.toHtml(x.title)));
                 if (element) return {
                     active: false,
-                    text : element.innerText
+                    text: element.innerText
                 }
             });
         }
-        
+
         $scope.$apply();//通知更新
         fixMdlTooltip(document.getElementsByClassName('android-content')[0]);//修復UI中的MDL說明文字效果
         fixMdlButton(document.getElementsByClassName('android-more-section')[0]);//修復UI中的MDL按鈕效果
@@ -102,18 +102,18 @@
                 if (segment.start <= visableStart && segment.end >= visableEnd) segment.active = true;
                 else if (segment.start >= visableStart && segment.start <= visableEnd) segment.active = true;
                 else if (segment.end >= visableEnd && segment.end <= visableEnd) segment.active = true;
-                else if (segment.start >= visableStart && segment.end <= visableEnd) segment.active = true;                
+                else if (segment.start >= visableStart && segment.end <= visableEnd) segment.active = true;
                 else segment.active = false;
             }
             $scope.$apply();
         };
         contentElement.getElementsByTagName("img")
-            .toArray().forEach((x:HTMLElement) => {
+            .toArray().forEach((x: HTMLElement) => {
                 x.onload = mdlContentElement.onscroll//當圖片讀取完畢，更新章節座標
             });
         mdlContentElement.onscroll(null);//初始化章節列表
         //#endregion
-    } 
+    }
     $scope.vote = async () => {
         $scope.loading = true;
         try {
@@ -138,7 +138,64 @@
             confirmButtonText: "確定"
         });
     }
+    $scope.changeProjectName = async () => {
+        swal({
+            title: "變更團隊名稱",
+            text: "請輸入新的團隊名稱",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "團隊名稱",
+            confirmButtonText: "確定",
+            cancelButtonText: "取消"
+        }, async (inputValue) => {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("團隊名稱不該為空"); return false
+            }
+            $scope.project.team.name = inputValue;
+            $scope.loading = true;
+            await $scope.project.update();
+            $scope.loading = false;
+            swal({
+                type: 'success',
+                title: "團隊名稱變更成功",
+                text: `您已經成功的將本提案團隊名稱變更為「${$scope.project.team.name}」`,
+                confirmButtonText: "確定"
+            });
+            $scope.$apply();
+        });
+    }
+    $scope.addTeamMember = (isMember: boolean) => {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/addMember.html',
+            controller: 'addMemberModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                isMember: ()=> isMember,
+            }
+        }).rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+    $scope.removeTeamMember = async () => {
+
+    }    
+
     await $scope.load();//初始化頁面
-    
+
     $scope.$apply();
+});
+app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, isMember:boolean, $uibModal) {
+    $scope.isMember = isMember;
+    if (isMember) {
+        $scope.typeName = "一般隊員";
+    } else {
+        $scope.typeName = "課程成員";
+    }
+
+    $scope.cancel = () => $uibModalInstance.close();
 });
