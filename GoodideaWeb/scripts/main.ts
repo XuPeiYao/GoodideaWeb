@@ -65,18 +65,15 @@ function fixMdlButton(area: Element) {
         .getElementsByClassName('mdl-button')
         .toArray()
         .forEach((x: HTMLElement) => {
-            console.log(x);
             x.attributes.removeNamedItem('data-upgraded');
             componentHandler.upgradeElement(x);
         });
 }
 function fixMdlTooltip(area: Element) {
-    console.log(area);
     area
         .getElementsByClassName('mdl-tooltip')
         .toArray()
         .forEach((x: HTMLElement) => {
-            console.log(x);
             x.attributes.removeNamedItem('data-upgraded');
             componentHandler.upgradeElement(x);
         });
