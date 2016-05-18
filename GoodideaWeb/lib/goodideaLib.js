@@ -101,6 +101,32 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
+    class Course {
+        static loadFromJSON(data) {
+            var result = new Course();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function)
+                    continue;
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
+            }
+            return result;
+        }
+        getCourseList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/course/list');
+                var result = [];
+                for (var i = 0; i < responseJSON['length']; i++) {
+                    result.push(Course.loadFromJSON(responseJSON[i]));
+                }
+                return result;
+            });
+        }
+    }
+    goodidea.Course = Course;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
     class Department {
         static loadFromJSON(data) {
             var result = new Department();
