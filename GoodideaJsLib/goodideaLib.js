@@ -603,8 +603,13 @@ var goodidea;
         addMember(user, memberType) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = user['id'] || user; //isTeacher: boolean, isAssistant: boolean
-                memberType = memberType || goodidea.MemberType.member;
-                var data = { project: this.id, user: id, isTeacher: memberType != goodidea.MemberType.member, isAssistant: memberType == goodidea.MemberType.assistant };
+                //memberType = memberType || MemberType.member;
+                var data = {
+                    project: this.id,
+                    user: id,
+                    isTeacher: memberType != goodidea.MemberType.member,
+                    isAssistant: memberType == goodidea.MemberType.assistant
+                };
                 var responseJSON = yield goodidea.postAsync('api/project/addmember', null, data);
                 var member = goodidea.TeamMember.loadFromJSON(responseJSON['Result']);
                 this.team.group.push(member);

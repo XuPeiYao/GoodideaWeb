@@ -144,8 +144,13 @@
          */
         public async addMember(user: (string | User), memberType : MemberType ): Promise<TeamMember> {
             var id = user['id'] || user;//isTeacher: boolean, isAssistant: boolean
-            memberType = memberType || MemberType.member;
-            var data = { project: this.id, user: id, isTeacher: memberType != MemberType.member, isAssistant: memberType == MemberType.assistant };
+            //memberType = memberType || MemberType.member;
+            var data = {
+                project: this.id,
+                user: id,
+                isTeacher: memberType != MemberType.member,
+                isAssistant: memberType == MemberType.assistant
+            };
             var responseJSON = await postAsync('api/project/addmember', null, data);
             var member = TeamMember.loadFromJSON(responseJSON['Result']);
             this.team.group.push(member);
