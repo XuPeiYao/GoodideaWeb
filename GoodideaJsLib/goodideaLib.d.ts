@@ -39,6 +39,19 @@ declare module goodidea {
     }
 }
 declare module goodidea {
+    class Course {
+        id: string;
+        year: number;
+        semester: number;
+        cId: string;
+        cName: string;
+        teacherName: string;
+        teacherEmail: string;
+        static loadFromJSON(data: JSON): Course;
+        getCourseList(): Promise<Course[]>;
+    }
+}
+declare module goodidea {
     class Department {
         collegeId: string;
         id: string;

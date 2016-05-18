@@ -197,6 +197,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 componentHandler.upgradeDom();
             });
             addTeamMember.closed.then(() => {
+                $scope.load();
             });
         };
         $scope.removeTeamMember = () => __awaiter(this, void 0, void 0, function* () {
@@ -207,6 +208,8 @@ app.controller('project', function ($scope, $sce, $uibModal) {
 });
 app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, project, isMember, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
+        $scope.loadTeachers = () => __awaiter(this, void 0, void 0, function* () {
+        });
         $scope.isMember = isMember;
         if (isMember) {
             $scope.typeName = "一般隊員";

@@ -182,6 +182,7 @@
             componentHandler.upgradeDom();
         });
         addTeamMember.closed.then(() => {//當視窗關閉
+            $scope.load();
         });
     }
     $scope.removeTeamMember = async () => {
@@ -193,12 +194,17 @@
     $scope.$apply();
 });
 app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, isMember:boolean, $uibModal) {
+    $scope.loadTeachers = async () => {
+        
+    }
+
     $scope.isMember = isMember;
     if (isMember) {
         $scope.typeName = "一般隊員";
     } else {
         $scope.typeName = "課程成員";
     }
+
     $scope.idChange = () => {//自動補足信箱
         if (!$scope.id || !$scope.id.length) return;
         var index = $scope.id.indexOf('@');

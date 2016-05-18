@@ -29,6 +29,7 @@
     <TypeScriptCompile Include="Class.ts" />
     <TypeScriptCompile Include="College.ts" />
     <TypeScriptCompile Include="Competition.ts" />
+    <TypeScriptCompile Include="Course.ts" />
     <TypeScriptCompile Include="Department.ts" />
     <TypeScriptCompile Include="DocumentInfo.ts" />
     <TypeScriptCompile Include="FileInfo.ts" />
