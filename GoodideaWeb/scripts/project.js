@@ -39,17 +39,13 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             console.log($scope.project);
             $scope.loading = false;
             $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
-            //#region 篩選各類別的團隊成員
-            $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
-            $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
-            $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
+            $scope.updateMember();
             //產生隱藏STYLE
             if (!$scope.project.setable) {
                 $scope.unSetableStyle = {
                     'visibility': 'collapse'
                 };
             }
-            //#endregion
             //#region Segment剖析
             $scope.project.segments = $scope.project.getContentSegments().segments;
             if ($scope.project.segments) {
@@ -126,6 +122,12 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             mdlContentElement.onscroll(null); //初始化章節列表
             //#endregion
         });
+        $scope.updateMember = () => {
+            //篩選各類別的團隊成員
+            $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
+            $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
+            $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
+        };
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;
             try {
@@ -190,27 +192,56 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 resolve: {
                     project: () => $scope.project,
                     isMember: () => isMember,
+                    mainScope: () => $scope
                 }
             });
             addTeamMember.rendered.then(() => {
                 $scope.loading = false;
                 componentHandler.upgradeDom();
             });
-            addTeamMember.closed.then(() => {
+            /*addTeamMember.closed.then(() => {//當視窗關閉
                 $scope.load();
-            });
+            });*/
         };
-        $scope.removeTeamMember = () => __awaiter(this, void 0, void 0, function* () {
-        });
+        $scope.removeTeamMember = (member) => {
+            swal({
+                title: "刪除團隊成員",
+                text: `您確定要將此成員「${member.user.name}(${member.user.id})」從本團隊中刪除嗎?`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (isConfirm) {
+                    $scope.loading = true;
+                    try {
+                        yield $scope.project.removeMember(member);
+                    }
+                    catch (e) {
+                        $scope.loading = false;
+                        swal({
+                            type: 'error',
+                            title: e.name,
+                            text: e.message,
+                            confirmButtonText: "確定"
+                        });
+                        return;
+                    }
+                    $scope.loading = false;
+                    $scope.updateMember();
+                    $scope.$apply();
+                }
+            }));
+        };
         yield $scope.load(); //初始化頁面
         $scope.$apply();
     });
 });
-app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, project, isMember, $uibModal) {
+app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, project, isMember, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
-        $scope.loadTeachers = () => __awaiter(this, void 0, void 0, function* () {
-        });
         $scope.isMember = isMember;
+        $scope.isTeacher = true;
         if (isMember) {
             $scope.typeName = "一般隊員";
         }
@@ -225,6 +256,45 @@ app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, proj
                 return;
             $scope.id += "nkfust.edu.tw";
         };
+        $scope.addMember = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            if (!$scope.id || !$scope.id.length) {
+                swal({
+                    type: 'error',
+                    title: "無效的使用者信箱",
+                    text: "使用者信箱不能為空",
+                    confirmButtonText: "確定"
+                });
+                $scope.loading = false;
+                return;
+            }
+            $scope.memberType = null;
+            if ($scope.isMember) {
+                $scope.memberType = goodidea.MemberType.member;
+            }
+            else if ($scope.isTeacher) {
+                $scope.memberType = goodidea.MemberType.teacher;
+            }
+            else {
+                $scope.memberType = goodidea.MemberType.assistant;
+            }
+            console.log($scope.memberType);
+            try {
+                yield project.addMember($scope.id, $scope.memberType);
+                mainScope.updateMember();
+                mainScope.$apply();
+                $scope.cancel();
+            }
+            catch (e) {
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+            }
+            $scope.loading = false;
+        });
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
