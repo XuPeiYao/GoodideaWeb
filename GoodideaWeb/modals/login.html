@@ -5,7 +5,7 @@
 <div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 <div class="modal-body">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <input tabindex="1" ng-disabled="loading" class="mdl-textfield__input" type="text" ng-model="id"/>
+        <input ng-change="idChange()" tabindex="1" ng-disabled="loading" class="mdl-textfield__input" type="text" ng-model="id"/>
         <label class="mdl-textfield__label">帳號</label>
         <span class="mdl-textfield__error">帳號不該為空</span>
     </div>

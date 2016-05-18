@@ -165,6 +165,12 @@ console.info("導覽列功能初始化完成");
 app.controller('loginModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, $uibModal) {
     $scope.loading = false;
     $scope.id = ""; $scope.pwd = "";
+    $scope.idChange = () => {//自動補足信箱
+        if (!$scope.id || !$scope.id.length) return;
+        var index = $scope.id.indexOf('@');
+        if (index != $scope.id.length - 1) return;
+        $scope.id += "nkfust.edu.tw";
+    };
     $scope.login = async () => {
         if (!$scope.id || !$scope.id.length || !$scope.pwd || !$scope.pwd.length) {
             swal({

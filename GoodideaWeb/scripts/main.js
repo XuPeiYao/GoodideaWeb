@@ -169,6 +169,14 @@ app.controller('loginModal', function ($scope, $sce, $uibModalInstance, $uibModa
         $scope.loading = false;
         $scope.id = "";
         $scope.pwd = "";
+        $scope.idChange = () => {
+            if (!$scope.id || !$scope.id.length)
+                return;
+            var index = $scope.id.indexOf('@');
+            if (index != $scope.id.length - 1)
+                return;
+            $scope.id += "nkfust.edu.tw";
+        };
         $scope.login = () => __awaiter(this, void 0, void 0, function* () {
             if (!$scope.id || !$scope.id.length || !$scope.pwd || !$scope.pwd.length) {
                 swal({
