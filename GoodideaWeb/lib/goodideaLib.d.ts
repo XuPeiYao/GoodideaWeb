@@ -48,7 +48,7 @@ declare module goodidea {
         teacherName: string;
         teacherEmail: string;
         static loadFromJSON(data: JSON): Course;
-        getCourseList(): Promise<Course[]>;
+        static getCourseList(): Promise<Course[]>;
     }
 }
 declare module goodidea {

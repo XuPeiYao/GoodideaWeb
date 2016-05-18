@@ -112,7 +112,7 @@ var goodidea;
             }
             return result;
         }
-        getCourseList() {
+        static getCourseList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/course/list');
                 var result = [];
