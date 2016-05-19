@@ -59,6 +59,19 @@ app.controller('requestList', function ($scope, $sce, $uibModal) {
         yield $scope.reload();
         $scope.$apply(); //通知更新  
         fixMdlTextfields(document.getElementsByClassName('listController')[0]);
+        //AutoLoadMore
+        var mdlContentElement = document.getElementsByClassName('mdl-layout__content')[0];
+        $scope.autoload = true; //自動讀取鎖定變數
+        mdlContentElement.onscroll = () => __awaiter(this, void 0, void 0, function* () {
+            if (mdlContentElement.scrollHeight - mdlContentElement.scrollTop > 1500)
+                return; //作用座標
+            if (!$scope.autoload)
+                return; //鎖定時不處理
+            $scope.autoload = false; //鎖定
+            yield $scope.loadNextPage(); //讀取
+            $scope.autoload = true; //取消鎖定
+            $scope.$apply(); //通知更新 
+        });
     });
 });
 //# sourceMappingURL=requestList.js.map

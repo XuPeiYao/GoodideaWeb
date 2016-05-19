@@ -57,4 +57,16 @@
     await $scope.reload();
     $scope.$apply();//通知更新  
     fixMdlTextfields(document.getElementsByClassName('listController')[0]);
+
+     //AutoLoadMore
+    var mdlContentElement: HTMLElement = (<HTMLElement>document.getElementsByClassName('mdl-layout__content')[0]);
+    $scope.autoload = true;//自動讀取鎖定變數
+    mdlContentElement.onscroll = async () => {
+        if (mdlContentElement.scrollHeight - mdlContentElement.scrollTop > 1500) return;//作用座標
+        if (!$scope.autoload) return;//鎖定時不處理
+        $scope.autoload = false;//鎖定
+        await $scope.loadNextPage();//讀取
+        $scope.autoload = true;//取消鎖定
+        $scope.$apply();//通知更新 
+    }
 });
