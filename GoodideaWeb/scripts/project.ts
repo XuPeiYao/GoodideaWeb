@@ -280,8 +280,43 @@
     await $scope.forumNextPage();//讀取討論區
     $scope.$apply();
 });
-app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, mainScope, $uibModal) {
-
+app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
+    $scope.name = "";
+    $scope.upload = async() => {
+        var files = (<HTMLInputElement>document.getElementById("AddDocument_FileInput")).files;
+        if (files.length == 0) {
+            swal({
+                type: 'error',
+                title: "資料缺漏",
+                text: "請務必選擇上傳檔案",
+                confirmButtonText: "確定"
+            });
+            return;
+        }
+        swal({
+            title: "檔案上傳中",
+            text: "正在上傳您的檔案，上傳完成後本視窗將自動關閉",
+            showConfirmButton: false
+        });
+        $scope.loading = true;
+        console.log(files);
+        try {
+            await project.uploadFile($scope.name, files[0]);
+            swal.close();
+            mainScope.$apply();
+            $scope.cancel();
+        } catch (e) {
+            swal({
+                type: 'error',
+                title: e.name,
+                text: e.message,
+                confirmButtonText: "確定"
+            });
+            $scope.loading = false;
+            $scope.$apply();
+            return;
+        }
+    }
     $scope.cancel = () => $uibModalInstance.close();
 });
 app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, isMember: boolean, mainScope, $uibModal) {

@@ -5,13 +5,13 @@
 <div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 <div class="modal-body">
     <from>
-        <div id="NameInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo {{Name.length > 0 ? 'is-dirty' : ''}}">
-            <input class="mdl-textfield__input" maxlength="128" type="text" id="Name" ng-model="Name" />
-            <label class="mdl-textfield__label" for="Name">名稱</label>
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo {{Name.length > 0 ? 'is-dirty' : ''}}">
+            <input class="mdl-textfield__input" maxlength="128" type="text" ng-model="name" />
+            <label class="mdl-textfield__label">名稱</label>
         </div><br />
-        <div id="FileInput" class="mdl-textfield  mdl-textfield--floating-label textfield-demo is-dirty">
-            <input class="mdl-textfield__input" type="file" id="File" accept=".jpg,.gif,.png,.doc,.xls,.ppt,.docx,.xlsx,.pptx,.pdf" />
-            <label class="mdl-textfield__label" for="File">檔案(檔案大小限制16MB以下)</label>
+        <div class="mdl-textfield  mdl-textfield--floating-label textfield-demo is-dirty">
+            <input class="mdl-textfield__input" type="file" id="AddDocument_FileInput" accept=".jpg,.gif,.png,.doc,.xls,.ppt,.docx,.xlsx,.pptx,.pdf" />
+            <label class="mdl-textfield__label">檔案(檔案大小限制16MB以下)</label>
         </div>
         檔案類型必須為jpg,gif,png,doc,xls,ppt,docx,xlsx,pptx,pdf格式
     </from>
