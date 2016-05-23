@@ -1,8 +1,8 @@
 ﻿<ul style="font-size:12pt">
     <li><label>提案名稱:</label>{{project.name}}</li>
     <li><label>提案分類:</label>{{project.class.name}}</li>
-    <li><label>參加競賽:</label>{{project.competition.name}}</li>
-    <li><label>參賽編號:</label>{{project.competitionPId}}</li>
+    <li><label>參加競賽:</label>{{project.competition.name || "未參賽"}}</li>
+    <li><label>參賽編號:</label>{{project.competitionPId || "未參賽"}}</li>
     <li><label>提案人(隊長):</label>{{project.owner.name}}</li>
     <li><label>最後更新時間:</label>{{project.lastEditTime.format("yyyy-mm-dd HH:MM:ss")}}</li>
     <li><label>累計瀏覽人次:</label>{{project.views}}</li>
