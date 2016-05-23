@@ -219,6 +219,22 @@
             }
         });
     }
+    $scope.addDocument = () => {
+        var addDocument = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/addDocument.html',
+            controller: 'addDocumentModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope
+            }
+        });
+        addDocument.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
     $scope.removeDocument = async (t: goodidea.DocumentInfo) => {
         swal({
             title: "刪除文件",
@@ -263,6 +279,10 @@
     await $scope.load();//初始化頁面
     await $scope.forumNextPage();//讀取討論區
     $scope.$apply();
+});
+app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, mainScope, $uibModal) {
+
+    $scope.cancel = () => $uibModalInstance.close();
 });
 app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, isMember: boolean, mainScope, $uibModal) {
     $scope.isMember = isMember;

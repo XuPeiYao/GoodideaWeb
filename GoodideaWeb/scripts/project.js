@@ -234,6 +234,22 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
             }));
         };
+        $scope.addDocument = () => {
+            var addDocument = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/addDocument.html',
+                controller: 'addDocumentModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addDocument.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         $scope.removeDocument = (t) => __awaiter(this, void 0, void 0, function* () {
             swal({
                 title: "刪除文件",
@@ -278,6 +294,11 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         yield $scope.load(); //初始化頁面
         yield $scope.forumNextPage(); //讀取討論區
         $scope.$apply();
+    });
+});
+app.controller('addDocumentModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.cancel = () => $uibModalInstance.close();
     });
 });
 app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, project, isMember, mainScope, $uibModal) {
