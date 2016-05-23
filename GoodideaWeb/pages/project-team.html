@@ -138,19 +138,23 @@
                 </ul>
             </div>
             <div class="nkfust-project-member-action mdl-card__actions mdl-card--border mdl-grid">
-                <button ng-hide="project.editable || !t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                <button id="project_request_join_{{t.id}}" ng-hide="!loginUser || project.editable || !t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                     應徵
                 </button>
-                <button ng-hide="project.editable || t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                    取消應徵
+                <button id="project_request_quit_{{t.id}}" ng-hide="!loginUser || project.editable || t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                    取消
                 </button>
-                <button ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button id="project_request_list_{{t.id}}" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     列表
                 </button>
-                <button ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button id="project_request_edit_{{t.id}}" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     編輯
                 </button>
             </div>
+            <div class="mdl-tooltip" for="project_request_join_{{t.id}}">以目前使用者身分應徵</div>
+            <div class="mdl-tooltip" for="project_request_quit_{{t.id}}">取消應徵</div>
+            <div class="mdl-tooltip" for="project_request_list_{{t.id}}">開啟應徵者列表</div>
+            <div class="mdl-tooltip" for="project_request_edit_{{t.id}}">編輯需求項目</div>
         </div>
     </div>
 </div>
