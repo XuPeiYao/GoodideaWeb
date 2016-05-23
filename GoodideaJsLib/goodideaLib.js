@@ -658,7 +658,7 @@ var goodidea;
         uploadCover(file) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/project/update', null, { project: this.id, cover: file });
-                var result = goodidea.FileInfo.loadFromJSON(responseJSON['Result']);
+                var result = goodidea.FileInfo.loadFromJSON(responseJSON['Result']['Cover']);
                 this.cover = result;
                 return result;
             });

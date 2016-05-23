@@ -103,6 +103,8 @@
     <Content Include="lib\tinymce\js\tinymce\themes\modern\theme.min.js" />
     <Content Include="lib\tinymce\js\tinymce\tinymce.min.js" />
     <Content Include="lib\tinymce\LICENSE.TXT" />
+    <Content Include="modals\addCover.html" />
+    <Content Include="modals\addDocument.html" />
     <Content Include="modals\addMember.html" />
     <Content Include="pages\project-content.html" />
     <Content Include="pages\project-document.html" />

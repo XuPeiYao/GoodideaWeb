@@ -195,7 +195,7 @@
          */
         public async uploadCover(file: File): Promise<FileInfo> {
             var responseJSON = await postAsync('api/project/update', null, { project: this.id, cover: file });
-            var result = FileInfo.loadFromJSON(responseJSON['Result']);
+            var result = FileInfo.loadFromJSON(responseJSON['Result']['Cover']);
             this.cover = result;
             return result;
         }
