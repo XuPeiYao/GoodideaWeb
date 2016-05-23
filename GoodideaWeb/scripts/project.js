@@ -280,6 +280,22 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
             }));
         });
+        $scope.addCover = () => {
+            var addDocument = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/addCover.html',
+                controller: 'addCoverModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addDocument.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         $scope.forumOnlyTeam = false;
         $scope.forumNextPage = () => __awaiter(this, void 0, void 0, function* () {
             if ($scope.forumList) {
@@ -316,9 +332,48 @@ app.controller('addDocumentModal', function ($scope, $sce, $uibModalInstance, pr
                 showConfirmButton: false
             });
             $scope.loading = true;
-            console.log(files);
             try {
                 yield project.uploadFile($scope.name, files[0]);
+                swal.close();
+                mainScope.$apply();
+                $scope.cancel();
+            }
+            catch (e) {
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+                $scope.loading = false;
+                $scope.$apply();
+                return;
+            }
+        });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('addCoverModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.upload = () => __awaiter(this, void 0, void 0, function* () {
+            var files = document.getElementById("AddCover_FileInput").files;
+            if (files.length == 0) {
+                swal({
+                    type: 'error',
+                    title: "資料缺漏",
+                    text: "請務必選擇上傳檔案",
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            swal({
+                title: "檔案上傳中",
+                text: "正在上傳您的檔案，上傳完成後本視窗將自動關閉",
+                showConfirmButton: false
+            });
+            $scope.loading = true;
+            try {
+                yield project.uploadCover(files[0]);
                 swal.close();
                 mainScope.$apply();
                 $scope.cancel();
