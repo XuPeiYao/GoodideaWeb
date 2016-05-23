@@ -320,6 +320,7 @@ body, h1, h2, h3, h4, h5, h6{
     margin-top:-1px;
     margin-right: auto;
     margin-left: auto;
+    margin-bottom:6px;
     background-color:#F3F3F3;
     border-color:#9E9E9E;
     border-radius:0 0 5px 5px;
