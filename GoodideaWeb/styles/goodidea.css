@@ -13,6 +13,45 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+.forum{
+    padding:15px;
+}
+.forum> .forum-photo{
+    width:168px;
+    height:168px;
+    position: absolute;
+}
+.forum> .forum-content{
+    position: absolute;
+    left:183px;
+    margin:0;
+    width:calc(100% - 168px - 15px) !important;
+    padding: 0 15px;
+    height:calc(100% - 30px);
+}
+@media(max-width:480px){
+    .forum> .forum-photo{
+        display:none;
+    }
+    .forum > .forum-content {
+        left:0;
+        width:calc(100% - 30px) !important;
+        margin: 0 15px;
+        padding:0;
+    }
+}
+.forum-content > .forum-name{
+    font-size: 18pt;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding-bottom:4px;
+}
+.forum-time{
+    bottom:-10px !important;
+    position:absolute;
+    width: calc(100% - 30px);
+}
+
 .fix-searchBox{
     background: white;
     z-index:999;
@@ -187,7 +226,7 @@ body, h1, h2, h3, h4, h5, h6{
     }
 }
 
-@media(max-width:480px){
+@media(max-width:479px){
     .nkfust-project-header{
         width:100%;
         height:396px;
@@ -328,6 +367,24 @@ body, h1, h2, h3, h4, h5, h6{
     padding: 0px;
     min-width: 36px !important;
     width: 36px;
+}
+.nkfust-project-forum-close{
+    position: absolute;
+    right: 2px;
+    margin-top: -13px;
+    font-size: 22pt;
+    padding: 0px;
+    min-width: 36px !important;
+    width: 36px;
+}
+.nkfust-project-document-close{
+    right: 2px;
+    margin-top: -13px;
+    font-size: 22pt;
+    padding: 0px;
+    min-width: 36px !important;
+    width: 36px;
+    height:30px;
 }
 
 .nkfust-memberList-card-image > h2>a{
