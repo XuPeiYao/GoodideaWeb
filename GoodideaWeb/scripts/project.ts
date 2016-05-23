@@ -220,8 +220,19 @@
         });
     }    
 
-    await $scope.load();//初始化頁面
+    $scope.forumOnlyTeam = false;
+    $scope.forumNextPage = async () => {
+        if ($scope.forumList) {
+            await (<goodidea.PageResult<goodidea.Forum>>$scope.forumList).nextPage();
+        } else {
+            $scope.forumList = await goodidea.Forum.getForumList($scope.project, $scope.forumOnlyTeam);
+        }
+        $scope.$apply();
+        fixMdlTooltip(document.getElementById("forumList"));
+    }
 
+    await $scope.load();//初始化頁面
+    await $scope.forumNextPage();//讀取討論區
     $scope.$apply();
 });
 app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, isMember: boolean, mainScope, $uibModal) {

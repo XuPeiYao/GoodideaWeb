@@ -234,7 +234,19 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
             }));
         };
+        $scope.forumOnlyTeam = false;
+        $scope.forumNextPage = () => __awaiter(this, void 0, void 0, function* () {
+            if ($scope.forumList) {
+                yield $scope.forumList.nextPage();
+            }
+            else {
+                $scope.forumList = yield goodidea.Forum.getForumList($scope.project, $scope.forumOnlyTeam);
+            }
+            $scope.$apply();
+            fixMdlTooltip(document.getElementById("forumList"));
+        });
         yield $scope.load(); //初始化頁面
+        yield $scope.forumNextPage(); //讀取討論區
         $scope.$apply();
     });
 });
