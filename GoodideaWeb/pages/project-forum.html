@@ -1,0 +1,36 @@
+﻿<div ng-show="project.editable" class="nkfust-project-edit-nav">
+    <!--
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        編輯
+    </button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        返回
+    </button>-->
+</div>
+<div class="mdl-grid" id="forumList">
+    <div class="forum mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp" ng-repeat="t in forumList.result">
+        <div class="forum-photo" style="background: url({{t.user.photo.url || 'images/user.png'}}) center / cover;">
+        </div>
+        <div class="forum-content mdl-cell mdl-cell--10-col nkfust-project-tab-hidden-table">
+            <div class="forum-name">
+                <a id="project_forum_{{t.id}}" href="about.html?id={{t.user.id}}">{{t.user.name}}</a>
+                <button id="project_forum_remove_{{t.id}}" ng-show="t.editable" type="button" class="nkfust-project-forum-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="mdl-tooltip" for="project_forum_{{t.id}}">
+                {{t.user.id}}
+            </div>
+            <div class="mdl-tooltip" for="project_forum_remove_{{t.id}}">
+                刪除留言
+            </div>
+            <div style="margin-top:5px;">{{t.content}}</div>
+            <div id="project_forum_time_{{t.id}}" class="forum-time mdl-card__actions mdl-card--border">
+                {{t.time.format('yyyy-mm-dd HH:MM:ss')}}
+            </div>
+        </div>
+        <div class="mdl-tooltip mdl-tooltip--top" for="project_forum_time_{{t.id}}">
+            留言時間
+        </div>
+    </div>
+</div>
