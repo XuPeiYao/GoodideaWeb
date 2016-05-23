@@ -9,7 +9,7 @@
 </div>
 <ul style="font-size:12pt">
     <li style="line-height:35px;" ng-repeat="t in project.files">
-        <button ng-show="project.editable" class="nkfust-project-document-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        <button ng-click="removeDocument(t)" ng-show="project.editable" class="nkfust-project-document-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
             ×
         </button>
         <a target="_blank" href="{{t.file.url}}">{{t.name || t.file.name}}</a>

@@ -234,6 +234,36 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
             }));
         };
+        $scope.removeDocument = (t) => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "刪除文件",
+                text: `您確定要將文件「${t.name || t.file.name}」從本提案中刪除嗎?請注意，請確保文章中並無使用到該檔案，否則刪除後可能發生找不到目標檔案問題`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (isConfirm) {
+                    $scope.loading = true;
+                    try {
+                        yield $scope.project.deleteFile(t);
+                    }
+                    catch (e) {
+                        $scope.loading = false;
+                        swal({
+                            type: 'error',
+                            title: e.name,
+                            text: e.message,
+                            confirmButtonText: "確定"
+                        });
+                        return;
+                    }
+                    $scope.loading = false;
+                    $scope.$apply();
+                }
+            }));
+        });
         $scope.forumOnlyTeam = false;
         $scope.forumNextPage = () => __awaiter(this, void 0, void 0, function* () {
             if ($scope.forumList) {
