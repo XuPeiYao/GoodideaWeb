@@ -303,17 +303,48 @@
     //#endregion
 
     //#region 討論區
-    $scope.forumOnlyTeam = false;
+    $scope.forumsType = null;
+    $scope.addForum = () => {
+        swal({
+            title: "發表討論",
+            text: "請輸入討論內容",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "討論內容",
+            confirmButtonText: "確定",
+            cancelButtonText: "取消"
+        }, async (inputValue) => {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("討論內容不該為空"); return false
+            }
+            $scope.loading = true;
+            await goodidea.Forum.createForum($scope.project, ($scope.forumsType == "Private"), <string>inputValue);
+            $scope.loading = false;
+            swal({
+                type: 'success',
+                title: "發表討論成功",
+                text: '您已經成功發表討論',
+                confirmButtonText: "確定"
+            });
+            $scope.forumTypeChange();
+            $scope.$apply();
+        });
+    }
     $scope.forumTypeChange = () => {
         $scope.forumList = null;
-        $scope.forumNextPage();        
+        $scope.forum = [];
+        $scope.forumNextPage();   
     }
+    $scope.forum = [];
     $scope.forumNextPage = async () => {
         if ($scope.forumList) {
-            await (<goodidea.PageResult<goodidea.Forum>>$scope.forumList).nextPage();
+            $scope.forumList = await (<goodidea.PageResult<goodidea.Forum>>$scope.forumList).nextPage();
         } else {
-            $scope.forumList = await goodidea.Forum.getForumList($scope.project, $scope.forumOnlyTeam);
+            $scope.forumList = await goodidea.Forum.getForumList($scope.project,  $scope.forumsType == "Private");
         }
+        $scope.forum = $scope.forum.concat($scope.forumList.result);
         $scope.$apply();
         fixMdlTooltip(document.getElementById("forumList"));
     }

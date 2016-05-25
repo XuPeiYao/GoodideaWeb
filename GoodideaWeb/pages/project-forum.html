@@ -1,14 +1,23 @@
-﻿<div ng-show="project.editable" class="nkfust-project-edit-nav">
-    <!--
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-        編輯
+﻿<div class="nkfust-project-edit-nav">    
+    <div ng-show="project.editable">
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-1">
+            <input type="radio" ng-change="forumTypeChange()" id="option-1" class="mdl-radio__button" ng-model="forumsType" name="options" value="Public" checked />
+            <span class="mdl-radio__label">公共討論區</span>
+        </label>
+        <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="option-2">
+            <input type="radio" ng-change="forumTypeChange()" id="option-2" class="mdl-radio__button" ng-model="forumsType" name="options" value="Private" />
+            <span class="mdl-radio__label">團隊討論區</span>
+        </label>
+    </div>
+    <button ng-click="addForum()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        發表討論
     </button>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
-        返回
-    </button>-->
 </div>
 <div class="mdl-grid" id="forumList">
-    <div class="forum mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp" ng-repeat="t in forumList.result">
+    <div ng-hide="forum.length"  style="text-align:center" class="forum mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp">
+        尚未有討論
+    </div>
+    <div class="forum mdl-cell mdl-cell--12-col mdl-card mdl-shadow--4dp" ng-repeat="t in forum">
         <div class="forum-photo" style="background: url({{t.user.photo.url || 'images/user.png'}}) center / cover;">
         </div>
         <div class="forum-content mdl-cell mdl-cell--10-col nkfust-project-tab-hidden-table">
@@ -32,5 +41,8 @@
         <div class="mdl-tooltip mdl-tooltip--top" for="project_forum_time_{{t.id}}">
             留言時間
         </div>
+    </div>
+    <div class="mdl-cell mdl-cell--12-col" style="text-align:center">
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="width:100%" ng-click="forumNextPage()">讀取更多</button>
     </div>
 </div>
