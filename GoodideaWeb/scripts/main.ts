@@ -104,6 +104,21 @@ console.info(`允許域設定為: ${goodidea.origin}`);
 //初始化應用程式範圍
 var app = angular.module('app', ['ngAnimate', 'ui.bootstrap']);
 
+//ng-enter功能
+app.directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if (event.which === 13) {
+                scope.$apply(function () {
+                    scope.$eval(attrs.ngEnter);
+                });
+
+                event.preventDefault();
+            }
+        });
+    };
+});
+
 //#region 導覽列控制器
 var navController = async function ($scope, $sce, $uibModal) {
     var loginUser = await goodidea.User.getLoginUser();
