@@ -303,7 +303,10 @@
     //#endregion
 
     //#region 討論區
+    //討論區類型字串
     $scope.forumsType = null;
+
+    //發表討論
     $scope.addForum = () => {
         swal({
             title: "發表討論",
@@ -332,12 +335,49 @@
             $scope.$apply();
         });
     }
+
+    //移除討論
+    $scope.removeForum = async (forum: goodidea.Forum) => {
+        swal({
+            title: "刪除討論",
+            text: `您確定要將此討論刪除嗎?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            closeOnConfirm: true
+        }, async (isConfirm) => {
+            if (isConfirm) {
+                $scope.loading = true;
+                try {
+                    await goodidea.Forum.remove(forum);
+                } catch (e) {
+                    $scope.loading = false;
+                    swal({
+                        type: 'error',
+                        title: e.name,
+                        text: e.message,
+                        confirmButtonText: "確定"
+                    });
+                    return;
+                }
+                $scope.loading = false;
+                $scope.forumTypeChange();
+            }
+        });
+    }
+
+    //當討論需類型改變
     $scope.forumTypeChange = () => {
         $scope.forumList = null;
         $scope.forum = [];
         $scope.forumNextPage();   
     }
+
+    //討論區討論串
     $scope.forum = [];
+
+    //讀取更多討論
     $scope.forumNextPage = async () => {
         if ($scope.forumList) {
             $scope.forumList = await (<goodidea.PageResult<goodidea.Forum>>$scope.forumList).nextPage();

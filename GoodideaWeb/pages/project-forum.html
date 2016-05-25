@@ -23,7 +23,7 @@
         <div class="forum-content mdl-cell mdl-cell--10-col nkfust-project-tab-hidden-table">
             <div class="forum-name">
                 <a id="project_forum_{{t.id}}" href="about.html?id={{t.user.id}}">{{t.user.name}}</a>
-                <button id="project_forum_remove_{{t.id}}" ng-show="t.editable" type="button" class="nkfust-project-forum-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button ng-click="removeForum(t)" id="project_forum_remove_{{t.id}}" ng-show="t.editable" type="button" class="nkfust-project-forum-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
