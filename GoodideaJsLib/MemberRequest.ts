@@ -65,6 +65,7 @@
          */
         public async joinMemberRequest(): Promise<void> {
             await postAsync('api/project/JoinMemberResponse', null, { memberRequest: this.id });
+            this.send = true;
         }
 
         /**
@@ -72,6 +73,7 @@
          */
         public async quitMemberRequest(): Promise<void> {
             await postAsync('api/project/QuitMemberResponse', null, { memberRequest: this.id });
+            this.send = false;
         }
 
         /**

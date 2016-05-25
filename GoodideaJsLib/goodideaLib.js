@@ -403,6 +403,7 @@ var goodidea;
         joinMemberRequest() {
             return __awaiter(this, void 0, Promise, function* () {
                 yield goodidea.postAsync('api/project/JoinMemberResponse', null, { memberRequest: this.id });
+                this.send = true;
             });
         }
         /**
@@ -411,6 +412,7 @@ var goodidea;
         quitMemberRequest() {
             return __awaiter(this, void 0, Promise, function* () {
                 yield goodidea.postAsync('api/project/QuitMemberResponse', null, { memberRequest: this.id });
+                this.send = false;
             });
         }
         /**
