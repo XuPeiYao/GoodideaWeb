@@ -277,10 +277,10 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
             });
             addRequest.rendered.then(() => {
-                $scope.loading = false;
                 componentHandler.upgradeDom();
             });
         };
+        //編輯徵人需求
         $scope.editRequest = (t) => {
             var editRequest = $uibModal.open({
                 animation: true,
@@ -294,7 +294,6 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
             });
             editRequest.rendered.then(() => {
-                $scope.loading = false;
                 componentHandler.upgradeDom();
             });
         };
@@ -340,6 +339,20 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         };
         //顯示應徵清單
         $scope.openResponseList = (t) => {
+            var openResponse = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/memberRequestResponse.html',
+                controller: 'memberRequestResponseModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope,
+                    memberRequest: () => t
+                }
+            });
+            openResponse.rendered.then(() => {
+                componentHandler.upgradeDom();
+            });
         };
         //#endregion
         //#region 文件管理
@@ -602,6 +615,11 @@ app.controller('editMemberRequestModal', function ($scope, $sce, $uibModalInstan
                 return;
             }
         });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('memberRequestResponseModal', function ($scope, $sce, $uibModalInstance, project, memberRequest, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
         $scope.cancel = () => $uibModalInstance.close();
     });
 });

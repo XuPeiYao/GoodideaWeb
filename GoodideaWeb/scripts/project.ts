@@ -268,11 +268,11 @@
             }
         });
         addRequest.rendered.then(() => {
-            $scope.loading = false;
             componentHandler.upgradeDom();
         });
     }
 
+    //編輯徵人需求
     $scope.editRequest = (t: goodidea.MemberRequest) => {
         var editRequest = $uibModal.open({
             animation: true,
@@ -286,7 +286,6 @@
             }
         });
         editRequest.rendered.then(() => {
-            $scope.loading = false;
             componentHandler.upgradeDom();
         });
     }
@@ -339,7 +338,20 @@
 
     //顯示應徵清單
     $scope.openResponseList = (t: goodidea.MemberRequest) => {
-        
+        var openResponse = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/memberRequestResponse.html',
+            controller: 'memberRequestResponseModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope,
+                memberRequest: () => t
+            }
+        });
+        openResponse .rendered.then(() => {
+            componentHandler.upgradeDom();
+        });
     }
     //#endregion
 
@@ -600,6 +612,10 @@ app.controller('editMemberRequestModal', async function ($scope, $sce, $uibModal
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+app.controller('memberRequestResponseModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, memberRequest: goodidea.MemberRequest, mainScope, $uibModal) {
+    
+    $scope.cancel = () => $uibModalInstance.close();
+});
 
 app.controller('addCoverModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.upload = async () => {

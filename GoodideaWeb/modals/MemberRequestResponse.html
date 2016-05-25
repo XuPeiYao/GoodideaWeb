@@ -1,0 +1,19 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">應徵者列表</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    
+</div>
+<div class="modal-footer">
+    <button id="addMember" tabindex="3" ng-disabled="loading" ng-click="addMember()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        使用者頁面
+    </button>
+    <button id="addMember" tabindex="3" ng-disabled="loading" ng-click="addMember()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        新增成員
+    </button>
+    <button id="cancelAddMember" tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>
