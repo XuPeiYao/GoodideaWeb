@@ -182,7 +182,7 @@ declare module goodidea {
         /**
          * 目前登入使用者是否已經應徵
          */
-        send: boolean;
+        sent: boolean;
         /**
          * 取得所需技能
          */

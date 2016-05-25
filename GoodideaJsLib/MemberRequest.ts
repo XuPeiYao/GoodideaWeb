@@ -17,7 +17,7 @@
         /**
          * 目前登入使用者是否已經應徵
          */
-        public send: boolean;
+        public sent: boolean;
 
         /**
          * 取得所需技能
@@ -65,7 +65,7 @@
          */
         public async joinMemberRequest(): Promise<void> {
             await postAsync('api/project/JoinMemberResponse', null, { memberRequest: this.id });
-            this.send = true;
+            this.sent = true;
         }
 
         /**
@@ -73,7 +73,7 @@
          */
         public async quitMemberRequest(): Promise<void> {
             await postAsync('api/project/QuitMemberResponse', null, { memberRequest: this.id });
-            this.send = false;
+            this.sent = false;
         }
 
         /**
