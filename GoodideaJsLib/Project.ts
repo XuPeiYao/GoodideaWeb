@@ -173,10 +173,13 @@
          * @param specialty 專長需求集合
          */
         public async addMemberRequest(isTeacher: boolean, specialty: string[]): Promise<MemberRequest> {
-            var responseJSON = await postAsync('api/project/addMemberRequest', null, {
+            var responseJSON = specialty ? await postAsync('api/project/addMemberRequest', null, {
                 project: this.id,
                 isTeacher: isTeacher,
-                specialty: specialty ? specialty.join(",") : null
+                specialty: specialty.join(",")
+            }) : await postAsync('api/project/addMemberRequest', null, {
+                project: this.id,
+                isTeacher: isTeacher
             });
             var result = MemberRequest.loadFromJSON(responseJSON['Result']);
             if (!this.memberRequest) this.memberRequest = [];

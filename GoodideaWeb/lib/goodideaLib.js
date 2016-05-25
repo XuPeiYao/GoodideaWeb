@@ -634,10 +634,13 @@ var goodidea;
          */
         addMemberRequest(isTeacher, specialty) {
             return __awaiter(this, void 0, Promise, function* () {
-                var responseJSON = yield goodidea.postAsync('api/project/addMemberRequest', null, {
+                var responseJSON = specialty ? yield goodidea.postAsync('api/project/addMemberRequest', null, {
                     project: this.id,
                     isTeacher: isTeacher,
-                    specialty: specialty ? specialty.join(",") : null
+                    specialty: specialty.join(",")
+                }) : yield goodidea.postAsync('api/project/addMemberRequest', null, {
+                    project: this.id,
+                    isTeacher: isTeacher
                 });
                 var result = goodidea.MemberRequest.loadFromJSON(responseJSON['Result']);
                 if (!this.memberRequest)
