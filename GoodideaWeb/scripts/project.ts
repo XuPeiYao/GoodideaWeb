@@ -4,6 +4,7 @@
     $scope.voteQuota = 0;
     $scope.loading = false;
 
+    //讀取提案
     $scope.load = async () => {
         $scope.loading = true;
         $scope.projectId = queryString['id'];
@@ -39,7 +40,21 @@
             };
         }
 
+        //更新內文HTML
+        $scope.updateContent();
+    }
 
+    //更新成員名單(成員名單在前端區分為課程成員與團隊成員)
+    $scope.updateMember = () => {
+        //篩選各類別的團隊成員
+        $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
+        $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
+        $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
+    }
+
+    //更新內文HTML(當project物件更新後需要更新目前UI)
+    $scope.updateContent = () => {
+        $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
         //#region Segment剖析
         $scope.project.segments = (<goodidea.Project>$scope.project).getContentSegments().segments;
         if ($scope.project.segments) {
@@ -110,12 +125,8 @@
         mdlContentElement.onscroll(null);//初始化章節列表
         //#endregion
     }
-    $scope.updateMember = () => {
-        //篩選各類別的團隊成員
-        $scope.project.team.member = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.member);
-        $scope.project.team.assistant = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.assistant);
-        $scope.project.team.teacher = $scope.project.team.group.filter(x => x.memberType == goodidea.MemberType.teacher);
-    }
+
+    //投票
     $scope.vote = async () => {
         $scope.loading = true;
         try {
@@ -140,7 +151,9 @@
             confirmButtonText: "確定"
         });
     }
-    $scope.changeProjectName = async () => {
+
+    //變更團隊名稱
+    $scope.changeTeamName = async () => {
         swal({
             title: "變更團隊名稱",
             text: "請輸入新的團隊名稱",
@@ -168,6 +181,26 @@
             $scope.$apply();
         });
     }
+
+    //提案封面上傳
+    $scope.addCover = () => {
+        var addDocument = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/addCover.html',
+            controller: 'addCoverModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope
+            }
+        });
+        addDocument.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+
+    //#region 團隊管理
     $scope.addTeamMember = (isMember: boolean) => {
         var addTeamMember = $uibModal.open({
             animation: true,
@@ -219,6 +252,9 @@
             }
         });
     }
+    //#endregion
+
+    //#region 文件管理
     $scope.addDocument = () => {
         var addDocument = $uibModal.open({
             animation: true,
@@ -264,24 +300,14 @@
             }
         });
     }
-    $scope.addCover = () => {
-        var addDocument = $uibModal.open({
-            animation: true,
-            templateUrl: 'modals/addCover.html',
-            controller: 'addCoverModal',
-            size: 'sm',
-            resolve: {
-                project: () => $scope.project,
-                mainScope: () => $scope
-            }
-        });
-        addDocument.rendered.then(() => {
-            $scope.loading = false;
-            componentHandler.upgradeDom();
-        });
-    }
+    //#endregion
 
+    //#region 討論區
     $scope.forumOnlyTeam = false;
+    $scope.forumTypeChange = () => {
+        $scope.forumList = null;
+        $scope.forumNextPage();        
+    }
     $scope.forumNextPage = async () => {
         if ($scope.forumList) {
             await (<goodidea.PageResult<goodidea.Forum>>$scope.forumList).nextPage();
@@ -291,6 +317,7 @@
         $scope.$apply();
         fixMdlTooltip(document.getElementById("forumList"));
     }
+    //#endregion
 
     await $scope.load();//初始化頁面
     await $scope.forumNextPage();//讀取討論區
