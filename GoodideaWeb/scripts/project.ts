@@ -254,6 +254,77 @@
     }
     //#endregion
 
+    //#region 團隊需求
+    //加入新的徵人需求
+    $scope.addRequest = () => {
+        var addRequest = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/addMemberRequest.html',
+            controller: 'addMemberRequestModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope
+            }
+        });
+        addRequest.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+
+    //移除徵人需求
+    $scope.removeRequest = async (t: goodidea.MemberRequest) => {
+        swal({
+            title: "刪除成員需求",
+            text: `您確定要將此成員需求刪除嗎?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            closeOnConfirm: true
+        }, async (isConfirm) => {
+            if (isConfirm) {
+                $scope.loading = true;
+                try {
+                    await (<goodidea.Project>$scope.project).removeMemberRequest(t);
+                } catch (e) {
+                    $scope.loading = false;
+                    swal({
+                        type: 'error',
+                        title: e.name,
+                        text: e.message,
+                        confirmButtonText: "確定"
+                    });
+                    return;
+                }
+                $scope.loading = false;
+                $scope.$apply();
+            }
+        });
+    }
+
+    //應徵
+    $scope.joinRequest = () => {
+        
+    }
+
+    //取消應徵
+    $scope.quitRequest = () => {
+        
+    }
+
+    //將指定人從應徵清單中移除
+    $scope.removeResponse = () => {
+        
+    }
+
+    //顯示應徵清單
+    $scope.openResponseList = () => {
+        
+    }
+    //#endregion
+
     //#region 文件管理
     $scope.addDocument = () => {
         var addDocument = $uibModal.open({
@@ -432,6 +503,43 @@ app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstan
     }
     $scope.cancel = () => $uibModalInstance.close();
 });
+
+app.controller('addMemberRequestModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
+    $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"];//預設專長限制
+    $scope.specialtySelect = $scope.specialtyList.first();//預設選取項目
+    $scope.specialty = [];
+    $scope.isTeacher = false;
+    $scope.addSpecialty = () => {
+        var value = $scope.specialtySelect == '' ? $scope.specialtyInput : $scope.specialtySelect;
+        if ($scope.specialty.filter(x => x == value).length) return;
+        $scope.specialty.push(value);
+    }
+    $scope.removeSpecialty = (t)=>{
+        $scope.specialty = $scope.specialty.filter(x => x != t);
+    }
+    $scope.addMemberRequest = async () => {
+        try {
+            $scope.loading = true;
+            var spec = $scope.specialty.length ? $scope.specialty : null;
+            await (<goodidea.Project>project).addMemberRequest($scope.isTeacher, spec);
+            $scope.loading = false;
+            mainScope.$apply();
+            $scope.cancel();
+        }catch (e) {
+            swal({
+                type: 'error',
+                title: e.name,
+                text: e.message,
+                confirmButtonText: "確定"
+            });
+            $scope.loading = false;
+            mainScope.$apply();
+            return;
+        }
+    }
+    $scope.cancel = () => $uibModalInstance.close();
+});
+
 app.controller('addCoverModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.upload = async () => {
         var files = (<HTMLInputElement>document.getElementById("AddCover_FileInput")).files;

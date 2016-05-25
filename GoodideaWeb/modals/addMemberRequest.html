@@ -1,0 +1,43 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">新增成員需求</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <label class="mdl-checkbox mdl-js-checkbox mdl-js-ripple-effect">
+        <input type="checkbox" class="mdl-checkbox__input" ng-model="isTeacher"/>
+        <span class="mdl-checkbox__label">應徵指導教授</span>
+    </label>
+    <hr/>
+    <div id="SpecialtyInput" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo is-dirty">
+        <div>
+            <div ng-hide="specialty.length">
+                您尚未加入專長需求
+            </div>
+            <div ng-repeat="t in specialty">
+                <button type="button" class="close item-close" ng-click="removeSpecialty(t)"><span aria-hidden="true">&times;</span></button>
+                {{t}}
+            </div>
+        </div>
+        <label class="mdl-textfield__label">專長需求列表</label>
+    </div>
+    <select class="mdl-textfield__input" ng-model="specialtySelect">
+        <option ng-repeat="s in specialtyList" value="{{s}}">{{s}}</option>
+        <option value="">自訂</option>
+    </select>
+    <div id="CustomSpecialtyInput" ng-show="specialtySelect==''" class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" maxlength="32" type="text" ng-model="specialtyInput">
+        <label class="mdl-textfield__label">自訂專長</label>
+    </div>
+    <button type="button" ng-click="addSpecialty()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        加入專長需求項目
+    </button>
+</div>
+<div class="modal-footer">
+    <button id="addMember" tabindex="3" ng-disabled="loading" ng-click="addMemberRequest()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        新增
+    </button>
+    <button id="cancelAddMember" tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>

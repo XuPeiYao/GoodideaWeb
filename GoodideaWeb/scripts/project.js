@@ -263,6 +263,68 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             }));
         };
         //#endregion
+        //#region 團隊需求
+        //加入新的徵人需求
+        $scope.addRequest = () => {
+            var addRequest = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/addMemberRequest.html',
+                controller: 'addMemberRequestModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addRequest.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
+        //移除徵人需求
+        $scope.removeRequest = (t) => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "刪除成員需求",
+                text: `您確定要將此成員需求刪除嗎?`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (isConfirm) {
+                    $scope.loading = true;
+                    try {
+                        yield $scope.project.removeMemberRequest(t);
+                    }
+                    catch (e) {
+                        $scope.loading = false;
+                        swal({
+                            type: 'error',
+                            title: e.name,
+                            text: e.message,
+                            confirmButtonText: "確定"
+                        });
+                        return;
+                    }
+                    $scope.loading = false;
+                    $scope.$apply();
+                }
+            }));
+        });
+        //應徵
+        $scope.joinRequest = () => {
+        };
+        //取消應徵
+        $scope.quitRequest = () => {
+        };
+        //將指定人從應徵清單中移除
+        $scope.removeResponse = () => {
+        };
+        //顯示應徵清單
+        $scope.openResponseList = () => {
+        };
+        //#endregion
         //#region 文件管理
         $scope.addDocument = () => {
             var addDocument = $uibModal.open({
@@ -437,6 +499,45 @@ app.controller('addDocumentModal', function ($scope, $sce, $uibModalInstance, pr
                 });
                 $scope.loading = false;
                 $scope.$apply();
+                return;
+            }
+        });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('addMemberRequestModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"]; //預設專長限制
+        $scope.specialtySelect = $scope.specialtyList.first(); //預設選取項目
+        $scope.specialty = [];
+        $scope.isTeacher = false;
+        $scope.addSpecialty = () => {
+            var value = $scope.specialtySelect == '' ? $scope.specialtyInput : $scope.specialtySelect;
+            if ($scope.specialty.filter(x => x == value).length)
+                return;
+            $scope.specialty.push(value);
+        };
+        $scope.removeSpecialty = (t) => {
+            $scope.specialty = $scope.specialty.filter(x => x != t);
+        };
+        $scope.addMemberRequest = () => __awaiter(this, void 0, void 0, function* () {
+            try {
+                $scope.loading = true;
+                var spec = $scope.specialty.length ? $scope.specialty : null;
+                yield project.addMemberRequest($scope.isTeacher, spec);
+                $scope.loading = false;
+                mainScope.$apply();
+                $scope.cancel();
+            }
+            catch (e) {
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+                $scope.loading = false;
+                mainScope.$apply();
                 return;
             }
         });

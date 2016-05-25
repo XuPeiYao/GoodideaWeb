@@ -8,7 +8,10 @@
 </div>
 <ul style="font-size:12pt">
     <li style="line-height:35px;" ng-repeat="t in project.files">
-        <button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable" class="nkfust-project-document-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        <!--<button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable" class="nkfust-project-document-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            ×
+        </button>-->
+        <button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable" class="close item-close">
             ×
         </button>
         <a target="_blank" href="{{t.file.url}}">{{t.name || t.file.name}}</a>

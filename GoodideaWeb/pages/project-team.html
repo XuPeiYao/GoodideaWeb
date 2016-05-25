@@ -114,7 +114,7 @@
 <!--成員需求只有在需求數量大於0才顯示或者是可進行公告需求的人-->
 <div class="nkfust-project-member" ng-show="project.setable || project.memberRequest.length > 0">
     <h5>成員需求</h5>
-    <button ng-style="unSetableStyle" id="project_request_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
+    <button ng-click="addRequest()" ng-style="unSetableStyle" id="project_request_add" class="mdl-button mdl-js-button mdl-button--fab mdl-button--mini-fab mdl-js-ripple-effect mdl-button--colored nkfust-project-member-add">
         <i class="material-icons">add</i>
     </button>
     <div class="mdl-tooltip" for="project_request_add">新增成員需求</div>
@@ -124,13 +124,13 @@
                 <h2 class="mdl-card__title-text nkfust-list-imageTitle">
                     <span style="color:white">{{t.isTeacher ? "指導教授" : "團隊成員"}}</span>
 
-                    <button ng-style="unSetableStyle" id="project_memberRequest_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                    <button ng-click="removeRequest(t)" ng-style="unSetableStyle" id="project_memberRequest_delete_{{t.id}}" type="button" class="nkfust-project-member-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                         <span aria-hidden="true">×</span>
                     </button>
                     <div class="mdl-tooltip" for="project_memberRequest_delete_{{t.id}}">刪除</div>
                 </h2>
             </div>
-            <div class="mdl-card__supporting-text">
+            <div class="nkfust-project-member-content mdl-card__supporting-text">
                 <label>所需專長:</label>
                 <ul>
                     <li ng-hide="t.specialty.length">無限制</li>
