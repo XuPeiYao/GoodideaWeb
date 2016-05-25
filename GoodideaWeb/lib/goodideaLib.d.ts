@@ -120,7 +120,7 @@ declare module goodidea {
         /**
          * 刪除這個討論
          */
-        remove(): Promise<void>;
+        static remove(forum: Forum): Promise<void>;
         /**
          * 建立新的討論
          * @param project 目標提案的ID或Project物件

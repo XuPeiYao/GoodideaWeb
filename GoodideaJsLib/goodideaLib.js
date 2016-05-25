@@ -201,10 +201,10 @@ var goodidea;
         /**
          * 刪除這個討論
          */
-        remove() {
+        static remove(forum) {
             return __awaiter(this, void 0, Promise, function* () {
                 yield goodidea.postAsync('api/forum/remove', null, {
-                    forum: this.id
+                    forum: forum.id
                 });
             });
         }

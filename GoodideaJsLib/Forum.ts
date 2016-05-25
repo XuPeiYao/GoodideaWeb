@@ -10,9 +10,9 @@
         /**
          * 刪除這個討論
          */
-        public async remove(): Promise<void> {
+        public static async remove(forum : Forum): Promise<void> {
             await postAsync('api/forum/remove', null, {
-                forum: this.id
+                forum: forum.id
             });
         }
 
