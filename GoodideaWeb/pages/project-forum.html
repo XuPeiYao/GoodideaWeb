@@ -9,7 +9,7 @@
             <span class="mdl-radio__label">團隊討論區</span>
         </label>
     </div>
-    <button ng-click="addForum()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    <button ng-disabled="!loginUser" ng-click="addForum()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         發表討論
     </button>
 </div>
