@@ -637,7 +637,7 @@ var goodidea;
                 var responseJSON = yield goodidea.postAsync('api/project/addMemberRequest', null, {
                     project: this.id,
                     isTeacher: isTeacher,
-                    specialty: specialty.join(",")
+                    specialty: specialty ? specialty.join(",") : null
                 });
                 var result = goodidea.MemberRequest.loadFromJSON(responseJSON['Result']);
                 if (!this.memberRequest)

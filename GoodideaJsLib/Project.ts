@@ -176,7 +176,7 @@
             var responseJSON = await postAsync('api/project/addMemberRequest', null, {
                 project: this.id,
                 isTeacher: isTeacher,
-                specialty: specialty.join(",")
+                specialty: specialty ? specialty.join(",") : null
             });
             var result = MemberRequest.loadFromJSON(responseJSON['Result']);
             if (!this.memberRequest) this.memberRequest = [];
