@@ -329,11 +329,19 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             }));
         });
         //應徵
-        $scope.joinRequest = () => {
-        };
+        $scope.joinRequest = (t) => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            yield t.joinMemberRequest();
+            $scope.loading = false;
+            $scope.$apply();
+        });
         //取消應徵
-        $scope.quitRequest = () => {
-        };
+        $scope.quitRequest = (t) => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            yield t.quitMemberRequest();
+            $scope.loading = false;
+            $scope.$apply();
+        });
         //將指定人從應徵清單中移除
         $scope.removeResponse = () => {
         };

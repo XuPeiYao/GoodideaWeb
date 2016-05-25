@@ -322,13 +322,19 @@
     }
 
     //應徵
-    $scope.joinRequest = () => {
-        
+    $scope.joinRequest = async (t: goodidea.MemberRequest) => {
+        $scope.loading = true;
+        await t.joinMemberRequest();
+        $scope.loading = false;
+        $scope.$apply();
     }
 
     //取消應徵
-    $scope.quitRequest = () => {
-        
+    $scope.quitRequest = async (t: goodidea.MemberRequest) => {
+        $scope.loading = true;
+        await t.quitMemberRequest();
+        $scope.loading = false;
+        $scope.$apply();
     }
 
     //將指定人從應徵清單中移除

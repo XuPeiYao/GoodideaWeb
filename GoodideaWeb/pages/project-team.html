@@ -138,10 +138,10 @@
                 </ul>
             </div>
             <div class="nkfust-project-member-action mdl-card__actions mdl-card--border mdl-grid">
-                <button id="project_request_join_{{t.id}}" ng-hide="!loginUser || project.editable || !t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                <button id="project_request_join_{{t.id}}" ng-click="joinRequest(t)" ng-hide="project.editable || t.sent" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                     應徵
                 </button>
-                <button id="project_request_quit_{{t.id}}" ng-hide="!loginUser || project.editable || t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                <button id="project_request_quit_{{t.id}}" ng-click="quitRequest(t)" ng-hide="project.editable || !t.sent" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                     取消
                 </button>
                 <button id="project_request_list_{{t.id}}" ng-click="openResponseList(t)" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
@@ -151,6 +151,9 @@
                     編輯
                 </button>
             </div>
+            
+        </div>
+        <div ng-repeat="t in project.memberRequest">
             <div class="mdl-tooltip" for="project_request_join_{{t.id}}">以目前使用者身分應徵</div>
             <div class="mdl-tooltip" for="project_request_quit_{{t.id}}">取消應徵</div>
             <div class="mdl-tooltip" for="project_request_list_{{t.id}}">開啟應徵者列表</div>
