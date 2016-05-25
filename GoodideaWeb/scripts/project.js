@@ -281,6 +281,23 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 componentHandler.upgradeDom();
             });
         };
+        $scope.editRequest = (t) => {
+            var editRequest = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/editMemberRequest.html',
+                controller: 'editMemberRequestModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope,
+                    memberRequest: () => t
+                }
+            });
+            editRequest.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         //移除徵人需求
         $scope.removeRequest = (t) => __awaiter(this, void 0, void 0, function* () {
             swal({
@@ -322,7 +339,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         $scope.removeResponse = () => {
         };
         //顯示應徵清單
-        $scope.openResponseList = () => {
+        $scope.openResponseList = (t) => {
         };
         //#endregion
         //#region 文件管理
@@ -520,6 +537,50 @@ app.controller('addMemberRequestModal', function ($scope, $sce, $uibModalInstanc
         $scope.removeSpecialty = (t) => {
             $scope.specialty = $scope.specialty.filter(x => x != t);
         };
+        $scope.addMemberRequest = () => __awaiter(this, void 0, void 0, function* () {
+            try {
+                $scope.loading = true;
+                var spec = $scope.specialty.length ? $scope.specialty : null;
+                yield project.addMemberRequest($scope.isTeacher, spec);
+                $scope.loading = false;
+                mainScope.$apply();
+                $scope.cancel();
+            }
+            catch (e) {
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+                $scope.loading = false;
+                mainScope.$apply();
+                return;
+            }
+        });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('editMemberRequestModal', function ($scope, $sce, $uibModalInstance, project, memberRequest, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"]; //預設專長限制
+        $scope.specialtySelect = $scope.specialtyList.first(); //預設選取項目
+        $scope.specialty = memberRequest.specialty;
+        $scope.isTeacher = memberRequest.isTeacher;
+        $scope.addSpecialty = () => __awaiter(this, void 0, void 0, function* () {
+            var value = $scope.specialtySelect == '' ? $scope.specialtyInput : $scope.specialtySelect;
+            if ($scope.specialty.filter(x => x.value == value).length)
+                return;
+            yield memberRequest.addSpecialty(value);
+            $scope.$apply();
+            mainScope.$apply();
+        });
+        $scope.removeSpecialty = (t) => __awaiter(this, void 0, void 0, function* () {
+            yield memberRequest.removeSpecialty(t);
+            $scope.specialty = $scope.specialty.filter(x => x.id != t.id);
+            $scope.$apply();
+            mainScope.$apply();
+        });
         $scope.addMemberRequest = () => __awaiter(this, void 0, void 0, function* () {
             try {
                 $scope.loading = true;

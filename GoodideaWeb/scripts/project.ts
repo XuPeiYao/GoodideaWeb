@@ -273,6 +273,24 @@
         });
     }
 
+    $scope.editRequest = (t: goodidea.MemberRequest) => {
+        var editRequest = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/editMemberRequest.html',
+            controller: 'editMemberRequestModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope,
+                memberRequest: () => t
+            }
+        });
+        editRequest.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+
     //移除徵人需求
     $scope.removeRequest = async (t: goodidea.MemberRequest) => {
         swal({
@@ -320,7 +338,7 @@
     }
 
     //顯示應徵清單
-    $scope.openResponseList = () => {
+    $scope.openResponseList = (t: goodidea.MemberRequest) => {
         
     }
     //#endregion
@@ -539,6 +557,49 @@ app.controller('addMemberRequestModal', async function ($scope, $sce, $uibModalI
     }
     $scope.cancel = () => $uibModalInstance.close();
 });
+
+app.controller('editMemberRequestModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, memberRequest: goodidea.MemberRequest, mainScope, $uibModal) {
+    $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"];//預設專長限制
+    $scope.specialtySelect = $scope.specialtyList.first();//預設選取項目
+    $scope.specialty = memberRequest.specialty;
+    $scope.isTeacher = memberRequest.isTeacher;
+    $scope.addSpecialty = async () => {
+        var value = $scope.specialtySelect == '' ? $scope.specialtyInput : $scope.specialtySelect;
+        if ($scope.specialty.filter(x => x.value == value).length) return;
+        await memberRequest.addSpecialty(value);
+        
+        $scope.$apply();
+        mainScope.$apply();
+    }
+    $scope.removeSpecialty = async (t: goodidea.MemberRequestSpecialty) => {
+        await memberRequest.removeSpecialty(t);
+        $scope.specialty = $scope.specialty.filter(x => x.id != t.id);
+        $scope.$apply();
+        mainScope.$apply();
+    }
+    $scope.addMemberRequest = async () => {
+        try {
+            $scope.loading = true;
+            var spec = $scope.specialty.length ? $scope.specialty : null;
+            await (<goodidea.Project>project).addMemberRequest($scope.isTeacher, spec);
+            $scope.loading = false;
+            mainScope.$apply();
+            $scope.cancel();
+        } catch (e) {
+            swal({
+                type: 'error',
+                title: e.name,
+                text: e.message,
+                confirmButtonText: "確定"
+            });
+            $scope.loading = false;
+            mainScope.$apply();
+            return;
+        }
+    }
+    $scope.cancel = () => $uibModalInstance.close();
+});
+
 
 app.controller('addCoverModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.upload = async () => {

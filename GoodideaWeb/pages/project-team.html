@@ -144,10 +144,10 @@
                 <button id="project_request_quit_{{t.id}}" ng-hide="!loginUser || project.editable || t.send" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
                     取消
                 </button>
-                <button id="project_request_list_{{t.id}}" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button id="project_request_list_{{t.id}}" ng-click="openResponseList(t)" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     列表
                 </button>
-                <button id="project_request_edit_{{t.id}}" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                <button id="project_request_edit_{{t.id}}" ng-click="editRequest(t)" ng-show="project.setable" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                     編輯
                 </button>
             </div>
