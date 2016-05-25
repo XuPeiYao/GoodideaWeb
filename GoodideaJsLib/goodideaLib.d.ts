@@ -367,6 +367,13 @@ declare module goodidea {
          */
         removeMember(member: (string | TeamMember | User)): Promise<void>;
         /**
+         * 加入新的團隊成員需求
+         * @param isTeacher 是否為指導教授
+         * @param specialty 專長需求集合
+         */
+        addMemberRequest(isTeacher: boolean, specialty: string[]): Promise<MemberRequest>;
+        removeMemberRequest(memberRequest: string | MemberRequest): Promise<void>;
+        /**
          * 上傳相關文件
          * @param name 檔案名稱
          * @param file 檔案

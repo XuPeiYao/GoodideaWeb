@@ -628,6 +628,36 @@ var goodidea;
             });
         }
         /**
+         * 加入新的團隊成員需求
+         * @param isTeacher 是否為指導教授
+         * @param specialty 專長需求集合
+         */
+        addMemberRequest(isTeacher, specialty) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/project/addMemberRequest', null, {
+                    project: this.id,
+                    isTeacher: isTeacher,
+                    specialty: specialty.join(",")
+                });
+                var result = goodidea.MemberRequest.loadFromJSON(responseJSON['Result']);
+                if (!this.memberRequest)
+                    this.memberRequest = [];
+                this.memberRequest.push(result);
+                return result;
+            });
+        }
+        removeMemberRequest(memberRequest) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var id = memberRequest['id'] || memberRequest;
+                yield goodidea.postAsync('api/project/removeMemberRequest', null, {
+                    request: id
+                });
+                if (!this.memberRequest)
+                    return;
+                this.memberRequest = this.memberRequest.filter(x => x.id != id);
+            });
+        }
+        /**
          * 上傳相關文件
          * @param name 檔案名稱
          * @param file 檔案

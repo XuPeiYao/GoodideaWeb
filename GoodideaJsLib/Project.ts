@@ -168,6 +168,34 @@
         }
 
         /**
+         * 加入新的團隊成員需求
+         * @param isTeacher 是否為指導教授
+         * @param specialty 專長需求集合
+         */
+        public async addMemberRequest(isTeacher: boolean, specialty: string[]): Promise<MemberRequest> {
+            var responseJSON = await postAsync('api/project/addMemberRequest', null, {
+                project: this.id,
+                isTeacher: isTeacher,
+                specialty: specialty.join(",")
+            });
+            var result = MemberRequest.loadFromJSON(responseJSON['Result']);
+            if (!this.memberRequest) this.memberRequest = [];
+            this.memberRequest.push(result);
+            return result;
+        }
+
+        public async removeMemberRequest(memberRequest: string | MemberRequest): Promise<void> {
+            var id = memberRequest['id'] || memberRequest;
+            await postAsync('api/project/removeMemberRequest', null, {
+                request: id
+            });
+            if (!this.memberRequest) return;
+            this.memberRequest = this.memberRequest.filter(x => x.id != id);
+        }
+
+
+
+        /**
          * 上傳相關文件
          * @param name 檔案名稱
          * @param file 檔案
