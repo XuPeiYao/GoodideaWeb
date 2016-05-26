@@ -38,6 +38,10 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             if (!$scope.project.cover)
                 $scope.project.cover = (yield goodidea.Banner.getBannerList())[0];
             console.log($scope.project);
+            if ($scope.project.isPublish) {
+                document.getElementById('project_publish').classList.add('is-checked');
+                componentHandler.upgradeElement(document.getElementById('project_publish'));
+            }
             $scope.loading = false;
             $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
             $scope.updateMember();
