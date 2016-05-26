@@ -124,7 +124,7 @@
         }
         
         /**
-         * 更新提案內容
+         * 更新提案
          */
         public async update(): Promise<void>{
             await postAsync('api/project/update', null, {
@@ -136,6 +136,58 @@
                 teamName: this.team.name
             });
         }
+
+        /**
+         * 更新提案內容
+         */
+        public async updateContent(): Promise<void> {
+            await postAsync('api/project/update', null, {
+                project: this.id,
+                content: this.content
+            });
+        }
+
+        //#region 細部更新操作
+        /**
+         * 更新提案隊伍名稱
+         */
+        public async updateTeamName(): Promise<void> {
+            await postAsync('api/project/update', null, {
+                project: this.id,
+                teamName: this.team.name
+            });
+        }
+
+        /**
+         * 更新提案名稱
+         */
+        public async updateName(): Promise<void> {
+            await postAsync('api/project/update', null, {
+                project: this.id,
+                name: this.name
+            });
+        }
+
+        /**
+         * 更新提案類別
+         */
+        public async updateClass(): Promise<void> {
+            await postAsync('api/project/update', null, {
+                project: this.id,
+                class: this.class.id
+            });
+        }
+
+        /**
+         * 更新提案公開狀態
+         */
+        public async updatePublish(): Promise<void> {
+            await postAsync('api/project/update', null, {
+                project: this.id,
+                isPublish: this.isPublish
+            });
+        }
+        //#endregion
 
         /**
          * 加入新的團隊成員

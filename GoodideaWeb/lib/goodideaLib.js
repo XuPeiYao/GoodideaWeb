@@ -583,7 +583,7 @@ var goodidea;
             return new goodidea.MarkdownSegment(this.content);
         }
         /**
-         * 更新提案內容
+         * 更新提案
          */
         update() {
             return __awaiter(this, void 0, Promise, function* () {
@@ -597,6 +597,63 @@ var goodidea;
                 });
             });
         }
+        /**
+         * 更新提案內容
+         */
+        updateContent() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/update', null, {
+                    project: this.id,
+                    content: this.content
+                });
+            });
+        }
+        //#region 細部更新操作
+        /**
+         * 更新提案隊伍名稱
+         */
+        updateTeamName() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/update', null, {
+                    project: this.id,
+                    teamName: this.team.name
+                });
+            });
+        }
+        /**
+         * 更新提案名稱
+         */
+        updateName() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/update', null, {
+                    project: this.id,
+                    name: this.name
+                });
+            });
+        }
+        /**
+         * 更新提案類別
+         */
+        updateClass() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/update', null, {
+                    project: this.id,
+                    class: this.class.id
+                });
+            });
+        }
+        /**
+         * 更新提案公開狀態
+         */
+        updatePublish() {
+            return __awaiter(this, void 0, Promise, function* () {
+                yield goodidea.postAsync('api/project/update', null, {
+                    project: this.id,
+                    isPublish: this.isPublish
+                });
+            });
+        }
+        //#endregion
         /**
          * 加入新的團隊成員
          * @param user 團隊成員的ID或User物件

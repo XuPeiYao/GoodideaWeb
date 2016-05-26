@@ -352,9 +352,29 @@ declare module goodidea {
          */
         getContentSegments(): MarkdownSegment;
         /**
-         * 更新提案內容
+         * 更新提案
          */
         update(): Promise<void>;
+        /**
+         * 更新提案內容
+         */
+        updateContent(): Promise<void>;
+        /**
+         * 更新提案隊伍名稱
+         */
+        updateTeamName(): Promise<void>;
+        /**
+         * 更新提案名稱
+         */
+        updateName(): Promise<void>;
+        /**
+         * 更新提案類別
+         */
+        updateClass(): Promise<void>;
+        /**
+         * 更新提案公開狀態
+         */
+        updatePublish(): Promise<void>;
         /**
          * 加入新的團隊成員
          * @param user 團隊成員的ID或User物件
