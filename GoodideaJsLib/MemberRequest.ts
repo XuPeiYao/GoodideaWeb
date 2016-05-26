@@ -81,7 +81,7 @@
          */
         public async getMemberResponseList(): Promise<User[]> {
             var responseJSON = await postAsync('api/project/MemberResponseList', null, { project: this.projectId });
-            var memberRequest = responseJSON['Result'].filter(x => x['ProjectId'] == this.projectId)[0];
+            var memberRequest = responseJSON['Result'].filter(x => x['Id'] == this.id)[0];
             return memberRequest['MemberResponse'].map(x => User.loadFromJSON(x['User']));
         }
 
@@ -91,7 +91,7 @@
         public async removeMemberResponse(user: string | User): Promise<void> {
             var id = user['id'] || user;
             await postAsync('api/project/RemoveMemberResponse', null, {
-                memberRequest: this.projectId,
+                memberRequest: this.id,
                 user: id
             });
         }

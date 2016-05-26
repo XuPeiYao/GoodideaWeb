@@ -421,7 +421,7 @@ var goodidea;
         getMemberResponseList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/project/MemberResponseList', null, { project: this.projectId });
-                var memberRequest = responseJSON['Result'].filter(x => x['ProjectId'] == this.projectId)[0];
+                var memberRequest = responseJSON['Result'].filter(x => x['Id'] == this.id)[0];
                 return memberRequest['MemberResponse'].map(x => goodidea.User.loadFromJSON(x['User']));
             });
         }
@@ -432,7 +432,7 @@ var goodidea;
             return __awaiter(this, void 0, Promise, function* () {
                 var id = user['id'] || user;
                 yield goodidea.postAsync('api/project/RemoveMemberResponse', null, {
-                    memberRequest: this.projectId,
+                    memberRequest: this.id,
                     user: id
                 });
             });
