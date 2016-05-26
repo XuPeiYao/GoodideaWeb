@@ -628,6 +628,47 @@ app.controller('editMemberRequestModal', function ($scope, $sce, $uibModalInstan
 });
 app.controller('memberRequestResponseModal', function ($scope, $sce, $uibModalInstance, project, memberRequest, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.users = yield memberRequest.getMemberResponseList();
+        if ($scope.users.length) {
+            $scope.user = $scope.users.first().id;
+        }
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.openUserPage = () => {
+            window.open(`about.html?id=${$scope.user}`);
+        };
+        $scope.addMember = () => __awaiter(this, void 0, void 0, function* () {
+            if (project.team.group.filter(x => x.user.id == $scope.user).length) {
+                swal({
+                    type: 'error',
+                    title: '重複成員',
+                    text: '您選擇的應徵者已經加入團隊中',
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            swal({
+                title: "新增團隊成員",
+                text: `您確定要將「${$scope.users.filter(x => x.id == $scope.user)[0].name}(${$scope.user})」加入團隊嗎?`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (isConfirm) {
+                    $scope.loading = true;
+                    yield project.addMember($scope.user, memberRequest.isTeacher ? goodidea.MemberType.teacher : goodidea.MemberType.member);
+                    yield memberRequest.removeMemberResponse($scope.user);
+                    $scope.loading = false;
+                    $scope.$apply();
+                    mainScope.updateMember();
+                    mainScope.$apply();
+                    $scope.cancel();
+                }
+            }));
+        });
         $scope.cancel = () => $uibModalInstance.close();
     });
 });

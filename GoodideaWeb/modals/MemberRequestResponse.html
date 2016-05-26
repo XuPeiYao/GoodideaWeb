@@ -4,13 +4,18 @@
 </div>
 <div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 <div class="modal-body">
-    
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select class="mdl-textfield__input" size="10" ng-model="user">
+            <option ng-repeat="t in users" value="{{t.id}}">{{t.name}}({{t.department.college.name || '未填寫'}} - {{t.department.name || "未填寫"}})</option>
+        </select>
+        <label class="mdl-textfield__label">應徵者</label>
+    </div>
 </div>
 <div class="modal-footer">
-    <button id="addMember" tabindex="3" ng-disabled="loading" ng-click="addMember()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-        使用者頁面
+    <button id="addMember" tabindex="3" ng-disabled="loading || users.length == 0" ng-click="openUserPage()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        個人頁面
     </button>
-    <button id="addMember" tabindex="3" ng-disabled="loading" ng-click="addMember()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+    <button id="addMember" tabindex="3" ng-disabled="loading || users.length == 0" ng-click="addMember()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
         新增成員
     </button>
     <button id="cancelAddMember" tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">

@@ -619,7 +619,52 @@ app.controller('editMemberRequestModal', async function ($scope, $sce, $uibModal
 });
 
 app.controller('memberRequestResponseModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, memberRequest: goodidea.MemberRequest, mainScope, $uibModal) {
-    
+    $scope.loading = true;
+    $scope.users = await memberRequest.getMemberResponseList();
+
+    if ($scope.users.length) {
+        $scope.user = $scope.users.first().id;       
+    }
+    $scope.loading = false;
+    $scope.$apply();
+
+
+    $scope.openUserPage = () => {
+        window.open(`about.html?id=${$scope.user}`);
+    }
+    $scope.addMember = async () => {
+        if (project.team.group.filter(x => x.user.id == $scope.user).length) {
+            swal({
+                type: 'error',
+                title: '重複成員',
+                text: '您選擇的應徵者已經加入團隊中',
+                confirmButtonText: "確定"
+            });
+            return;
+        }
+        swal({
+            title: "新增團隊成員",
+            text: `您確定要將「${$scope.users.filter(x => x.id == $scope.user)[0].name}(${$scope.user})」加入團隊嗎?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            closeOnConfirm: true
+        }, async (isConfirm) => {
+            if (isConfirm) {
+                $scope.loading = true;
+
+                await project.addMember($scope.user, memberRequest.isTeacher ? goodidea.MemberType.teacher : goodidea.MemberType.member);
+                await memberRequest.removeMemberResponse($scope.user);
+
+                $scope.loading = false;
+                $scope.$apply();
+                mainScope.updateMember();
+                mainScope.$apply();
+                $scope.cancel();
+            }
+        });
+    }
     $scope.cancel = () => $uibModalInstance.close();
 });
 
