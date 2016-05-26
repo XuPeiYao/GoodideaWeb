@@ -1,0 +1,29 @@
+﻿<div class="nkfust-project-member">
+    <h5>提案屬性</h5>
+    <div class="mdl-grid" style="margin-top: 40px;">
+        <button ng-click="" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <i class="fa fa-pencil" aria-hidden="true"></i>變更提案名稱
+        </button> 
+        <button ng-click="" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <i class="fa fa-pencil" aria-hidden="true"></i>變更提案分類
+        </button>
+        <label id="project_publish" ng-show="project.setable" class="mdl-cell mdl-cell--3-col mdl-switch mdl-js-switch mdl-js-ripple-effect">
+            <input ng-change="project.updatePublish()" type="checkbox" ng-model="project.isPublish" class="mdl-switch__input" />
+            <span class="mdl-switch__label">公開提案</span>
+        </label>
+    </div>
+</div>
+<div ng-show="project.setable" class="nkfust-project-member">
+    <h5>提案操作</h5>
+    <div class="mdl-grid" style="margin-top: 40px;">
+        <button ng-click="" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <i class="fa fa-clone" aria-hidden="true"></i>複製提案
+        </button> 
+        <button ng-click="" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>參加競賽
+        </button>
+        <button ng-click="" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            <i class="fa fa-trash" aria-hidden="true"></i>刪除提案
+        </button>
+    </div>
+</div>

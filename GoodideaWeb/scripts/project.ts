@@ -28,6 +28,10 @@
 
         if (!$scope.project.cover) $scope.project.cover = (await goodidea.Banner.getBannerList())[0]
         console.log($scope.project)
+        if ($scope.project.isPublish) {
+            document.getElementById('project_publish').classList.add('is-checked');
+            componentHandler.upgradeElement(document.getElementById('project_publish'));
+        }
         $scope.loading = false;
         $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
 
