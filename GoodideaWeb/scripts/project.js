@@ -197,6 +197,37 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.$apply();
             }));
         });
+        //變更提案名稱
+        $scope.changeName = () => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "變更提案名稱",
+                text: "請輸入提案名稱",
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                inputPlaceholder: "提案名稱",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }, (inputValue) => __awaiter(this, void 0, void 0, function* () {
+                if (inputValue === false)
+                    return false;
+                if (inputValue === "") {
+                    swal.showInputError("提案名稱不該為空");
+                    return false;
+                }
+                $scope.project.name = inputValue;
+                $scope.loading = true;
+                yield $scope.project.updateName();
+                $scope.loading = false;
+                swal({
+                    type: 'success',
+                    title: "提案名稱變更成功",
+                    text: `您已經成功的將本提案名稱變更為「${$scope.project.name}」`,
+                    confirmButtonText: "確定"
+                });
+                $scope.$apply();
+            }));
+        });
         //複製提案
         $scope.cloneProject = () => __awaiter(this, void 0, void 0, function* () {
             swal({

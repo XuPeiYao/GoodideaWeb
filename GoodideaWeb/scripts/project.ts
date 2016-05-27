@@ -185,6 +185,38 @@
             $scope.$apply();
         });
     }
+
+    //變更提案名稱
+    $scope.changeName = async () => {
+        swal({
+            title: "變更提案名稱",
+            text: "請輸入提案名稱",
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "提案名稱",
+            confirmButtonText: "確定",
+            cancelButtonText: "取消"
+        }, async (inputValue) => {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("提案名稱不該為空"); return false
+            }
+            $scope.project.name = inputValue;
+            $scope.loading = true;
+            await $scope.project.updateName();
+            $scope.loading = false;
+            swal({
+                type: 'success',
+                title: "提案名稱變更成功",
+                text: `您已經成功的將本提案名稱變更為「${$scope.project.name}」`,
+                confirmButtonText: "確定"
+            });
+            $scope.$apply();
+        });
+    }
+
+
     //複製提案
     $scope.cloneProject = async () => {
         swal({
