@@ -116,8 +116,8 @@ var goodidea;
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/course/list');
                 var result = [];
-                for (var i = 0; i < responseJSON['length']; i++) {
-                    result.push(Course.loadFromJSON(responseJSON[i]));
+                for (var i = 0; i < responseJSON['Result']['length']; i++) {
+                    result.push(Course.loadFromJSON(responseJSON['Result'][i]));
                 }
                 return result;
             });

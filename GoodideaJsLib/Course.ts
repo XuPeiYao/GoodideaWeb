@@ -21,10 +21,9 @@
 
         public static async getCourseList(): Promise<Course[]> {
             var responseJSON = await goodidea.postAsync('api/course/list');
-
             var result = [];
-            for (var i = 0; i < responseJSON['length']; i++) {
-                result.push(Course.loadFromJSON(responseJSON[i]));
+            for (var i = 0; i < responseJSON['Result']['length']; i++) {
+                result.push(Course.loadFromJSON(responseJSON['Result'][i]));
             }
 
             return result;
