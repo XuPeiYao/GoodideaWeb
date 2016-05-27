@@ -228,6 +228,37 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.$apply();
             }));
         });
+        //刪除提案
+        $scope.delete = () => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "刪除提案",
+                text: `您確定要將此提案「${$scope.project.name}」刪除嗎?，此動作是不可還原的`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (isConfirm) {
+                    $scope.loading = true;
+                    try {
+                        yield $scope.project.delete();
+                    }
+                    catch (e) {
+                        $scope.loading = false;
+                        swal({
+                            type: 'error',
+                            title: e.name,
+                            text: e.message,
+                            confirmButtonText: "確定"
+                        });
+                        return;
+                    }
+                    $scope.loading = false;
+                    location.href = "index.html"; //刪除後回首頁
+                }
+            }));
+        });
         //複製提案
         $scope.cloneProject = () => __awaiter(this, void 0, void 0, function* () {
             swal({

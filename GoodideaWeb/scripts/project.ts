@@ -216,6 +216,36 @@
         });
     }
 
+    //刪除提案
+    $scope.delete = async () => {
+        swal({
+            title: "刪除提案",
+            text: `您確定要將此提案「${$scope.project.name}」刪除嗎?，此動作是不可還原的`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            closeOnConfirm: true
+        }, async (isConfirm) => {
+            if (isConfirm) {
+                $scope.loading = true;
+                try {
+                    await (<goodidea.Project>$scope.project).delete();
+                } catch (e) {
+                    $scope.loading = false;
+                    swal({
+                        type: 'error',
+                        title: e.name,
+                        text: e.message,
+                        confirmButtonText: "確定"
+                    });
+                    return;
+                }
+                $scope.loading = false;
+                location.href = "index.html";//刪除後回首頁
+            }
+        });
+    }
 
     //複製提案
     $scope.cloneProject = async () => {
