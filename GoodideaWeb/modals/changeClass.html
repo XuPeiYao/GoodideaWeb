@@ -1,0 +1,21 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">變更提案分類</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select class="mdl-textfield__input" ng-model="class">
+            <option ng-repeat="t in classList" value="{{t.id}}">{{t.name}}</option>
+        </select>
+        <label class="mdl-textfield__label">分類</label>
+    </div>
+</div>
+<div class="modal-footer">
+    <button tabindex="3" ng-disabled="loading" ng-click="update()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        確定
+    </button>
+    <button tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>

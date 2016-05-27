@@ -228,6 +228,23 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.$apply();
             }));
         });
+        //變更提案分類
+        $scope.changeClass = () => {
+            var changeClass = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/changeClass.html',
+                controller: 'changeClassModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            changeClass.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         //刪除提案
         $scope.delete = () => __awaiter(this, void 0, void 0, function* () {
             swal({
@@ -805,6 +822,36 @@ app.controller('addCoverModal', function ($scope, $sce, $uibModalInstance, proje
                 $scope.$apply();
                 return;
             }
+        });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('changeClassModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.classList = yield goodidea.Class.getClassList();
+        $scope.class = project.class.id;
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.update = () => __awaiter(this, void 0, void 0, function* () {
+            project.class = $scope.classList.filter(x => x.id == $scope.class)[0];
+            $scope.loading = true;
+            try {
+                yield project.updateClass();
+                $scope.loading = false;
+            }
+            catch (e) {
+                $scope.loading = false;
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            mainScope.$apply();
+            $scope.cancel();
         });
         $scope.cancel = () => $uibModalInstance.close();
     });
