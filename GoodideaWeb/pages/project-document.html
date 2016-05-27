@@ -1,4 +1,4 @@
-﻿<div ng-show="project.editable" class="nkfust-project-edit-nav">
+﻿<div ng-show="project.editable && !project.competition" class="nkfust-project-edit-nav">
     <button ng-click="addDocument()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         上傳檔案
     </button>
@@ -11,7 +11,7 @@
         <!--<button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable" class="nkfust-project-document-close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
             ×
         </button>-->
-        <button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable" class="close item-close">
+        <button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable && !project.competition" class="close item-close">
             ×
         </button>
         <a target="_blank" href="{{t.file.url}}">{{t.name || t.file.name}}</a>
