@@ -110,6 +110,7 @@
     <Content Include="modals\addMember.html" />
     <Content Include="modals\addMemberRequest.html" />
     <Content Include="modals\editMemberRequest.html" />
+    <Content Include="modals\teacherList.html" />
     <Content Include="modals\memberRequestResponse.html" />
     <Content Include="pages\project-content.html" />
     <Content Include="pages\project-document.html" />

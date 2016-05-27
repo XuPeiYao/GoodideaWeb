@@ -1,0 +1,25 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">課程教授列表</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <div style="width:100%" class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select class="mdl-textfield__input" size="10" ng-model="course">
+            <optgroup ng-repeat="t in formatCourseList" label="{{t.year}}學年{{t.semester==1?'上':'下'}}學期">
+                <option ng-repeat="t2 in courseList" value="{{t2.id}}">
+                    {{t2.cName}}({{t2.cId}}) - {{t2.teacherName}}
+                </option>
+            </optgroup>
+        </select>
+        <label class="mdl-textfield__label">課程</label>
+    </div>
+</div>
+<div class="modal-footer">
+    <button tabindex="3" ng-disabled="loading || courseList.length == 0" ng-click="ok()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        確定
+    </button>
+    <button tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>

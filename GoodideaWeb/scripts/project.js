@@ -911,6 +911,21 @@ app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, proj
                 return;
             $scope.id += "nkfust.edu.tw";
         };
+        $scope.getTeacherMail = () => {
+            var joinCompetition = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/teacherList.html',
+                controller: 'teacherListModal',
+                size: '',
+                resolve: {
+                    mainScope: () => $scope
+                }
+            });
+            joinCompetition.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         $scope.addMember = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;
             if (!$scope.id || !$scope.id.length) {
@@ -945,6 +960,39 @@ app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, proj
             mainScope.$apply();
             $scope.cancel();
         });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+//課程清單控制器
+app.controller('teacherListModal', function ($scope, $sce, $uibModalInstance, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.courseList = yield goodidea.Course.getCourseList();
+        if ($scope.courseList.length) {
+            $scope.course = $scope.courseList.first().id;
+            $scope.formatCourseList = [];
+            $scope.courseList.forEach(x => {
+                if ($scope.formatCourseList.length && $scope.formatCourseList.last().year == x.year &&
+                    $scope.formatCourseList.last().semester == x.semester) {
+                }
+                else {
+                    $scope.formatCourseList.push({
+                        year: x.year,
+                        semester: x.semester,
+                        courseList: []
+                    });
+                }
+                $scope.formatCourseList.last().courseList.push(x);
+            });
+        }
+        console.log($scope.courseList);
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.ok = () => {
+            mainScope.id = $scope.courseList.filter(x => x.id == $scope.course)[0].teacherEmail;
+            document.getElementById('addMemberInput').classList.add('is-dirty');
+            $scope.cancel();
+        };
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
