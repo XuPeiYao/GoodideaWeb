@@ -398,16 +398,13 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 catch (e) {
                     $scope.loading = false;
                     $scope.$apply();
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
                     return;
                 }
                 $scope.loading = false;
                 $scope.updateMember();
+                if (member.user.id == $scope.loginUser.id) {
+                    location.reload(); //自行退出隊伍則重新整理頁面
+                }
                 $scope.$apply();
                 swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");
             }));

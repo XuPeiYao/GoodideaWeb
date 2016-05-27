@@ -13,16 +13,16 @@
         </label>
     </div>
 </div>
-<div class="nkfust-project-member">
+<div ng-show="project.setable" class="nkfust-project-member">
     <h5>提案操作</h5>
     <div class="mdl-grid" style="margin-top: 40px;">
         <button ng-click="cloneProject()" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
             <i class="fa fa-clone" aria-hidden="true"></i>複製提案
         </button> 
-        <button ng-show="project.setable" ng-click="joinCompetition()" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        <button ng-click="joinCompetition()" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
             <i class="fa fa-sign-in" aria-hidden="true"></i>參加競賽
         </button>
-        <button ng-show="project.setable" ng-click="delete()" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        <button ng-click="delete()" class="mdl-cell mdl-cell--3-col mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
             <i class="fa fa-trash" aria-hidden="true"></i>刪除提案
         </button>
     </div>
