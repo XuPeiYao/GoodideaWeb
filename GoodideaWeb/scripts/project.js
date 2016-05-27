@@ -197,6 +197,37 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.$apply();
             }));
         });
+        //複製提案
+        $scope.cloneProject = () => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "複製提案",
+                text: "請輸入新的提案名稱",
+                inputValue: `${$scope.project.name} - 複製`,
+                type: "input",
+                showCancelButton: true,
+                closeOnConfirm: false,
+                inputPlaceholder: "提案名稱",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消"
+            }, (inputValue) => __awaiter(this, void 0, void 0, function* () {
+                if (inputValue === false)
+                    return false;
+                if (inputValue === "") {
+                    swal.showInputError("提案名稱不該為空");
+                    return false;
+                }
+                $scope.loading = true;
+                yield $scope.project.clone(inputValue);
+                $scope.loading = false;
+                swal({
+                    type: 'success',
+                    title: "複製提案成功",
+                    text: `您已經成功的建立本提案的副本「${inputValue}」`,
+                    confirmButtonText: "確定"
+                });
+                $scope.$apply();
+            }));
+        });
         //提案封面上傳
         $scope.addCover = () => {
             var addDocument = $uibModal.open({

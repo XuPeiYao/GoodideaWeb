@@ -185,6 +185,35 @@
             $scope.$apply();
         });
     }
+    //複製提案
+    $scope.cloneProject = async () => {
+        swal({
+            title: "複製提案",
+            text: "請輸入新的提案名稱",
+            inputValue:`${$scope.project.name} - 複製`,
+            type: "input",
+            showCancelButton: true,
+            closeOnConfirm: false,
+            inputPlaceholder: "提案名稱",
+            confirmButtonText: "確定",
+            cancelButtonText: "取消"
+        }, async (inputValue) => {
+            if (inputValue === false) return false;
+            if (inputValue === "") {
+                swal.showInputError("提案名稱不該為空"); return false
+            }
+            $scope.loading = true;
+            await (<goodidea.Project>$scope.project).clone(<string>inputValue);
+            $scope.loading = false;
+            swal({
+                type: 'success',
+                title: "複製提案成功",
+                text: `您已經成功的建立本提案的副本「${<string>inputValue}」`,
+                confirmButtonText: "確定"
+            });
+            $scope.$apply();
+        });
+    }
 
     //提案封面上傳
     $scope.addCover = () => {
