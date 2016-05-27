@@ -761,9 +761,10 @@ var goodidea;
          */
         joinCompetition(competition) {
             return __awaiter(this, void 0, Promise, function* () {
+                var id = competition['id'] || competition;
                 yield goodidea.postAsync('api/project/joinCompetition', null, {
                     project: this.id,
-                    competition: competition
+                    competition: id
                 });
                 this.load(); //reload Project
             });

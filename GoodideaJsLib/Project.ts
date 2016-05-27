@@ -287,10 +287,11 @@
          * 參加指定競賽
          * @param competition 指定競賽的ID或Competition物件
          */
-        public async joinCompetition(competition: Competition | string) : Promise<void>{
+        public async joinCompetition(competition: Competition | string): Promise<void>{
+            var id = competition['id'] || competition;
             await postAsync('api/project/joinCompetition', null, {
                 project: this.id,
-                competition: competition
+                competition: id
             });
             this.load();//reload Project
         }
