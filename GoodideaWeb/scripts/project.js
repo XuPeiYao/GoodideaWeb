@@ -307,6 +307,23 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.$apply();
             }));
         });
+        //參加競賽
+        $scope.joinCompetition = () => {
+            var joinCompetition = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/joinCompetition.html',
+                controller: 'joinCompetitionModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            joinCompetition.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         //提案封面上傳
         $scope.addCover = () => {
             var addDocument = $uibModal.open({
@@ -841,17 +858,65 @@ app.controller('changeClassModal', function ($scope, $sce, $uibModalInstance, pr
                 $scope.loading = false;
             }
             catch (e) {
-                $scope.loading = false;
                 swal({
                     type: 'error',
                     title: e.name,
                     text: e.message,
                     confirmButtonText: "確定"
                 });
+                $scope.loading = false;
+                $scope.$apply();
                 return;
             }
             mainScope.$apply();
             $scope.cancel();
+        });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('joinCompetitionModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.competitionList = yield goodidea.Competition.getCompetitionList(true, false);
+        if ($scope.competitionList.length) {
+            $scope.competition = $scope.competitionList.first().id;
+        }
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.update = () => __awaiter(this, void 0, void 0, function* () {
+            var competition = $scope.competitionList.filter(x => x.id == $scope.competition)[0];
+            if (!competition) {
+                swal({
+                    type: 'error',
+                    title: '未選擇競賽',
+                    text: '您目前尚未選擇欲參加競賽',
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            swal({
+                title: "參加競賽",
+                text: `您確定要將此提案「參加「${competition.name}」嗎?送出後您將無法對本提案進行變更`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                try {
+                    yield project.joinCompetition(competition);
+                    $scope.loading = false;
+                }
+                catch (e) {
+                    $scope.loading = false;
+                    return;
+                }
+                mainScope.$apply();
+                $scope.cancel();
+            }));
         });
         $scope.cancel = () => $uibModalInstance.close();
     });

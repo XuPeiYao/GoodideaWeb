@@ -101,6 +101,16 @@ console.warn("請注意，這是專門提供給開發人員的瀏覽器功能。
 goodidea.origin = location.origin;//設定允許域
 console.info(`允許域設定為: ${goodidea.origin}`);
 
+//錯誤事件處理函式
+goodidea.onException = (e) => {
+    swal({
+        type: 'error',
+        title: e.name,
+        text: e.message,
+        confirmButtonText: "確定"
+    });
+};
+
 //初始化應用程式範圍
 var app = angular.module('app', ['ngAnimate', 'ui.bootstrap']);
 

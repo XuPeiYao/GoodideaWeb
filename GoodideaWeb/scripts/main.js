@@ -100,6 +100,15 @@ console.info("SDK版本: " + goodidea.version);
 console.warn("請注意，這是專門提供給開發人員的瀏覽器功能。您在此處的操作將有可能影響到您在平台上的資料，請謹慎使用。");
 goodidea.origin = location.origin; //設定允許域
 console.info(`允許域設定為: ${goodidea.origin}`);
+//錯誤事件處理函式
+goodidea.onException = (e) => {
+    swal({
+        type: 'error',
+        title: e.name,
+        text: e.message,
+        confirmButtonText: "確定"
+    });
+};
 //初始化應用程式範圍
 var app = angular.module('app', ['ngAnimate', 'ui.bootstrap']);
 //ng-enter功能
