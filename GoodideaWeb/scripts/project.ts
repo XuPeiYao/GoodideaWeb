@@ -174,7 +174,7 @@
             }
             $scope.project.team.name = inputValue;
             $scope.loading = true;
-            await $scope.project.update();
+            await $scope.project.updateTeamName();
             $scope.loading = false;
             swal({
                 type: 'success',

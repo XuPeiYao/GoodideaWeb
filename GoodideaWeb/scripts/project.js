@@ -186,7 +186,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 $scope.project.team.name = inputValue;
                 $scope.loading = true;
-                yield $scope.project.update();
+                yield $scope.project.updateTeamName();
                 $scope.loading = false;
                 swal({
                     type: 'success',
