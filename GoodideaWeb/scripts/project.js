@@ -26,12 +26,6 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                     $scope.voteQuota = "0，您尚未登入";
             }
             catch (e) {
-                swal({
-                    type: 'error',
-                    title: "無效的提案ID",
-                    text: "您目前的檢視頁面連結是無效的，這可能是因為該提案並未公開且您目前的身分無法檢視(或登入逾時)或已經刪除",
-                    confirmButtonText: "確定"
-                });
                 return;
             }
             $scope.$apply();
@@ -148,12 +142,6 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             }
             catch (e) {
                 $scope.loading = false;
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
                 return;
             }
             yield $scope.load(); //更新提案資訊
@@ -254,21 +242,22 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 showCancelButton: true,
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
-                closeOnConfirm: true
+                closeOnConfirm: false,
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
                 if (isConfirm) {
                     $scope.loading = true;
+                    swal({
+                        title: "刪除中",
+                        text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
+                        showConfirmButton: false
+                    });
                     try {
                         yield $scope.project.delete();
+                        swal.close();
                     }
                     catch (e) {
+                        swal.close();
                         $scope.loading = false;
-                        swal({
-                            type: 'error',
-                            title: e.name,
-                            text: e.message,
-                            confirmButtonText: "確定"
-                        });
                         return;
                     }
                     $scope.loading = false;
@@ -370,7 +359,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 showCancelButton: true,
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
-                closeOnConfirm: true
+                closeOnConfirm: false
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
                 if (isConfirm) {
                     $scope.loading = true;
@@ -390,6 +379,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                     $scope.loading = false;
                     $scope.updateMember();
                     $scope.$apply();
+                    swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");
                 }
             }));
         };
@@ -439,24 +429,25 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 cancelButtonText: "取消",
                 closeOnConfirm: true
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
-                if (isConfirm) {
-                    $scope.loading = true;
-                    try {
-                        yield $scope.project.removeMemberRequest(t);
-                    }
-                    catch (e) {
-                        $scope.loading = false;
-                        swal({
-                            type: 'error',
-                            title: e.name,
-                            text: e.message,
-                            confirmButtonText: "確定"
-                        });
-                        return;
-                    }
-                    $scope.loading = false;
-                    $scope.$apply();
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                try {
+                    yield $scope.project.removeMemberRequest(t);
                 }
+                catch (e) {
+                    $scope.loading = false;
+                    swal({
+                        type: 'error',
+                        title: e.name,
+                        text: e.message,
+                        confirmButtonText: "確定"
+                    });
+                    return;
+                }
+                swal("刪除成員需求", `您已經將指定的成員需求刪除`, "success");
+                $scope.loading = false;
+                $scope.$apply();
             }));
         });
         //應徵
@@ -473,9 +464,6 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             $scope.loading = false;
             $scope.$apply();
         });
-        //將指定人從應徵清單中移除
-        $scope.removeResponse = () => {
-        };
         //顯示應徵清單
         $scope.openResponseList = (t) => {
             var openResponse = $uibModal.open({
@@ -660,12 +648,6 @@ app.controller('addDocumentModal', function ($scope, $sce, $uibModalInstance, pr
                 $scope.cancel();
             }
             catch (e) {
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
                 $scope.loading = false;
                 $scope.$apply();
                 return;
@@ -674,6 +656,7 @@ app.controller('addDocumentModal', function ($scope, $sce, $uibModalInstance, pr
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//成員需求增加控制器
 app.controller('addMemberRequestModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"]; //預設專長限制
@@ -699,12 +682,6 @@ app.controller('addMemberRequestModal', function ($scope, $sce, $uibModalInstanc
                 $scope.cancel();
             }
             catch (e) {
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
                 $scope.loading = false;
                 mainScope.$apply();
                 return;
@@ -713,6 +690,7 @@ app.controller('addMemberRequestModal', function ($scope, $sce, $uibModalInstanc
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//成員需求編輯控制器
 app.controller('editMemberRequestModal', function ($scope, $sce, $uibModalInstance, project, memberRequest, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"]; //預設專長限制
@@ -733,30 +711,10 @@ app.controller('editMemberRequestModal', function ($scope, $sce, $uibModalInstan
             $scope.$apply();
             mainScope.$apply();
         });
-        $scope.addMemberRequest = () => __awaiter(this, void 0, void 0, function* () {
-            try {
-                $scope.loading = true;
-                var spec = $scope.specialty.length ? $scope.specialty : null;
-                yield project.addMemberRequest($scope.isTeacher, spec);
-                $scope.loading = false;
-                mainScope.$apply();
-                $scope.cancel();
-            }
-            catch (e) {
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
-                $scope.loading = false;
-                mainScope.$apply();
-                return;
-            }
-        });
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//應徵清單控制器
 app.controller('memberRequestResponseModal', function ($scope, $sce, $uibModalInstance, project, memberRequest, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.loading = true;
@@ -803,6 +761,7 @@ app.controller('memberRequestResponseModal', function ($scope, $sce, $uibModalIn
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//封面上傳控制器
 app.controller('addCoverModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.upload = () => __awaiter(this, void 0, void 0, function* () {
@@ -829,12 +788,6 @@ app.controller('addCoverModal', function ($scope, $sce, $uibModalInstance, proje
                 $scope.cancel();
             }
             catch (e) {
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
                 $scope.loading = false;
                 $scope.$apply();
                 return;
@@ -843,6 +796,7 @@ app.controller('addCoverModal', function ($scope, $sce, $uibModalInstance, proje
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//變更提案分類
 app.controller('changeClassModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.loading = true;
@@ -858,12 +812,6 @@ app.controller('changeClassModal', function ($scope, $sce, $uibModalInstance, pr
                 $scope.loading = false;
             }
             catch (e) {
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
                 $scope.loading = false;
                 $scope.$apply();
                 return;
@@ -874,6 +822,7 @@ app.controller('changeClassModal', function ($scope, $sce, $uibModalInstance, pr
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//參加競賽控制器
 app.controller('joinCompetitionModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.loading = true;
@@ -901,7 +850,7 @@ app.controller('joinCompetitionModal', function ($scope, $sce, $uibModalInstance
                 showCancelButton: true,
                 confirmButtonText: "確定",
                 cancelButtonText: "取消",
-                closeOnConfirm: true
+                closeOnConfirm: false
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
                 if (!isConfirm)
                     return;
@@ -921,6 +870,7 @@ app.controller('joinCompetitionModal', function ($scope, $sce, $uibModalInstance
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//加入成員控制器
 app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, project, isMember, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.isMember = isMember;
@@ -965,18 +915,13 @@ app.controller('addMemberModal', function ($scope, $sce, $uibModalInstance, proj
             try {
                 yield project.addMember($scope.id, $scope.memberType);
                 mainScope.updateMember();
-                mainScope.$apply();
-                $scope.cancel();
+                $scope.loading = false;
             }
             catch (e) {
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
+                $scope.loading = false;
             }
-            $scope.loading = false;
+            mainScope.$apply();
+            $scope.cancel();
         });
         $scope.cancel = () => $uibModalInstance.close();
     });

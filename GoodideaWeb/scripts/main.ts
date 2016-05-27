@@ -108,7 +108,7 @@ goodidea.onException = (e) => {
         title: e.name,
         text: e.message,
         confirmButtonText: "確定"
-    });
+    });    
 };
 
 //初始化應用程式範圍

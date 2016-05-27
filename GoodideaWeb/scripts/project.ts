@@ -16,12 +16,6 @@
             }
             if (!$scope.loginUser) $scope.voteQuota = "0，您尚未登入";
         } catch (e) {
-            swal({
-                type: 'error',
-                title: "無效的提案ID",
-                text: "您目前的檢視頁面連結是無效的，這可能是因為該提案並未公開且您目前的身分無法檢視(或登入逾時)或已經刪除",
-                confirmButtonText: "確定"
-            });
             return;
         }
         $scope.$apply();
@@ -137,12 +131,6 @@
             $scope.voteQuota = (await $scope.project.vote());
         } catch (e) {
             $scope.loading = false;
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
             return;
         }
         await $scope.load();//更新提案資訊
@@ -243,20 +231,21 @@
             showCancelButton: true,
             confirmButtonText: "確定",
             cancelButtonText: "取消",
-            closeOnConfirm: true
+            closeOnConfirm: false,
         }, async (isConfirm) => {
             if (isConfirm) {
                 $scope.loading = true;
+                swal({
+                    title: "刪除中",
+                    text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
+                    showConfirmButton: false
+                });
                 try {
                     await (<goodidea.Project>$scope.project).delete();
+                    swal.close();
                 } catch (e) {
+                    swal.close();
                     $scope.loading = false;
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
                     return;
                 }
                 $scope.loading = false;
@@ -360,7 +349,7 @@
             showCancelButton: true,
             confirmButtonText: "確定",
             cancelButtonText: "取消",
-            closeOnConfirm: true
+            closeOnConfirm: false
         }, async (isConfirm) => {
             if (isConfirm) {
                 $scope.loading = true;
@@ -379,7 +368,7 @@
                 $scope.loading = false;
                 $scope.updateMember();
                 $scope.$apply();
-                //swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");        
+                swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");        
             }
         });
     }
@@ -432,23 +421,24 @@
             cancelButtonText: "取消",
             closeOnConfirm: true
         }, async (isConfirm) => {
-            if (isConfirm) {
-                $scope.loading = true;
-                try {
-                    await (<goodidea.Project>$scope.project).removeMemberRequest(t);
-                } catch (e) {
-                    $scope.loading = false;
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
-                    return;
-                }
+            if (!isConfirm) return;
+            $scope.loading = true;
+            try {
+                await (<goodidea.Project>$scope.project).removeMemberRequest(t);
+            } catch (e) {
                 $scope.loading = false;
-                $scope.$apply();
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+                return;
             }
+            swal("刪除成員需求", `您已經將指定的成員需求刪除`, "success");        
+
+            $scope.loading = false;
+            $scope.$apply();
         });
     }
 
@@ -466,11 +456,6 @@
         await t.quitMemberRequest();
         $scope.loading = false;
         $scope.$apply();
-    }
-
-    //將指定人從應徵清單中移除
-    $scope.removeResponse = () => {
-        
     }
 
     //顯示應徵清單
@@ -658,12 +643,6 @@ app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstan
             mainScope.$apply();
             $scope.cancel();
         } catch (e) {
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
             $scope.loading = false;
             $scope.$apply();
             return;
@@ -672,6 +651,7 @@ app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstan
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//成員需求增加控制器
 app.controller('addMemberRequestModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"];//預設專長限制
     $scope.specialtySelect = $scope.specialtyList.first();//預設選取項目
@@ -694,12 +674,6 @@ app.controller('addMemberRequestModal', async function ($scope, $sce, $uibModalI
             mainScope.$apply();
             $scope.cancel();
         }catch (e) {
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
             $scope.loading = false;
             mainScope.$apply();
             return;
@@ -708,6 +682,7 @@ app.controller('addMemberRequestModal', async function ($scope, $sce, $uibModalI
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//成員需求編輯控制器
 app.controller('editMemberRequestModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, memberRequest: goodidea.MemberRequest, mainScope, $uibModal) {
     $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"];//預設專長限制
     $scope.specialtySelect = $scope.specialtyList.first();//預設選取項目
@@ -727,29 +702,10 @@ app.controller('editMemberRequestModal', async function ($scope, $sce, $uibModal
         $scope.$apply();
         mainScope.$apply();
     }
-    $scope.addMemberRequest = async () => {
-        try {
-            $scope.loading = true;
-            var spec = $scope.specialty.length ? $scope.specialty : null;
-            await (<goodidea.Project>project).addMemberRequest($scope.isTeacher, spec);
-            $scope.loading = false;
-            mainScope.$apply();
-            $scope.cancel();
-        } catch (e) {
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
-            $scope.loading = false;
-            mainScope.$apply();
-            return;
-        }
-    }
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//應徵清單控制器
 app.controller('memberRequestResponseModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, memberRequest: goodidea.MemberRequest, mainScope, $uibModal) {
     $scope.loading = true;
     $scope.users = await memberRequest.getMemberResponseList();
@@ -800,6 +756,7 @@ app.controller('memberRequestResponseModal', async function ($scope, $sce, $uibM
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//封面上傳控制器
 app.controller('addCoverModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.upload = async () => {
         var files = (<HTMLInputElement>document.getElementById("AddCover_FileInput")).files;
@@ -824,12 +781,6 @@ app.controller('addCoverModal', async function ($scope, $sce, $uibModalInstance:
             mainScope.$apply();
             $scope.cancel();
         } catch (e) {
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
             $scope.loading = false;
             $scope.$apply();
             return;
@@ -838,6 +789,7 @@ app.controller('addCoverModal', async function ($scope, $sce, $uibModalInstance:
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//變更提案分類
 app.controller('changeClassModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.loading = true;
     $scope.classList = await goodidea.Class.getClassList();
@@ -851,12 +803,6 @@ app.controller('changeClassModal', async function ($scope, $sce, $uibModalInstan
             await project.updateClass();
             $scope.loading = false;
         } catch (e) {
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
             $scope.loading = false;
             $scope.$apply();
             return;
@@ -867,6 +813,7 @@ app.controller('changeClassModal', async function ($scope, $sce, $uibModalInstan
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//參加競賽控制器
 app.controller('joinCompetitionModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.loading = true;
     $scope.competitionList = await goodidea.Competition.getCompetitionList(true, false);
@@ -894,7 +841,7 @@ app.controller('joinCompetitionModal', async function ($scope, $sce, $uibModalIn
             showCancelButton: true,
             confirmButtonText: "確定",
             cancelButtonText: "取消",
-            closeOnConfirm: true
+            closeOnConfirm: false
         }, async (isConfirm) => {
             if (!isConfirm) return;
 
@@ -913,6 +860,7 @@ app.controller('joinCompetitionModal', async function ($scope, $sce, $uibModalIn
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//加入成員控制器
 app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project, isMember: boolean, mainScope, $uibModal) {
     $scope.isMember = isMember;
     $scope.isTeacher = true;
@@ -957,17 +905,12 @@ app.controller('addMemberModal', async function ($scope, $sce, $uibModalInstance
             await (<goodidea.Project>project).addMember(
                 $scope.id, $scope.memberType );
             mainScope.updateMember();
-            mainScope.$apply();
-            $scope.cancel();
+            $scope.loading = false;
         } catch (e) {
-            swal({
-                type: 'error',
-                title: e.name,
-                text: e.message,
-                confirmButtonText: "確定"
-            });
+            $scope.loading = false;
         }
-        $scope.loading = false;
+        mainScope.$apply();
+        $scope.cancel();
     }
     $scope.cancel = () => $uibModalInstance.close();
 });
