@@ -419,6 +419,10 @@ declare module goodidea {
          */
         vote(): Promise<number>;
         /**
+         * 取得編輯紀錄
+         */
+        getEditLogs(): Promise<PageResult<ProjectEditLog>>;
+        /**
          * 複製目前提案
          * @param name 新的提案名稱
          */
@@ -475,6 +479,18 @@ declare module goodidea {
          * @param order 排序
          */
         static search(keyword: string, _class: Class, competition: Competition, order: OrderBy): Promise<PageResult<Project>>;
+    }
+}
+declare module goodidea {
+    class ProjectEditLog {
+        id: string;
+        projectId: string;
+        user: User;
+        userId: string;
+        content: string;
+        static loadFromJSON(data: JSON): ProjectEditLog;
+        getProject(): Promise<Project>;
+        static getEditLogs(project: Project | string): Promise<PageResult<ProjectEditLog>>;
     }
 }
 declare module goodidea {

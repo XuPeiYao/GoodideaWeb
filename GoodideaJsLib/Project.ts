@@ -307,6 +307,13 @@
         }
 
         /**
+         * 取得編輯紀錄
+         */
+        public async getEditLogs(): Promise<PageResult<ProjectEditLog>> {
+            return await ProjectEditLog.getEditLogs(this);
+        }
+        
+        /**
          * 複製目前提案
          * @param name 新的提案名稱
          */

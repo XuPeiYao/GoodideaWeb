@@ -781,6 +781,14 @@ var goodidea;
             });
         }
         /**
+         * 取得編輯紀錄
+         */
+        getEditLogs() {
+            return __awaiter(this, void 0, Promise, function* () {
+                return yield goodidea.ProjectEditLog.getEditLogs(this);
+            });
+        }
+        /**
          * 複製目前提案
          * @param name 新的提案名稱
          */
@@ -959,6 +967,39 @@ var goodidea;
         }
     }
     goodidea.Project = Project;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class ProjectEditLog {
+        static loadFromJSON(data) {
+            var result = new ProjectEditLog();
+            var fields = data.getKeys();
+            for (var i = 0; i < fields.length; i++) {
+                if (data[fields[i]] instanceof Function)
+                    continue;
+                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
+            }
+            return result;
+        }
+        getProject() {
+            return __awaiter(this, void 0, Promise, function* () {
+                return goodidea.Project.getProjectById(this.projectId);
+            });
+        }
+        static getEditLogs(project) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var result = new goodidea.PageResult(ProjectEditLog);
+                result.url = 'api/project/updateLogs';
+                result.params = {
+                    project: project['id'] || project
+                };
+                result.length = 10;
+                yield result.load();
+                return result;
+            });
+        }
+    }
+    goodidea.ProjectEditLog = ProjectEditLog;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
