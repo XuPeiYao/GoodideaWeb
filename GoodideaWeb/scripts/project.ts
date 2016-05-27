@@ -162,8 +162,14 @@
             }
             $scope.project.team.name = inputValue;
             $scope.loading = true;
-            await $scope.project.updateTeamName();
-            $scope.loading = false;
+            try {
+                await $scope.project.updateTeamName();
+                $scope.loading = false;
+            } catch (e) {
+                $scope.loading = false;
+                return;
+            }
+            
             swal({
                 type: 'success',
                 title: "團隊名稱變更成功",
@@ -192,8 +198,14 @@
             }
             $scope.project.name = inputValue;
             $scope.loading = true;
-            await $scope.project.updateName();
-            $scope.loading = false;
+            try {
+                await $scope.project.updateName();
+                $scope.loading = false;
+            } catch (e) {
+                $scope.loading = false;
+                return;
+            }
+            
             swal({
                 type: 'success',
                 title: "提案名稱變更成功",

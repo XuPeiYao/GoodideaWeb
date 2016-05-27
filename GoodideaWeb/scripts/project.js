@@ -174,8 +174,14 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 $scope.project.team.name = inputValue;
                 $scope.loading = true;
-                yield $scope.project.updateTeamName();
-                $scope.loading = false;
+                try {
+                    yield $scope.project.updateTeamName();
+                    $scope.loading = false;
+                }
+                catch (e) {
+                    $scope.loading = false;
+                    return;
+                }
                 swal({
                     type: 'success',
                     title: "團隊名稱變更成功",
@@ -205,8 +211,14 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 $scope.project.name = inputValue;
                 $scope.loading = true;
-                yield $scope.project.updateName();
-                $scope.loading = false;
+                try {
+                    yield $scope.project.updateName();
+                    $scope.loading = false;
+                }
+                catch (e) {
+                    $scope.loading = false;
+                    return;
+                }
                 swal({
                     type: 'success',
                     title: "提案名稱變更成功",
