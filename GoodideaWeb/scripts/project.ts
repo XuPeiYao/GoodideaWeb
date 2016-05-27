@@ -126,21 +126,33 @@
 
     //投票
     $scope.vote = async () => {
-        $scope.loading = true;
-        try {
-            $scope.voteQuota = (await $scope.project.vote());
-        } catch (e) {
-            $scope.loading = false;
-            return;
-        }
-        await $scope.load();//更新提案資訊
-        $scope.loading = false;
-        $scope.$apply();
         swal({
-            type: 'success',
-            title: "投票成功",
-            text: `您已經成功的在競賽「${$scope.project.competition.name}」中針對此提案「${$scope.project.name}」進行投票`,
-            confirmButtonText: "確定"
+            title: "確認投票",
+            text: `您確定要針對提案「${$scope.project.name}」進行投票?，此動作是不可還原的`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+        }, async (isConfirm) => {
+            if (!isConfirm) return;
+            $scope.loading = true;
+            try {
+                $scope.voteQuota = (await $scope.project.vote());
+            } catch (e) {
+                $scope.loading = false;
+                $scope.$apply();
+                return;
+            }
+            await $scope.load();//更新提案資訊
+            $scope.loading = false;
+            $scope.$apply();
+            swal({
+                type: 'success',
+                title: "投票成功",
+                text: `您已經成功的在競賽「${$scope.project.competition.name}」中針對此提案「${$scope.project.name}」進行投票`,
+                confirmButtonText: "確定"
+            });
         });
     }
 
@@ -167,6 +179,7 @@
                 $scope.loading = false;
             } catch (e) {
                 $scope.loading = false;
+                $scope.$apply();
                 return;
             }
             
@@ -203,6 +216,7 @@
                 $scope.loading = false;
             } catch (e) {
                 $scope.loading = false;
+                $scope.$apply();
                 return;
             }
             
@@ -245,24 +259,24 @@
             cancelButtonText: "取消",
             closeOnConfirm: false,
         }, async (isConfirm) => {
-            if (isConfirm) {
-                $scope.loading = true;
-                swal({
-                    title: "刪除中",
-                    text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
-                    showConfirmButton: false
-                });
-                try {
-                    await (<goodidea.Project>$scope.project).delete();
-                    swal.close();
-                } catch (e) {
-                    swal.close();
-                    $scope.loading = false;
-                    return;
-                }
+            if (!isConfirm) return;
+            $scope.loading = true;
+            swal({
+                title: "刪除中",
+                text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
+                showConfirmButton: false
+            });
+            try {
+                await (<goodidea.Project>$scope.project).delete();
+                swal.close();
+            } catch (e) {
+                swal.close();
                 $scope.loading = false;
-                location.href = "index.html";//刪除後回首頁
+                $scope.$apply();
+                return;
             }
+            $scope.loading = false;
+            location.href = "index.html";//刪除後回首頁
         });
     }
 
@@ -363,25 +377,25 @@
             cancelButtonText: "取消",
             closeOnConfirm: false
         }, async (isConfirm) => {
-            if (isConfirm) {
-                $scope.loading = true;
-                try {
-                    await (<goodidea.Project>$scope.project).removeMember(member);
-                } catch (e) {
-                    $scope.loading = false;
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
-                    return;
-                }
+            if (!isConfirm) return;
+            $scope.loading = true;
+            try {
+                await (<goodidea.Project>$scope.project).removeMember(member);
+            } catch (e) {
                 $scope.loading = false;
-                $scope.updateMember();
                 $scope.$apply();
-                swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");        
+                swal({
+                    type: 'error',
+                    title: e.name,
+                    text: e.message,
+                    confirmButtonText: "確定"
+                });
+                return;
             }
+            $scope.loading = false;
+            $scope.updateMember();
+            $scope.$apply();
+            swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");        
         });
     }
     //#endregion
@@ -439,12 +453,7 @@
                 await (<goodidea.Project>$scope.project).removeMemberRequest(t);
             } catch (e) {
                 $scope.loading = false;
-                swal({
-                    type: 'error',
-                    title: e.name,
-                    text: e.message,
-                    confirmButtonText: "確定"
-                });
+                $scope.$apply();
                 return;
             }
             swal("刪除成員需求", `您已經將指定的成員需求刪除`, "success");        
@@ -516,23 +525,17 @@
             cancelButtonText: "取消",
             closeOnConfirm: true
         }, async (isConfirm) => {
-            if (isConfirm) {
-                $scope.loading = true;
-                try {
-                    await (<goodidea.Project>$scope.project).deleteFile(t);
-                } catch (e) {
-                    $scope.loading = false;
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
-                    return;
-                }
+            if (!isConfirm) return;
+            $scope.loading = true;
+            try {
+                await (<goodidea.Project>$scope.project).deleteFile(t);
+            } catch (e) {
                 $scope.loading = false;
                 $scope.$apply();
+                return;
             }
+            $scope.loading = false;
+            $scope.$apply();
         });
     }
     //#endregion
@@ -558,7 +561,13 @@
                 swal.showInputError("討論內容不該為空"); return false
             }
             $scope.loading = true;
-            await goodidea.Forum.createForum($scope.project, ($scope.forumsType == "Private"), <string>inputValue);
+            try {
+                await goodidea.Forum.createForum($scope.project, ($scope.forumsType == "Private"), <string>inputValue);
+            } catch (e) {
+                $scope.loading = false;
+                $scope.$apply();
+                return;
+            }
             $scope.loading = false;
             swal({
                 type: 'success',
@@ -582,23 +591,17 @@
             cancelButtonText: "取消",
             closeOnConfirm: true
         }, async (isConfirm) => {
-            if (isConfirm) {
-                $scope.loading = true;
-                try {
-                    await goodidea.Forum.remove(forum);
-                } catch (e) {
-                    $scope.loading = false;
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
-                    return;
-                }
+            if (!isConfirm) return;
+            $scope.loading = true;
+            try {
+                await goodidea.Forum.remove(forum);
+            } catch (e) {
                 $scope.loading = false;
-                $scope.forumTypeChange();
+                $scope.$apply();
+                return;
             }
+            $scope.loading = false;
+            $scope.forumTypeChange();
         });
     }
 
@@ -630,6 +633,7 @@
     $scope.$apply();
 });
 
+//文件上傳控制器
 app.controller('addDocumentModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.name = "";
     $scope.upload = async() => {

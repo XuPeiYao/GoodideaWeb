@@ -136,23 +136,36 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         };
         //投票
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
-            $scope.loading = true;
-            try {
-                $scope.voteQuota = (yield $scope.project.vote());
-            }
-            catch (e) {
-                $scope.loading = false;
-                return;
-            }
-            yield $scope.load(); //更新提案資訊
-            $scope.loading = false;
-            $scope.$apply();
             swal({
-                type: 'success',
-                title: "投票成功",
-                text: `您已經成功的在競賽「${$scope.project.competition.name}」中針對此提案「${$scope.project.name}」進行投票`,
-                confirmButtonText: "確定"
-            });
+                title: "確認投票",
+                text: `您確定要針對提案「${$scope.project.name}」進行投票?，此動作是不可還原的`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                try {
+                    $scope.voteQuota = (yield $scope.project.vote());
+                }
+                catch (e) {
+                    $scope.loading = false;
+                    $scope.$apply();
+                    return;
+                }
+                yield $scope.load(); //更新提案資訊
+                $scope.loading = false;
+                $scope.$apply();
+                swal({
+                    type: 'success',
+                    title: "投票成功",
+                    text: `您已經成功的在競賽「${$scope.project.competition.name}」中針對此提案「${$scope.project.name}」進行投票`,
+                    confirmButtonText: "確定"
+                });
+            }));
         });
         //變更團隊名稱
         $scope.changeTeamName = () => __awaiter(this, void 0, void 0, function* () {
@@ -180,6 +193,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 catch (e) {
                     $scope.loading = false;
+                    $scope.$apply();
                     return;
                 }
                 swal({
@@ -217,6 +231,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 catch (e) {
                     $scope.loading = false;
+                    $scope.$apply();
                     return;
                 }
                 swal({
@@ -256,25 +271,26 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 cancelButtonText: "取消",
                 closeOnConfirm: false,
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
-                if (isConfirm) {
-                    $scope.loading = true;
-                    swal({
-                        title: "刪除中",
-                        text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
-                        showConfirmButton: false
-                    });
-                    try {
-                        yield $scope.project.delete();
-                        swal.close();
-                    }
-                    catch (e) {
-                        swal.close();
-                        $scope.loading = false;
-                        return;
-                    }
-                    $scope.loading = false;
-                    location.href = "index.html"; //刪除後回首頁
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                swal({
+                    title: "刪除中",
+                    text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
+                    showConfirmButton: false
+                });
+                try {
+                    yield $scope.project.delete();
+                    swal.close();
                 }
+                catch (e) {
+                    swal.close();
+                    $scope.loading = false;
+                    $scope.$apply();
+                    return;
+                }
+                $scope.loading = false;
+                location.href = "index.html"; //刪除後回首頁
             }));
         });
         //複製提案
@@ -373,26 +389,27 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 cancelButtonText: "取消",
                 closeOnConfirm: false
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
-                if (isConfirm) {
-                    $scope.loading = true;
-                    try {
-                        yield $scope.project.removeMember(member);
-                    }
-                    catch (e) {
-                        $scope.loading = false;
-                        swal({
-                            type: 'error',
-                            title: e.name,
-                            text: e.message,
-                            confirmButtonText: "確定"
-                        });
-                        return;
-                    }
-                    $scope.loading = false;
-                    $scope.updateMember();
-                    $scope.$apply();
-                    swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                try {
+                    yield $scope.project.removeMember(member);
                 }
+                catch (e) {
+                    $scope.loading = false;
+                    $scope.$apply();
+                    swal({
+                        type: 'error',
+                        title: e.name,
+                        text: e.message,
+                        confirmButtonText: "確定"
+                    });
+                    return;
+                }
+                $scope.loading = false;
+                $scope.updateMember();
+                $scope.$apply();
+                swal("刪除團隊成員", `您已經將成員「${member.user.name}(${member.user.id})」從本團隊中刪除`, "success");
             }));
         };
         //#endregion
@@ -449,12 +466,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 catch (e) {
                     $scope.loading = false;
-                    swal({
-                        type: 'error',
-                        title: e.name,
-                        text: e.message,
-                        confirmButtonText: "確定"
-                    });
+                    $scope.$apply();
                     return;
                 }
                 swal("刪除成員需求", `您已經將指定的成員需求刪除`, "success");
@@ -521,24 +533,19 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 cancelButtonText: "取消",
                 closeOnConfirm: true
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
-                if (isConfirm) {
-                    $scope.loading = true;
-                    try {
-                        yield $scope.project.deleteFile(t);
-                    }
-                    catch (e) {
-                        $scope.loading = false;
-                        swal({
-                            type: 'error',
-                            title: e.name,
-                            text: e.message,
-                            confirmButtonText: "確定"
-                        });
-                        return;
-                    }
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                try {
+                    yield $scope.project.deleteFile(t);
+                }
+                catch (e) {
                     $scope.loading = false;
                     $scope.$apply();
+                    return;
                 }
+                $scope.loading = false;
+                $scope.$apply();
             }));
         });
         //#endregion
@@ -564,7 +571,14 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                     return false;
                 }
                 $scope.loading = true;
-                yield goodidea.Forum.createForum($scope.project, ($scope.forumsType == "Private"), inputValue);
+                try {
+                    yield goodidea.Forum.createForum($scope.project, ($scope.forumsType == "Private"), inputValue);
+                }
+                catch (e) {
+                    $scope.loading = false;
+                    $scope.$apply();
+                    return;
+                }
                 $scope.loading = false;
                 swal({
                     type: 'success',
@@ -587,24 +601,19 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 cancelButtonText: "取消",
                 closeOnConfirm: true
             }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
-                if (isConfirm) {
-                    $scope.loading = true;
-                    try {
-                        yield goodidea.Forum.remove(forum);
-                    }
-                    catch (e) {
-                        $scope.loading = false;
-                        swal({
-                            type: 'error',
-                            title: e.name,
-                            text: e.message,
-                            confirmButtonText: "確定"
-                        });
-                        return;
-                    }
-                    $scope.loading = false;
-                    $scope.forumTypeChange();
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                try {
+                    yield goodidea.Forum.remove(forum);
                 }
+                catch (e) {
+                    $scope.loading = false;
+                    $scope.$apply();
+                    return;
+                }
+                $scope.loading = false;
+                $scope.forumTypeChange();
             }));
         });
         //當討論需類型改變
@@ -633,6 +642,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         $scope.$apply();
     });
 });
+//文件上傳控制器
 app.controller('addDocumentModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.name = "";
