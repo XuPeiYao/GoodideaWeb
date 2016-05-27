@@ -988,6 +988,8 @@ var goodidea;
                 var exception = {};
                 for (var key in response.Result)
                     exception[firstToLowerCase(key)] = response.Result[key];
+                if (goodidea.onException)
+                    goodidea.onException(exception);
                 throw exception;
             }
             return response;

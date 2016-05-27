@@ -490,6 +490,7 @@ declare module goodidea {
     var host: string;
     var origin: string;
     var version: string;
+    var onException: (exception: any) => void;
     function postAsync(url: string, header?: any, data?: (FormData | String | Object), user?: string, password?: string, progressCallback?: (event: ProgressEvent) => any): Promise<JSON>;
     function firstToLowerCase(input: string): string;
 }
