@@ -48,12 +48,21 @@
                         <div class="mdl-tooltip" for="project_pid">
                             參賽編號(<strong>{{project.competition.name}}</strong>)
                         </div>
-                        <div id="project_vote" class="mdl-badge nkfust-project-header-vote nkfust-project-votes-fix" style="width:50px;" data-badge="{{project.votes}}" ng-show="project.competition">
-                            <button ng-disabled="!project.competition.canVote || !loginUser || !voteQuota"
-                                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
-                                    ng-click="vote()">
-                                投票
-                            </button>
+                        <div style="position:absolute;bottom:40px;width:80px;left:calc(100% - 80px)">
+                            <div id="project_share">
+                                <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                                        ng-click="share()"
+                                        style="margin-bottom:12px;">
+                                    <i class="fa fa-facebook-square" aria-hidden="true"></i> 分享
+                                </button>
+                            </div>
+                            <div style="width:50px;" class="nkfust-project-votes-fix mdl-badge nkfust-project-header-vote" id="project_vote" data-badge="{{project.votes}}" ng-show="project.competition">
+                                <button style="width:50px;margin-bottom:12px;" ng-disabled="!project.competition.canVote || !loginUser || !voteQuota"
+                                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored"
+                                        ng-click="vote()">
+                                    投票
+                                </button>
+                            </div>
                         </div>
                         <div class="mdl-tooltip" for="project_vote">競賽中的得票數，目前登入用戶的剩餘可投票數為{{voteQuota}}</div>
                     </div>

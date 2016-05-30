@@ -346,6 +346,18 @@
         });
     }
 
+    //FB分享
+    $scope.share = () => {
+        FB.ui({
+            method: "feed",
+            link: location.href,
+            name: `[${$scope.project.class.name}]${$scope.project.name}`,
+            caption: '創意創新雲端平台 - 國立高雄第一科技大學',
+            description: $scope.project.summary,
+            picture: (<goodidea.Project>$scope.project).cover.url
+        });
+    }
+
     //#region 團隊管理
     $scope.addTeamMember = (isMember: boolean) => {
         var addTeamMember = $uibModal.open({
