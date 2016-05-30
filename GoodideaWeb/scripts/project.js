@@ -366,7 +366,6 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 name: `[${$scope.project.class.name}]${$scope.project.name}`,
                 caption: '創意創新雲端平台 - 國立高雄第一科技大學',
                 description: $scope.project.summary,
-                picture: $scope.project.cover.url
             });
         };
         //#region 團隊管理
