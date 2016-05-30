@@ -8,6 +8,10 @@
         public content: string;
         public files: DocumentInfo[];
 
+        /**
+         * 透過最新消息Id取得最新消息
+         * @param id 最新消息Id
+         */
         public static async getNewsById(id:string) : Promise<News> {
             var responseJSON = await postAsync('api/news/get', null, {
                 news: id
@@ -15,6 +19,10 @@
             return News.loadFromJSON(responseJSON['Result']);
         }
 
+        /**
+         * 由JSON資料產生News
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): News {
             var result = new News();
             result.id = data['Id'];
@@ -36,6 +44,9 @@
             return result;
         }
 
+        /**
+         * 取得最新消息分頁列表
+         */
         public static async getNewsList(): Promise<PageResult<News>> {
             var result = new PageResult<News>(goodidea.News);
             result.length = 5;

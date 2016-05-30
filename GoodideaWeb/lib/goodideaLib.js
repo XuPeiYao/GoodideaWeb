@@ -9,12 +9,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 var goodidea;
 (function (goodidea) {
     class Banner {
+        /**
+         * 由JSON資料產生Banner
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Banner();
             result.id = data['Id'];
             result.url = data['Url'];
             return result;
         }
+        /**
+         * 取得Banner列表
+         */
         static getBannerList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/banner/list');
@@ -31,12 +38,19 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Class {
+        /**
+         * 由JSON資料產生Class
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Class();
             result.id = data['Id'];
             result.name = data['Name'];
             return result;
         }
+        /**
+         * 取得分類列表
+         */
         static getClassList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = [];
@@ -53,6 +67,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class College {
+        /**
+         * 由JSON資料產生College
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new College();
             result.id = data['Id'];
@@ -65,6 +83,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Competition {
+        /**
+         * 由JSON資料產生Competition
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Competition();
             var fields = data.getKeys();
@@ -77,6 +99,11 @@ var goodidea;
             }
             return result;
         }
+        /**
+         * 透過限制條件取得競賽清單
+         * @param active 目前可參賽
+         * @param vote 目前可投票
+         */
         static getCompetitionList(active, vote) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/competition/list', null, { active: active, vote: vote });
@@ -87,6 +114,10 @@ var goodidea;
                 return result;
             });
         }
+        /**
+         * 取得目前登入使用者針對指定競賽剩餘可投票數
+         * @param competition 競賽
+         */
         static getLoginUserQuota(competition) {
             return __awaiter(this, void 0, Promise, function* () {
                 var id = competition['id'] || competition;
@@ -102,6 +133,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Course {
+        /**
+         * 由JSON資料產生Course
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Course();
             var fields = data.getKeys();
@@ -112,6 +147,9 @@ var goodidea;
             }
             return result;
         }
+        /**
+         * 取得現有課程列表
+         */
         static getCourseList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/course/list');
@@ -128,6 +166,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Department {
+        /**
+         * 由JSON資料產生Department
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Department();
             var fields = data.getKeys();
@@ -140,7 +182,7 @@ var goodidea;
             return result;
         }
         /**
-         * 取得所有系所陣列
+         * 取得所有系所列表
          */
         static getDepartmentList() {
             return __awaiter(this, void 0, Promise, function* () {
@@ -159,6 +201,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class DocumentInfo {
+        /**
+         * 由JSON資料產生DocumentInfo
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new DocumentInfo();
             var fields = data.getKeys();
@@ -177,10 +223,14 @@ var goodidea;
 (function (goodidea) {
     (function (FileType) {
         FileType[FileType["Document"] = 0] = "Document";
-        FileType[FileType["Image"] = 1] = "Image";
+        FileType[FileType["Image"] = 1] = "Image"; //圖片類型
     })(goodidea.FileType || (goodidea.FileType = {}));
     var FileType = goodidea.FileType;
     class FileInfo {
+        /**
+         * 由JSON資料產生FileInfo
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new FileInfo();
             var fields = data.getKeys();
@@ -245,6 +295,10 @@ var goodidea;
                 return result;
             });
         }
+        /**
+         * 由JSON資料產生Forum
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Forum();
             var fields = data.getKeys();
@@ -279,6 +333,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class Link {
+        /**
+         * 由JSON資料產生Link
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Link();
             result.id = data['Id'];
@@ -286,6 +344,9 @@ var goodidea;
             result.url = data['Url'];
             return result;
         }
+        /**
+         * 取得相關連結列表
+         */
         static getLinkList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/link/list');
@@ -362,6 +423,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class MemberRequest {
+        /**
+         * 由JSON資料產生MemberRequest
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new MemberRequest();
             var fields = data.getKeys();
@@ -443,6 +508,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class MemberRequestSpecialty {
+        /**
+         * 由JSON資料產生MemberRequestSpecialty
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new MemberRequestSpecialty();
             result.id = data['Id'];
@@ -455,6 +524,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class News {
+        /**
+         * 透過最新消息Id取得最新消息
+         * @param id 最新消息Id
+         */
         static getNewsById(id) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/news/get', null, {
@@ -463,6 +536,10 @@ var goodidea;
                 return News.loadFromJSON(responseJSON['Result']);
             });
         }
+        /**
+         * 由JSON資料產生News
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new News();
             result.id = data['Id'];
@@ -482,6 +559,9 @@ var goodidea;
             }
             return result;
         }
+        /**
+         * 取得最新消息分頁列表
+         */
         static getNewsList() {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = new goodidea.PageResult(goodidea.News);
@@ -497,15 +577,34 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class PageResult {
+        /**
+         * 建構分頁查詢結果
+         * @param type 結果類型
+         */
         constructor(type) {
+            /*
+             * 分頁查詢參數
+             */
             this.params = {};
+            /*
+             * 查詢結果總數量
+             */
             this.count = 0;
+            /*
+             * 目前查詢結果起始索引
+             */
             this.index = 0;
             this.type = type;
         }
+        /**
+         * 是否有下一個分頁
+         */
         hasNext() {
             return this.index + this.length < this.count;
         }
+        /*
+         * 讀取查詢結果
+         */
         load() {
             return __awaiter(this, void 0, Promise, function* () {
                 var data = {
@@ -522,6 +621,9 @@ var goodidea;
                 }
             });
         }
+        /*
+         * 取得下一頁查詢結果
+         */
         nextPage() {
             return __awaiter(this, void 0, Promise, function* () {
                 var result = new PageResult(this.type);
@@ -533,6 +635,10 @@ var goodidea;
                 return result;
             });
         }
+        /**
+         * 由JSON資料產生PageResult
+         * @param data 資料來源
+         */
         static loadFromJSON(type, data) {
             var result = new PageResult(type);
             result.result = [];
@@ -842,6 +948,10 @@ var goodidea;
                 return Project.loadFromJSON(responseJSON['Result']);
             });
         }
+        /**
+         * 由JSON資料產生Project
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Project();
             var fields = data.getKeys();
@@ -971,6 +1081,10 @@ var goodidea;
 var goodidea;
 (function (goodidea) {
     class ProjectEditLog {
+        /**
+         * 由JSON資料產生ProjectEditLog
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new ProjectEditLog();
             var fields = data.getKeys();

@@ -24,6 +24,10 @@
          */
         public specialty: MemberRequestSpecialty[];
 
+        /**
+         * 由JSON資料產生MemberRequest
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): MemberRequest {
             var result = new MemberRequest();
             var fields = data.getKeys();

@@ -51,6 +51,10 @@
         public isLinkFB: boolean;
         
         //#region 資料更新
+        /**
+         * 由JSON資料產生User
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): User {
             var result = new User();
             var fields = data.getKeys();

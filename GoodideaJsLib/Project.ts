@@ -361,6 +361,10 @@
             return Project.loadFromJSON(responseJSON['Result']);
         }
 
+        /**
+         * 由JSON資料產生Project
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): Project {
             var result = new Project();
             var fields = data.getKeys();

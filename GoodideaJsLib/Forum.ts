@@ -1,10 +1,33 @@
 ﻿module goodidea {
     export class Forum {
+        /**
+         * 討論Id
+         */
         public id: string;
+
+        /**
+         * 是否可編輯或刪除
+         */
         public editable: boolean;
+
+        /**
+         * 討論發布日期
+         */
         public time: Date;
+
+        /**
+         * 是否為團隊內部討論
+         */
         public groupOnly: boolean;
+
+        /**
+         * 討論內容
+         */
         public content: string;
+
+        /**
+         * 討論發起使用者
+         */
         public user: User;
 
         /**
@@ -54,6 +77,10 @@
             return result;
         }
 
+        /**
+         * 由JSON資料產生Forum
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): Forum {
             var result = new Forum();
             var fields = data.getKeys();

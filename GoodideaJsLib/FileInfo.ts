@@ -1,6 +1,7 @@
 ﻿module goodidea {
     export enum FileType {
-        Document,Image
+        Document,//文件類型
+        Image//圖片類型
     }
     export class FileInfo {
         /**
@@ -38,6 +39,10 @@
          */
         public url: string;
 
+        /**
+         * 由JSON資料產生FileInfo
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): FileInfo {
             var result = new FileInfo();
             var fields = data.getKeys();

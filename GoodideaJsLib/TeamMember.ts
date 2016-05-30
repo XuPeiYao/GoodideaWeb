@@ -4,11 +4,29 @@ module goodidea {
     }
 
     export class TeamMember {
-        public id:string;
-        public isTeacher:boolean;
-        public isAssistant:boolean;
+        /**
+         * 團隊成員資訊Id
+         */
+        public id: string;
+
+        /**
+         * 是否為指導老師
+         */
+        public isTeacher: boolean;
+
+        /**
+         * 是否為助教
+         */
+        public isAssistant: boolean;
+
+        /**
+         * 使用者
+         */
         public user: User;
 
+        /**
+         * 取得或設定團隊成員類型
+         */
         public get memberType(): MemberType {
             if (!this.isTeacher) return MemberType.member;
             return this.isAssistant ? MemberType.assistant : MemberType.teacher;
@@ -27,6 +45,10 @@ module goodidea {
             }
         }
 
+        /**
+         * 由JSON資料產生TeamMember
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): TeamMember {
             var result = new TeamMember();
             var fields = data.getKeys();

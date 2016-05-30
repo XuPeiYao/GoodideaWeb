@@ -1,8 +1,19 @@
 module goodidea {
     export class Team {
-        public name:string;
+        /**
+         * 團隊名稱
+         */
+        public name: string;
+
+        /**
+         * 團隊成員資訊
+         */
         public group: TeamMember[] = [];
 
+        /**
+         * 由JSON資料產生Team
+         * @param data 資料來源
+         */
         public static loadFromJSON(data: JSON): Team {
             var result = new Team();
             result.name = data['Name'];

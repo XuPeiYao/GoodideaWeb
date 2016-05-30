@@ -1,74 +1,210 @@
 declare module goodidea {
     class Banner {
+        /**
+         * BannerId
+         */
         id: string;
+        /**
+         * 圖片位址
+         */
         url: string;
+        /**
+         * 由JSON資料產生Banner
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Banner;
+        /**
+         * 取得Banner列表
+         */
         static getBannerList(): Promise<Banner[]>;
     }
 }
 declare module goodidea {
     class Class {
+        /**
+         * 分類Id
+         */
         id: string;
+        /**
+         * 分類名稱
+         */
         name: string;
+        /**
+         * 由JSON資料產生Class
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Class;
+        /**
+         * 取得分類列表
+         */
         static getClassList(): Promise<Class[]>;
     }
 }
 declare module goodidea {
     class College {
+        /**
+         * 學院Id
+         */
         id: string;
+        /**
+         * 學院名稱
+         */
         name: string;
+        /**
+         * 由JSON資料產生College
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): College;
     }
 }
 declare module goodidea {
     class Competition {
+        /**
+         * 競賽Id
+         */
         id: string;
+        /**
+         * 競賽名稱
+         */
         name: string;
+        /**
+         * 用戶在該競賽可投票數
+         */
         userVotes: number;
+        /**
+         * 投稿後即公開
+         */
         publishOnSubmit: boolean;
+        /**
+         * 需要指導教授
+         */
         needTeacher: boolean;
+        /**
+         * 最多成員數限制
+         */
         maxMember: number;
+        /**
+         * 最少成員數限制
+         */
         minMember: number;
+        /**
+         * 單一使用者單一重複參賽次數
+         */
         repeatCount: number;
+        /**
+         * 提案範本
+         */
         template: number;
+        /**
+         * 競賽限制投稿分類
+         */
         condition: Class[];
+        /**
+         * 由JSON資料產生Competition
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Competition;
+        /**
+         * 透過限制條件取得競賽清單
+         * @param active 目前可參賽
+         * @param vote 目前可投票
+         */
         static getCompetitionList(active: boolean, vote: boolean): Promise<Competition[]>;
+        /**
+         * 取得目前登入使用者針對指定競賽剩餘可投票數
+         * @param competition 競賽
+         */
         static getLoginUserQuota(competition: string | Competition): Promise<number>;
     }
 }
 declare module goodidea {
     class Course {
+        /**
+         * 課程Id
+         */
         id: string;
+        /**
+         * 課程年份
+         */
         year: number;
+        /**
+         * 學期
+         */
         semester: number;
+        /**
+         * 課程編號
+         */
         cId: string;
+        /**
+         * 課程名稱
+         */
         cName: string;
+        /**
+         * 教師名稱
+         */
         teacherName: string;
+        /**
+         * 教師信箱
+         */
         teacherEmail: string;
+        /**
+         * 由JSON資料產生Course
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Course;
+        /**
+         * 取得現有課程列表
+         */
         static getCourseList(): Promise<Course[]>;
     }
 }
 declare module goodidea {
     class Department {
+        /**
+         * 學院Id
+         */
         collegeId: string;
+        /**
+         * 系所Id
+         */
         id: string;
+        /**
+         * 系所名稱
+         */
         name: string;
+        /**
+         * 所屬學院
+         */
         college: College;
+        /**
+         * 由JSON資料產生Department
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Department;
         /**
-         * 取得所有系所陣列
+         * 取得所有系所列表
          */
         static getDepartmentList(): Promise<Department[]>;
     }
 }
 declare module goodidea {
     class DocumentInfo {
+        /**
+         * 提案文件Id
+         */
         id: string;
+        /**
+         * 提案文件名稱
+         */
         name: string;
+        /**
+         * 提案文件檔案資訊
+         */
         file: FileInfo;
+        /**
+         * 由JSON資料產生DocumentInfo
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): DocumentInfo;
     }
 }
@@ -106,16 +242,38 @@ declare module goodidea {
          * 取得檔案超連結
          */
         url: string;
+        /**
+         * 由JSON資料產生FileInfo
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): FileInfo;
     }
 }
 declare module goodidea {
     class Forum {
+        /**
+         * 討論Id
+         */
         id: string;
+        /**
+         * 是否可編輯或刪除
+         */
         editable: boolean;
+        /**
+         * 討論發布日期
+         */
         time: Date;
+        /**
+         * 是否為團隊內部討論
+         */
         groupOnly: boolean;
+        /**
+         * 討論內容
+         */
         content: string;
+        /**
+         * 討論發起使用者
+         */
         user: User;
         /**
          * 刪除這個討論
@@ -134,6 +292,10 @@ declare module goodidea {
          * @param teamOnly 是否為團隊訊息(必須為團隊成員)
          */
         static getForumList(project: Project | string, teamOnly: boolean): Promise<PageResult<Forum>>;
+        /**
+         * 由JSON資料產生Forum
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Forum;
     }
 }
@@ -149,7 +311,14 @@ declare module goodidea {
         id: string;
         name: string;
         url: string;
+        /**
+         * 由JSON資料產生Link
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Link;
+        /**
+         * 取得相關連結列表
+         */
         static getLinkList(): Promise<Link[]>;
     }
 }
@@ -187,6 +356,10 @@ declare module goodidea {
          * 取得所需技能
          */
         specialty: MemberRequestSpecialty[];
+        /**
+         * 由JSON資料產生MemberRequest
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): MemberRequest;
         /**
          * 新增需求技能
@@ -220,6 +393,10 @@ declare module goodidea {
     class MemberRequestSpecialty {
         id: string;
         value: string;
+        /**
+         * 由JSON資料產生MemberRequestSpecialty
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): MemberRequestSpecialty;
     }
 }
@@ -232,8 +409,19 @@ declare module goodidea {
         views: number;
         content: string;
         files: DocumentInfo[];
+        /**
+         * 透過最新消息Id取得最新消息
+         * @param id 最新消息Id
+         */
         static getNewsById(id: string): Promise<News>;
+        /**
+         * 由JSON資料產生News
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): News;
+        /**
+         * 取得最新消息分頁列表
+         */
         static getNewsList(): Promise<PageResult<News>>;
     }
 }
@@ -246,10 +434,21 @@ declare module goodidea {
         length: number;
         result: T[];
         private type;
+        /**
+         * 建構分頁查詢結果
+         * @param type 結果類型
+         */
         constructor(type: any);
+        /**
+         * 是否有下一個分頁
+         */
         hasNext(): boolean;
         load(): Promise<void>;
         nextPage(): Promise<PageResult<T>>;
+        /**
+         * 由JSON資料產生PageResult
+         * @param data 資料來源
+         */
         static loadFromJSON<T>(type: any, data: JSON): PageResult<T>;
     }
 }
@@ -442,6 +641,10 @@ declare module goodidea {
          * @param temp 提案競賽樣板，競賽ID或Competition物件
          */
         static create(name: string, _class: (Class | string), temp: (Competition | string)): Promise<Project>;
+        /**
+         * 由JSON資料產生Project
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Project;
         /**
          * 取得指定使用者ID或User物件對象所有提案
@@ -488,6 +691,10 @@ declare module goodidea {
         user: User;
         userId: string;
         content: string;
+        /**
+         * 由JSON資料產生ProjectEditLog
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): ProjectEditLog;
         getProject(): Promise<Project>;
         static getEditLogs(project: Project | string): Promise<PageResult<ProjectEditLog>>;

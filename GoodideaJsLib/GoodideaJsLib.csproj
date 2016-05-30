@@ -43,7 +43,6 @@
     <TypeScriptCompile Include="News.ts" />
     <TypeScriptCompile Include="PageResult.ts" />
     <TypeScriptCompile Include="Project.ts" />
-    <TypeScriptCompile Include="ProjectEditLog.ts" />
     <TypeScriptCompile Include="ProjectUpdateLog.ts" />
     <TypeScriptCompile Include="System.ts" />
     <TypeScriptCompile Include="Team.ts" />
