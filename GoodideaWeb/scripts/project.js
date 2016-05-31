@@ -47,6 +47,9 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             }
             //更新內文HTML
             $scope.updateContent();
+            //初始化編輯器
+            if ($scope.project.editable)
+                $scope.initEditor();
         });
         //更新成員名單(成員名單在前端區分為課程成員與團隊成員)
         $scope.updateMember = () => {
@@ -133,6 +136,10 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             });
             mdlContentElement.onscroll(null); //初始化章節列表
             //#endregion
+        };
+        //初始化編輯器
+        $scope.initEditor = () => {
+            initEditor('#projectEditorTextarea');
         };
         //投票
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
@@ -384,6 +391,14 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 $scope.loading = false;
                 componentHandler.upgradeDom();
             });
+        };
+        //顯示編輯畫面
+        $scope.edit = () => {
+            $scope.editing = true;
+        };
+        //關閉編輯畫面
+        $scope.unedit = () => {
+            $scope.editing = false;
         };
         //#region 團隊管理
         $scope.addTeamMember = (isMember) => {

@@ -1,21 +1,24 @@
 ﻿<div ng-show="project.editable && !project.competition" class="nkfust-project-edit-nav">
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    <button ng-hide="editing" ng-click="edit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         編輯
     </button>
-    <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+    <button ng-show="editing" ng-click="unedit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         返回
     </button>
     <button ng-click="openUpdateLogs()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
         編輯紀錄
     </button>
 </div>
-<div class="nkfust-project-segments">
+<div ng-hide="editing" class="nkfust-project-segments">
     <h4>章節列表</h4>
     <ol style="padding-left:30px">
         <li ng-hide="project.segments && project.segments.length">無章節</li>
         <li ng-repeat="t in project.segments"><a href="#{{t.text}}" style="{{t.active ? 'color: #337ab7;': ''}}">{{t.text || "未命名章節"}}</a></li>
     </ol>
 </div>
-<div class="nkfust-project-content" ng-bind-html="project.htmlContent">
+<div ng-hide="editing" class="nkfust-project-content" ng-bind-html="project.htmlContent">
 
+</div>
+<div id="projectEditor" ng-show="editing" class="nkfust-project-content">
+    <textarea id="projectEditorTextarea"></textarea>
 </div>
