@@ -305,13 +305,6 @@
             });
             return responseJSON['Result']['Quota'];
         }
-
-        /**
-         * 取得編輯紀錄
-         */
-        public async getEditLogs(): Promise<PageResult<ProjectEditLog>> {
-            return await ProjectEditLog.getEditLogs(this);
-        }
         
         /**
          * 複製目前提案

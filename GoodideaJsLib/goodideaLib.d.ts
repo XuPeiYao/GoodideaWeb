@@ -618,10 +618,6 @@ declare module goodidea {
          */
         vote(): Promise<number>;
         /**
-         * 取得編輯紀錄
-         */
-        getEditLogs(): Promise<PageResult<ProjectEditLog>>;
-        /**
          * 複製目前提案
          * @param name 新的提案名稱
          */
@@ -685,27 +681,40 @@ declare module goodidea {
     }
 }
 declare module goodidea {
-    class ProjectEditLog {
+    class ProjectUpdateLog {
+        /**
+         * 更新紀錄Id
+         */
         id: string;
-        projectId: string;
+        /**
+         * 更新使用者
+         */
         user: User;
-        userId: string;
+        /**
+         * 更新後的資料
+         */
         content: string;
         /**
-         * 由JSON資料產生ProjectEditLog
+         * 更新時間
+         */
+        time: Date;
+        /**
+         * 更新的提案Id
+         */
+        projectId: string;
+        /**
+         * 取得提案
+         */
+        getProject(): Promise<Project>;
+        /**
+         * 取得指定提案更新紀錄分頁列表
+         * @param project 提案
+         */
+        static getUpdateLogs(project: Project | string): Promise<PageResult<ProjectUpdateLog>>;
+        /**
+         * 由JSON資料產生ProjectUpdateLog
          * @param data 資料來源
          */
-        static loadFromJSON(data: JSON): ProjectEditLog;
-        getProject(): Promise<Project>;
-        static getEditLogs(project: Project | string): Promise<PageResult<ProjectEditLog>>;
-    }
-}
-declare module goodidea {
-    class ProjectUpdateLog {
-        id: string;
-        user: User;
-        content: string;
-        time: Date;
         static loadFromJSON(data: JSON): ProjectUpdateLog;
     }
 }
@@ -719,8 +728,18 @@ declare module goodidea {
 }
 declare module goodidea {
     class Team {
+        /**
+         * 團隊名稱
+         */
         name: string;
+        /**
+         * 團隊成員資訊
+         */
         group: TeamMember[];
+        /**
+         * 由JSON資料產生Team
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): Team;
     }
 }
@@ -731,11 +750,30 @@ declare module goodidea {
         member = 2,
     }
     class TeamMember {
+        /**
+         * 團隊成員資訊Id
+         */
         id: string;
+        /**
+         * 是否為指導老師
+         */
         isTeacher: boolean;
+        /**
+         * 是否為助教
+         */
         isAssistant: boolean;
+        /**
+         * 使用者
+         */
         user: User;
+        /**
+         * 取得或設定團隊成員類型
+         */
         memberType: MemberType;
+        /**
+         * 由JSON資料產生TeamMember
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): TeamMember;
     }
 }
@@ -781,6 +819,10 @@ declare module goodidea {
          * 是否連結Facebook
          */
         isLinkFB: boolean;
+        /**
+         * 由JSON資料產生User
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): User;
         /**
          * 讀取使用者資料
@@ -841,8 +883,18 @@ declare module goodidea {
 }
 declare module goodidea {
     class UserProjectList {
+        /**
+         * 擁有的提案列表
+         */
         own: Project[];
+        /**
+         * 參與的提案列表
+         */
         participate: Project[];
+        /**
+         * 由JSON資料產生UserProjectList
+         * @param data 資料來源
+         */
         static loadFromJSON(data: JSON): UserProjectList;
     }
 }

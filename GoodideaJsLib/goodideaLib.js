@@ -887,14 +887,6 @@ var goodidea;
             });
         }
         /**
-         * 取得編輯紀錄
-         */
-        getEditLogs() {
-            return __awaiter(this, void 0, Promise, function* () {
-                return yield goodidea.ProjectEditLog.getEditLogs(this);
-            });
-        }
-        /**
          * 複製目前提案
          * @param name 新的提案名稱
          */
@@ -1080,29 +1072,22 @@ var goodidea;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {
-    class ProjectEditLog {
+    class ProjectUpdateLog {
         /**
-         * 由JSON資料產生ProjectEditLog
-         * @param data 資料來源
+         * 取得提案
          */
-        static loadFromJSON(data) {
-            var result = new ProjectEditLog();
-            var fields = data.getKeys();
-            for (var i = 0; i < fields.length; i++) {
-                if (data[fields[i]] instanceof Function)
-                    continue;
-                result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
-            }
-            return result;
-        }
         getProject() {
             return __awaiter(this, void 0, Promise, function* () {
                 return goodidea.Project.getProjectById(this.projectId);
             });
         }
-        static getEditLogs(project) {
+        /**
+         * 取得指定提案更新紀錄分頁列表
+         * @param project 提案
+         */
+        static getUpdateLogs(project) {
             return __awaiter(this, void 0, Promise, function* () {
-                var result = new goodidea.PageResult(ProjectEditLog);
+                var result = new goodidea.PageResult(ProjectUpdateLog);
                 result.url = 'api/project/updateLogs';
                 result.params = {
                     project: project['id'] || project
@@ -1112,18 +1097,17 @@ var goodidea;
                 return result;
             });
         }
-    }
-    goodidea.ProjectEditLog = ProjectEditLog;
-})(goodidea || (goodidea = {}));
-var goodidea;
-(function (goodidea) {
-    class ProjectUpdateLog {
+        /**
+         * 由JSON資料產生ProjectUpdateLog
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new ProjectUpdateLog();
             result.id = data['Id'];
             result.user = goodidea.User.loadFromJSON(data['User']);
             result.content = data['Content'];
             result.time = new Date(data['Time']);
+            result.projectId = data['ProjectId'];
             return result;
         }
     }
@@ -1164,8 +1148,15 @@ var goodidea;
 (function (goodidea) {
     class Team {
         constructor() {
+            /**
+             * 團隊成員資訊
+             */
             this.group = [];
         }
+        /**
+         * 由JSON資料產生Team
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new Team();
             result.name = data['Name'];
@@ -1187,6 +1178,9 @@ var goodidea;
     })(goodidea.MemberType || (goodidea.MemberType = {}));
     var MemberType = goodidea.MemberType;
     class TeamMember {
+        /**
+         * 取得或設定團隊成員類型
+         */
         get memberType() {
             if (!this.isTeacher)
                 return MemberType.member;
@@ -1208,6 +1202,10 @@ var goodidea;
                     break;
             }
         }
+        /**
+         * 由JSON資料產生TeamMember
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new TeamMember();
             var fields = data.getKeys();
@@ -1230,6 +1228,10 @@ var goodidea;
             this.specialty = [];
         }
         //#region 資料更新
+        /**
+         * 由JSON資料產生User
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new User();
             var fields = data.getKeys();
@@ -1429,9 +1431,19 @@ var goodidea;
 (function (goodidea) {
     class UserProjectList {
         constructor() {
+            /**
+             * 擁有的提案列表
+             */
             this.own = [];
+            /**
+             * 參與的提案列表
+             */
             this.participate = [];
         }
+        /**
+         * 由JSON資料產生UserProjectList
+         * @param data 資料來源
+         */
         static loadFromJSON(data) {
             var result = new UserProjectList();
             for (var i = 0; i < data['Own'].length; i++) {
