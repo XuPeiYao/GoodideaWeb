@@ -646,6 +646,14 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         //#endregion
         yield $scope.load(); //初始化頁面
         yield $scope.forumNextPage(); //讀取討論區
+        //#region 載入後開啟的標籤
+        if (queryString['tab']) {
+            var element = document.querySelector(`a[href="#${queryString['tab']}"]`);
+            if (element) {
+                element.click();
+            }
+        }
+        //#endregion
         $scope.$apply();
     });
 });
