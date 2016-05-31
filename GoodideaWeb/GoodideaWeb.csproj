@@ -103,6 +103,7 @@
     <Content Include="lib\tinymce\js\tinymce\themes\modern\theme.min.js" />
     <Content Include="lib\tinymce\js\tinymce\tinymce.min.js" />
     <Content Include="lib\tinymce\LICENSE.TXT" />
+    <Content Include="modals\updateLogs.html" />
     <Content Include="modals\joinCompetition.html" />
     <Content Include="modals\changeClass.html" />
     <Content Include="modals\addCover.html" />

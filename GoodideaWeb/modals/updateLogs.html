@@ -1,0 +1,33 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">編輯紀錄</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <div>
+        <table class="mdl-cell mdl-cell--6-col mdl-cell--8-col-tablet mdl-data-table mdl-js-data-table mdl-shadow--2dp is-upgraded" data-upgraded=",MaterialDataTable">
+            <thead>
+                <tr style="background-color:#37474f;">
+                    <th style="color:white;font-size:14pt !important;" class="mdl-data-table__cell--non-numeric">編輯者</th>
+                    <th style="color:white;font-size:14pt !important;">編輯時間</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="t in logList" class="mdl-button--raised">
+                    <td>{{t.user.name}}</td>
+                    <td>{{t.time.format('yyyy-mm-dd HH:MM:ss')}}</td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align:center;padding-bottom:10px">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect" style="width:100%" ng-click="load()">讀取更多</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal-footer">
+    <button tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        關閉
+    </button>
+</div>

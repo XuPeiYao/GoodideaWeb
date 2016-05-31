@@ -358,6 +358,24 @@
         });
     }
 
+    //開啟編輯紀錄
+    $scope.openUpdateLogs = () => {
+        var updateLogs = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/updateLogs.html',
+            controller: 'updateLogsModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope
+            }
+        });
+        updateLogs.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+
     //#region 團隊管理
     $scope.addTeamMember = (isMember: boolean) => {
         var addTeamMember = $uibModal.open({
@@ -998,5 +1016,26 @@ app.controller('teacherListModal', async function ($scope, $sce, $uibModalInstan
         document.getElementById('addMemberInput').classList.add('is-dirty');
         $scope.cancel();
     }
+    $scope.cancel = () => $uibModalInstance.close();
+});
+
+app.controller('updateLogsModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
+    $scope.logList = [];
+    $scope.logResult = null;
+    $scope.load = async () => {
+        $scope.loading = true;
+        if (!$scope.logResult) {
+            $scope.logResult = await project.getProjectUpdateLogList();
+        } else {
+            $scope.logResult = await $scope.logResult.nextPage();
+        }
+        $scope.logResult.result.forEach(x => {
+            $scope.logList.push(x)
+        });
+        $scope.loading = false;
+        $scope.$apply();
+    }
+    await $scope.load();
+
     $scope.cancel = () => $uibModalInstance.close();
 });

@@ -368,6 +368,23 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 description: $scope.project.summary,
             });
         };
+        //開啟編輯紀錄
+        $scope.openUpdateLogs = () => {
+            var updateLogs = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/updateLogs.html',
+                controller: 'updateLogsModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            updateLogs.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         //#region 團隊管理
         $scope.addTeamMember = (isMember) => {
             var addTeamMember = $uibModal.open({
@@ -1008,6 +1025,28 @@ app.controller('teacherListModal', function ($scope, $sce, $uibModalInstance, ma
             document.getElementById('addMemberInput').classList.add('is-dirty');
             $scope.cancel();
         };
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('updateLogsModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.logList = [];
+        $scope.logResult = null;
+        $scope.load = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            if (!$scope.logResult) {
+                $scope.logResult = yield project.getProjectUpdateLogList();
+            }
+            else {
+                $scope.logResult = yield $scope.logResult.nextPage();
+            }
+            $scope.logResult.result.forEach(x => {
+                $scope.logList.push(x);
+            });
+            $scope.loading = false;
+            $scope.$apply();
+        });
+        yield $scope.load();
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
