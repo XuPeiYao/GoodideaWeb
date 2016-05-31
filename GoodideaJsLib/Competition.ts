@@ -56,7 +56,7 @@ module goodidea {
          */
         public static loadFromJSON(data: JSON): Competition {
             var result = new Competition();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
 
             for (var i = 0; i < fields.length; i++) {
                 result[firstToLowerCase(fields[i])] = data[fields[i]];

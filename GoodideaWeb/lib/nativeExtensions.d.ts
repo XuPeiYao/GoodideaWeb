@@ -49,13 +49,7 @@ interface Math {
 interface NodeList {
     toArray<T>(): Array<T>;
 }
-interface Object {
-    getKeys(): Array<any>;
-    getValues(): Array<any>;
-    containsKey(key: any): boolean;
-    containsValue(value: any): boolean;
-    toArray(): Array<any>;
-}
+declare var getKeys: (obj: any) => any[];
 declare function parseHTML(htmlString: string): HTMLDocument;
 declare function parseXML(xmlString: string): HTMLDocument;
 declare function parseNode(nodeString: string): Node;

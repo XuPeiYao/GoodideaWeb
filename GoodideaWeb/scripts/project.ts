@@ -76,7 +76,7 @@
         var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
         $scope.tags = [];//標籤集合
         for (var i = 1; i <= 6; i++) {//產生頁面標籤
-            contentElement.getElementsByTagName('h' + i.toString()).toArray().forEach((x: HTMLElement) => {
+            toArray(contentElement.getElementsByTagName('h' + i.toString())).forEach((x: HTMLElement) => {
                 var aTag = document.createElement('a');
                 aTag.name = x.innerText;
                 $scope.tags.push(aTag);//加入標籤集合
@@ -119,8 +119,8 @@
             }
             $scope.$apply();
         };
-        contentElement.getElementsByTagName("img")
-            .toArray().forEach((x: HTMLElement) => {
+        toArray(contentElement.getElementsByTagName("img"))
+            .forEach((x: HTMLElement) => {
                 x.onload = mdlContentElement.onscroll//當圖片讀取完畢，更新章節座標
             });
         mdlContentElement.onscroll(null);//初始化章節列表
@@ -128,8 +128,8 @@
     }
 
     //初始化編輯器
-    $scope.initEditor = () => {
-        initEditor('#projectEditorTextarea');
+    $scope.initEditor = async() => {
+        await initEditor('#editor', $scope);
     }
 
     //投票

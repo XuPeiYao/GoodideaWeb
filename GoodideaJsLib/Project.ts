@@ -109,7 +109,7 @@
          */
         public async load():Promise<void>{
             var temp = await Project.getProjectById(this.id);
-            var fields =  temp.getKeys();
+            var fields =  getKeys(temp);
             for (var i = 0; i < fields.length; i++) {
                 if (temp[fields[i]] instanceof Function) continue;
                 this[fields[i]] = temp[fields[i]];
@@ -353,7 +353,7 @@
          */
         public static loadFromJSON(data: JSON): Project {
             var result = new Project();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function) continue;
                 result[firstToLowerCase(fields[i])] = data[fields[i]];

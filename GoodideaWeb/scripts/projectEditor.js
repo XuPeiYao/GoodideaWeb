@@ -1,8 +1,9 @@
-function initEditor(selector) {
+function initEditor(selector, $scope) {
     tinymce.init({
         selector: selector,
+        language: "zh_TW",
         height: 600,
-        content_css: "styles/editor.css,MDL/material.css",
+        content_css: "styles/editor.css,lib/mdl/material.css,lib/bootstrap-3.3.6-dist/css/bootstrap.min.css",
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks hr fullscreen",
@@ -87,13 +88,14 @@ function initEditor(selector) {
                 }
             });
             ed.addCommand('save', function (ui, v) {
-                /*//ed.insertContent('Hello world!!<h1>GG</h1>');
-
+                //ed.insertContent('Hello world!!<h1>GG</h1>');
+                /*
                 var text = tinyMCE.activeEditor.getContent();
+                markdown.markdownObject.
                 markdownHTML = toMarkdown(text, { gfm: true });
-
+                */
                 document.getElementById('editorSave').click();
-                //ed.selection.getContent({ format: 'text' })*/
+                //ed.selection.getContent({ format: 'text' })
             });
             ed.addCommand('insertUrl', function (ui, v) {
                 document.getElementById('editorAddUrl').click();
@@ -134,7 +136,8 @@ function initEditor(selector) {
                 document.getElementById('editorAddImage').click();
             });
             ed.on('init', function (ed) {
-                tinyMCE.activeEditor.setContent();
+                console.log(markdown.toHtml($scope.project.content));
+                tinyMCE.activeEditor.setContent(markdown.toHtml($scope.project.content));
             });
         }
     });

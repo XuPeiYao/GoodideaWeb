@@ -45,7 +45,7 @@
          */
         public static loadFromJSON(data: JSON): FileInfo {
             var result = new FileInfo();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function) continue;
                 result[fields[i].toLowerCase()] = data[fields[i]];

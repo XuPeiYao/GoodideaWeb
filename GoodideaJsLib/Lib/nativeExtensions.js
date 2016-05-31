@@ -1,4 +1,4 @@
-﻿var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
@@ -198,29 +198,33 @@ var nativeExtensions;
     nativeExtensions.HttpResponse = HttpResponse;
 })(nativeExtensions || (nativeExtensions = {}));
 var HttpClient = nativeExtensions.HttpClient;
-function include() {
+function includeAsync() {
     return __awaiter(this, void 0, Promise, function* () {
         return new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
             try {
-                var includeTags = document.getElementsByTagName("include")
-                    .toArray()
-                    .filter(x => x.getAttribute("isComplete") != null);
+                var includeTags = [];
+                var temp = document.getElementsByTagName("include");
+                for (var i = 0; i < temp.length; i++) {
+                    includeTags.push(temp[i]);
+                }
                 if (includeTags.length == 0) {
                     resolve();
                     return;
                 }
-                includeTags.forEach((includeTag) => __awaiter(this, void 0, void 0, function* () {
+                for (var i = 0; i < includeTags.length; i++) {
+                    var includeTag = includeTags[i];
                     includeTag.setAttribute("id", Math.uuid());
                     var fileSrc = includeTag.getAttribute("src");
                     if (!fileSrc)
-                        return;
+                        continue;
                     var client = new HttpClient();
                     var response = yield client.getAsync(fileSrc);
                     parseHTML(response.result).body.childNodes.toArray().forEach((x) => {
                         includeTag.parentNode.insertBefore(x, includeTag);
                     });
+                    console.info("include " + fileSrc);
                     includeTag.parentNode.removeChild(includeTag);
-                }));
+                }
                 yield include(); //Deep
             }
             catch (e) {
@@ -229,6 +233,32 @@ function include() {
             resolve();
         }));
     });
+}
+function include() {
+    var includeTags = [];
+    var temp = document.getElementsByTagName("include");
+    for (var i = 0; i < temp.length; i++) {
+        includeTags.push(temp[i]);
+    }
+    if (includeTags.length == 0) {
+        return;
+    }
+    for (var i = 0; i < includeTags.length; i++) {
+        var includeTag = includeTags[i];
+        includeTag.setAttribute("id", Math.uuid());
+        var fileSrc = includeTag.getAttribute("src");
+        if (!fileSrc)
+            continue;
+        var client = new XMLHttpRequest(); //請求用物件
+        client.open('GET', fileSrc, false);
+        client.send();
+        parseHTML(client.response).body.childNodes.toArray().forEach((x) => {
+            includeTag.parentNode.insertBefore(x, includeTag);
+        });
+        console.info("include " + fileSrc);
+        includeTag.parentNode.removeChild(includeTag);
+    }
+    include(); //Deep
 }
 Math.uuid = function () {
     function s4() {
@@ -245,33 +275,46 @@ NodeList.prototype.toArray = function () {
         result.push(this[i]);
     return result;
 };
+/*
+interface Object {
+    getKeys(): Array<any>;
+    getValues(): Array<any>;
+    containsKey(key: any): boolean;
+    containsValue(value: any): boolean;
+    toArray(): Array<any>;
+}
+
 Object.prototype.getKeys = function () {
-    var result = new Array();
-    for (var key in this)
-        result.push(key);
+    var result = new Array<any>();
+    for (var key in this) result.push(key);
     return result;
-};
+}
 Object.prototype.getValues = function () {
-    var result = new Array();
-    for (var key in this)
-        result.push(this[key]);
+    var result = new Array<any>();
+    for (var key in this) result.push(this[key]);
     return result;
-};
-Object.prototype.containsKey = function (key) {
+}
+Object.prototype.containsKey = function (key: any) {
     return this.getKeys().contains(key);
-};
-Object.prototype.containsValue = function (value) {
+}
+Object.prototype.containsValue = function (value: any) {
     return this.getValues().contains(value);
-};
+}
 Object.prototype.toArray = function () {
     if (this.length > 0) {
-        var result = new Array();
+        var result = new Array<any>();
         for (var i = 0; i < this.length; i++) {
             result.push(this[i]);
         }
         return result;
     }
     return [];
+}*/
+var getKeys = function (obj) {
+    var result = new Array();
+    for (var key in obj)
+        result.push(key);
+    return result;
 };
 function parseHTML(htmlString) {
     return new DOMParser().parseFromString(htmlString, "text/html");

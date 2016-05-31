@@ -1,0 +1,50 @@
+﻿.markdown-video {
+    
+}
+
+.markdown-video-div {
+    display:block;
+    padding-bottom: 0 !important;
+    height: 480px !important; 
+    text-align: center;
+}
+.markdown-video-div > .mce-object-iframe{
+    width:80%;
+}
+.markdown-video-div > .mce-object-iframe > iframe{
+    width:100%;
+}
+.mce-preview-object{
+    height:480px !important;
+}
+img{
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+@media(max-width:1025px) {
+    .markdown-video-div > .mce-object-iframe{
+        height:400px !important;
+        width:100%;
+    }
+    .markdown-video-div > .mce-object-iframe > iframe{
+        height:400px !important;
+    }
+    .markdown-video-div {
+        height: 400px !important;
+    }
+    .mce-preview-object{
+        height:400px !important;
+    }
+}
+.
+img{/*提案正文圖片置中*/
+     display:block;
+     margin:auto;
+}
+.emoji {
+      width: 1em !important;
+      height: 1em !important;
+      vertical-align: baseline !important;
+      display: initial !important;
+}

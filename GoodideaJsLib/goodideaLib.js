@@ -89,7 +89,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new Competition();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
@@ -139,7 +139,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new Course();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -172,7 +172,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new Department();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -207,7 +207,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new DocumentInfo();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -233,7 +233,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new FileInfo();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -301,7 +301,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new Forum();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -319,7 +319,7 @@ var goodidea;
     class KeyValue {
         static loadFromJSON(data) {
             var result = new KeyValue();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -429,7 +429,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new MemberRequest();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -674,7 +674,7 @@ var goodidea;
         load() {
             return __awaiter(this, void 0, Promise, function* () {
                 var temp = yield Project.getProjectById(this.id);
-                var fields = temp.getKeys();
+                var fields = getKeys(temp);
                 for (var i = 0; i < fields.length; i++) {
                     if (temp[fields[i]] instanceof Function)
                         continue;
@@ -939,7 +939,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new Project();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 if (data[fields[i]] instanceof Function)
                     continue;
@@ -1201,7 +1201,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new TeamMember();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
@@ -1227,7 +1227,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new User();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
@@ -1261,7 +1261,7 @@ var goodidea;
                     id: this.id
                 });
                 var user = yield User.loadFromJSON(responseJSON['Result']);
-                var fields = user.getKeys();
+                var fields = getKeys(user);
                 for (var i = 0; i < fields.length; i++) {
                     this[fields[i]] = user[fields[i]];
                 }

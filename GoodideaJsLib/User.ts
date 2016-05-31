@@ -57,7 +57,7 @@
          */
         public static loadFromJSON(data: JSON): User {
             var result = new User();
-            var fields = data.getKeys();
+            var fields = getKeys(data);
             for (var i = 0; i < fields.length; i++) {
                 result[firstToLowerCase(fields[i])] = data[fields[i]];
             }
@@ -97,7 +97,7 @@
             });
 
             var user = await User.loadFromJSON(responseJSON['Result']);
-            var fields = user.getKeys();
+            var fields = getKeys(user);
             for (var i = 0; i < fields.length; i++) {
                 this[fields[i]] = user[fields[i]];
             }

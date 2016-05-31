@@ -1,9 +1,10 @@
 ﻿declare var tinymce, tinyMCE;
-function initEditor(selector:string) {
+function initEditor(selector:string,$scope) {
     tinymce.init({
         selector: selector,
+        language: "zh_TW",
         height: 600,
-        content_css: "styles/editor.css,MDL/material.css",
+        content_css: "styles/editor.css,lib/mdl/material.css,lib/bootstrap-3.3.6-dist/css/bootstrap.min.css",
         plugins: [
             "advlist autolink lists link image charmap print preview anchor",
             "searchreplace visualblocks hr fullscreen",
@@ -88,14 +89,14 @@ function initEditor(selector:string) {
                 }
             });
             ed.addCommand('save', function (ui, v) {
-                /*//ed.insertContent('Hello world!!<h1>GG</h1>');
-
+                //ed.insertContent('Hello world!!<h1>GG</h1>');
+                /*
                 var text = tinyMCE.activeEditor.getContent();
+                markdown.markdownObject.
                 markdownHTML = toMarkdown(text, { gfm: true });
-
+                */
                 document.getElementById('editorSave').click();
-                //ed.selection.getContent({ format: 'text' })*/
-
+                //ed.selection.getContent({ format: 'text' })
             });
             ed.addCommand('insertUrl', function (ui, v) {
                 document.getElementById('editorAddUrl').click();
@@ -136,7 +137,8 @@ function initEditor(selector:string) {
 
             });
             ed.on('init', function (ed) {
-                tinyMCE.activeEditor.setContent(/*markdownHTML*/);
+                console.log(markdown.toHtml($scope.project.content));
+                tinyMCE.activeEditor.setContent(markdown.toHtml($scope.project.content));
             });
         }
     });

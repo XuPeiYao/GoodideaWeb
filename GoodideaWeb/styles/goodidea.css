@@ -169,7 +169,16 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .markdown-video-div {
-    height: 400px;
+    height: 480px;
+    width: 80%;
+    margin: auto;
+}
+@media(max-width:1025px) {
+    .markdown-video-div {
+        height: 400px;
+        width: 100%;
+        margin: auto;
+    }
 }
 
 .android-more-section {

@@ -37,17 +37,22 @@ var markdown = {
     }
 };
 markdown.init();
+function toArray(obj) {
+    var result = [];
+    for (var i = 0; i < obj.length; i++)
+        result.push(obj[i]);
+    return result;
+}
 /**
  * 修正指定區域內的mdl輸入欄位再有數值的情況下無isDirty問題
  * @param area 指定區域
  */
 function fixMdlTextfields(area) {
-    area
-        .getElementsByClassName('mdl-textfield')
-        .toArray()
+    toArray(area
+        .getElementsByClassName('mdl-textfield'))
         .forEach((x) => {
-        var inputs = x.getElementsByTagName('input').toArray();
-        var selects = x.getElementsByTagName('select').toArray();
+        var inputs = toArray(x.getElementsByTagName('input'));
+        var selects = toArray(x.getElementsByTagName('select'));
         var target = null;
         if (inputs.length) {
             target = inputs[0];
@@ -64,18 +69,16 @@ function fixMdlTextfields(area) {
     });
 }
 function fixMdlButton(area) {
-    area
-        .getElementsByClassName('mdl-button')
-        .toArray()
+    toArray(area
+        .getElementsByClassName('mdl-button'))
         .forEach((x) => {
         x.attributes.removeNamedItem('data-upgraded');
         componentHandler.upgradeElement(x);
     });
 }
 function fixMdlTooltip(area) {
-    area
-        .getElementsByClassName('mdl-tooltip')
-        .toArray()
+    toArray(area
+        .getElementsByClassName('mdl-tooltip'))
         .forEach((x) => {
         x.attributes.removeNamedItem('data-upgraded');
         componentHandler.upgradeElement(x);

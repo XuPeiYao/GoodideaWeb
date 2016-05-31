@@ -80,7 +80,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
             var contentElement = document.getElementsByClassName("nkfust-project-content")[0];
             $scope.tags = []; //標籤集合
             for (var i = 1; i <= 6; i++) {
-                contentElement.getElementsByTagName('h' + i.toString()).toArray().forEach((x) => {
+                toArray(contentElement.getElementsByTagName('h' + i.toString())).forEach((x) => {
                     var aTag = document.createElement('a');
                     aTag.name = x.innerText;
                     $scope.tags.push(aTag); //加入標籤集合
@@ -130,17 +130,17 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 }
                 $scope.$apply();
             };
-            contentElement.getElementsByTagName("img")
-                .toArray().forEach((x) => {
+            toArray(contentElement.getElementsByTagName("img"))
+                .forEach((x) => {
                 x.onload = mdlContentElement.onscroll; //當圖片讀取完畢，更新章節座標
             });
             mdlContentElement.onscroll(null); //初始化章節列表
             //#endregion
         };
         //初始化編輯器
-        $scope.initEditor = () => {
-            initEditor('#projectEditorTextarea');
-        };
+        $scope.initEditor = () => __awaiter(this, void 0, void 0, function* () {
+            yield initEditor('#editor', $scope);
+        });
         //投票
         $scope.vote = () => __awaiter(this, void 0, void 0, function* () {
             swal({
