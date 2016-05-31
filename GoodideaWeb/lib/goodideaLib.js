@@ -912,14 +912,7 @@ var goodidea;
          */
         getProjectUpdateLogList() {
             return __awaiter(this, void 0, Promise, function* () {
-                var result = new goodidea.PageResult(goodidea.ProjectUpdateLog);
-                result.url = 'api/project/requestList';
-                result.params = {
-                    project: this.id
-                };
-                result.length = 10;
-                yield result.load();
-                return result;
+                return yield goodidea.ProjectUpdateLog.getUpdateLogs(this);
             });
         }
         /**

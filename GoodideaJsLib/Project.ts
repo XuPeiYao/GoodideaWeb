@@ -328,14 +328,7 @@
          * 取得目前提案的編輯紀錄
          */
         public async getProjectUpdateLogList(): Promise<PageResult<ProjectUpdateLog>> {
-            var result = new PageResult<ProjectUpdateLog>(goodidea.ProjectUpdateLog);
-            result.url = 'api/project/requestList';
-            result.params = {
-                project: this.id
-            };
-            result.length = 10;
-            await result.load();
-            return result;
+            return await ProjectUpdateLog.getUpdateLogs(this);
         }
 
         /**
