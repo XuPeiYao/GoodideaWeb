@@ -91,6 +91,8 @@ function initEditor(selector:string,$scope) {
             ed.addCommand('save', function (ui, v) {
                 //ed.insertContent('Hello world!!<h1>GG</h1>');
                 /*
+
+                console.log(ed.getContent());
                 var text = tinyMCE.activeEditor.getContent();
                 markdown.markdownObject.
                 markdownHTML = toMarkdown(text, { gfm: true });
@@ -99,7 +101,7 @@ function initEditor(selector:string,$scope) {
                 //ed.selection.getContent({ format: 'text' })
             });
             ed.addCommand('insertUrl', function (ui, v) {
-                $scope.changeName()
+                $scope.editor.addUrl();
             });
             ed.addCommand('insertVideo', function (ui, v) {
                 swal({

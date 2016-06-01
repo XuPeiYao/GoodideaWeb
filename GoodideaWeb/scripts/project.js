@@ -400,6 +400,25 @@ app.controller('project', function ($scope, $sce, $uibModal) {
         $scope.unedit = () => {
             $scope.editing = false;
         };
+        //#region 編輯器
+        $scope.editor = {};
+        $scope.editor.addUrl = () => {
+            var addUrl = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/editorAddUrl.html',
+                controller: 'editorAddUrlModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addUrl.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
+        //#endregion
         //#region 團隊管理
         $scope.addTeamMember = (isMember) => {
             var addTeamMember = $uibModal.open({
@@ -1062,6 +1081,27 @@ app.controller('updateLogsModal', function ($scope, $sce, $uibModalInstance, pro
             $scope.$apply();
         });
         yield $scope.load();
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+//編輯器插入連結控制器
+app.controller('editorAddUrlModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.ok = () => {
+            if (!$scope.url) {
+                swal({
+                    type: 'error',
+                    title: "連結網址不該為空",
+                    text: "您尚未輸入連結網址，或者您輸入的格式錯誤",
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            if (!$scope.name || $scope.name.length == 0)
+                $scope.name = $scope.url;
+            var aHtml = parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
+            tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+        };
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
