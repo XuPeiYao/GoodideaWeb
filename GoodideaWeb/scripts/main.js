@@ -87,16 +87,19 @@ function fixMdlTooltip(area) {
 include();
 componentHandler.upgradeAllRegistered();
 //componentHandler.upgradeDom();
-var queryString = {};
-(function () {
-    if (!location.search)
-        return;
-    var keyvaluePairs = location.search.substring(1).split('&');
-    for (var i = 0; i < keyvaluePairs.length; i++) {
-        var keyvalue = keyvaluePairs[i].split('=').map(x => decodeURIComponent(x));
-        queryString[keyvalue[0].toLowerCase()] = keyvalue[1];
+var queryString = fromQueryString(location.href, true);
+function fromQueryString(url, decode) {
+    var result = {};
+    try {
+        var keyvaluePairs = url.split('?')[1].split('#')[0].split('&');
+        for (var i = 0; i < keyvaluePairs.length; i++) {
+            var keyvalue = keyvaluePairs[i].split('=').map(x => decode ? decodeURIComponent(x) : x);
+            result[keyvalue[0].toLowerCase()] = keyvalue[1];
+        }
     }
-})();
+    catch (e) { }
+    return result;
+}
 console.clear();
 console.log3D("創意創新雲端平台");
 console.info("SDK版本: " + goodidea.version);

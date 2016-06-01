@@ -98,7 +98,7 @@ function initEditor(selector, $scope) {
                 //ed.selection.getContent({ format: 'text' })
             });
             ed.addCommand('insertUrl', function (ui, v) {
-                document.getElementById('editorAddUrl').click();
+                $scope.changeName();
             });
             ed.addCommand('insertVideo', function (ui, v) {
                 swal({
@@ -116,18 +116,12 @@ function initEditor(selector, $scope) {
                     if (inputValue === "") {
                         swal.showInputError("您必須要輸入影片連結!");
                         return false;
-                    } /*
-                    if (inputValue.match(Config.YoutubeRegex) == null) {
-                        swal.showInputError("不正確的連結格式!(範例:https://www.youtube.com/watch?v=XXXXX)");
-                        return false
                     }
-                    function youtube_parser(url) {
-                        var Search = url.split("?", 2);
-                        var Data = FormatQueryString(Search[1]);
-
-                        return Data.v || Data.V;
-                    }*/
-                    var result = '<p><iframe class="youtube-player" width="420" height="315" src="https://www.youtube.com/embed/' + '" frameborder="0" allowfullscreen=""></iframe></p>';
+                    if (inputValue.match(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#\&\?]*).*/) == null) {
+                        swal.showInputError("不正確的連結格式!(範例:https://www.youtube.com/watch?v=XXXXX)");
+                        return false;
+                    }
+                    var result = markdown.toHtml(`![youtube](${inputValue})`);
                     ed.insertContent(result);
                     swal.close();
                 });
