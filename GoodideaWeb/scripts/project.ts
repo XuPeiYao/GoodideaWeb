@@ -412,7 +412,22 @@
             componentHandler.upgradeDom();
         });
     }
-
+    $scope.editor.addImage = () => {
+        var addImage = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/editorAddImage.html',
+            controller: 'editorAddImageModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope
+            }
+        });
+        addImage.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
     
     //#endregion
 
@@ -1059,6 +1074,7 @@ app.controller('teacherListModal', async function ($scope, $sce, $uibModalInstan
     $scope.cancel = () => $uibModalInstance.close();
 });
 
+//編輯紀錄控制器
 app.controller('updateLogsModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.logList = [];
     $scope.logResult = null;
@@ -1096,6 +1112,24 @@ app.controller('editorAddUrlModal', async function ($scope, $sce, $uibModalInsta
 
         var aHtml = <HTMLElement>parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
         tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+    }
+    $scope.cancel = () => $uibModalInstance.close();
+});
+
+//編輯器插入圖片控制器
+app.controller('editorAddImageModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
+    $scope.loading = true;
+    $scope.imageList = await project.files.filter(x => x.file.type == goodidea.FileType.Image);
+    if ($scope.imageList.length > 0) {
+        $scope.image = $scope.imageList.first().file.url;
+    }
+    $scope.loading = false;
+    $scope.$apply();
+
+    $scope.ok = () => {
+        if (!$scope.name || $scope.name.length == 0) $scope.name = "未設定";
+        
+        tinyMCE.activeEditor.insertContent(markdown.toHtml(`![${$scope.name}](${$scope.image})`));
     }
     $scope.cancel = () => $uibModalInstance.close();
 });

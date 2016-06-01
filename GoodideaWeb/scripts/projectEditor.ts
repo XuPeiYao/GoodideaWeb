@@ -129,8 +129,7 @@ function initEditor(selector:string,$scope) {
                 });
             });
             ed.addCommand('insertImage', function (ui, v) {
-                document.getElementById('editorAddImage').click();
-
+                $scope.editor.addImage();
             });
             ed.on('init', function (ed) {
                 console.log(markdown.toHtml($scope.project.content));

@@ -418,6 +418,22 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 componentHandler.upgradeDom();
             });
         };
+        $scope.editor.addImage = () => {
+            var addImage = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/editorAddImage.html',
+                controller: 'editorAddImageModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addImage.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         //#endregion
         //#region 團隊管理
         $scope.addTeamMember = (isMember) => {
@@ -1062,6 +1078,7 @@ app.controller('teacherListModal', function ($scope, $sce, $uibModalInstance, ma
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
+//編輯紀錄控制器
 app.controller('updateLogsModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.logList = [];
@@ -1101,6 +1118,24 @@ app.controller('editorAddUrlModal', function ($scope, $sce, $uibModalInstance, p
                 $scope.name = $scope.url;
             var aHtml = parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
             tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+        };
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+//編輯器插入圖片控制器
+app.controller('editorAddImageModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.imageList = yield project.files.filter(x => x.file.type == goodidea.FileType.Image);
+        if ($scope.imageList.length > 0) {
+            $scope.image = $scope.imageList.first().file.url;
+        }
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.ok = () => {
+            if (!$scope.name || $scope.name.length == 0)
+                $scope.name = "未設定";
+            tinyMCE.activeEditor.insertContent(markdown.toHtml(`![${$scope.name}](${$scope.image})`));
         };
         $scope.cancel = () => $uibModalInstance.close();
     });
