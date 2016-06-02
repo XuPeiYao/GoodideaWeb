@@ -1237,8 +1237,8 @@ var goodidea;
             if (data == null)
                 return null;
             var result = new TimeRange();
-            result.Start = new Date(data['Start']);
-            result.End = new Date(data['End']);
+            result.start = new Date(data['Start']);
+            result.end = new Date(data['End']);
             return result;
         }
     }

@@ -1,7 +1,7 @@
 ﻿module goodidea {
     export class TimeRange{
-        public Start: Date
-        public End: Date;
+        public start: Date
+        public end: Date;
 
         /**
          * 由JSON資料產生TimeRange
@@ -12,8 +12,8 @@
 
             var result = new TimeRange();
 
-            result.Start = new Date(data['Start']);
-            result.End = new Date(data['End']);
+            result.start = new Date(data['Start']);
+            result.end = new Date(data['End']);
 
             return result;
         }

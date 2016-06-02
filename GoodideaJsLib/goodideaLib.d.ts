@@ -792,8 +792,8 @@ declare module goodidea {
 }
 declare module goodidea {
     class TimeRange {
-        Start: Date;
-        End: Date;
+        start: Date;
+        end: Date;
         /**
          * 由JSON資料產生TimeRange
          * @param data 資料來源
