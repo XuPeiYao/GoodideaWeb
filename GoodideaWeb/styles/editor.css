@@ -33,7 +33,9 @@ img{
         height:400px !important;
     }
 }
-
+body{
+    font-family: 'Microsoft JhengHei' !important;
+}
 td,th{
     width:50px;
     border: 1px solid black;
