@@ -1,8 +1,4 @@
-﻿.markdown-video {
-    
-}
-
-.markdown-video-div {
+﻿.markdown-video-div {
     display:block;
     padding-bottom: 0 !important;
     height: 480px !important; 
@@ -37,7 +33,15 @@ img{
         height:400px !important;
     }
 }
-.
+
+td,th{
+    width:50px;
+    border: 1px solid black;
+}
+table{
+    margin-left: auto;
+    margin-right: auto;
+}
 img{/*提案正文圖片置中*/
      display:block;
      margin:auto;

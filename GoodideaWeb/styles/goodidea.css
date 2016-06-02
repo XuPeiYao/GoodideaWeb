@@ -14,6 +14,20 @@
  * limitations under the License.
  */
 
+#project-content > table{
+    margin-left: auto;
+    margin-right: auto;
+}
+#project-content > table > thead > tr > th{
+    width:50px;
+    border: 1px solid black;
+}
+#project-content > table > tbody > tr > td{
+    width:50px;
+    border: 1px solid black;
+}
+
+
 .mce-tinymce.mce-fullscreen {
     top: 64px;
 }
