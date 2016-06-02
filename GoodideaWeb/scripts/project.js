@@ -37,7 +37,19 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 componentHandler.upgradeElement(document.getElementById('project_publish'));
             }
             $scope.loading = false;
-            $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
+            if (queryString['version']) {
+                var content = yield goodidea.ProjectUpdateLog.getUpdateLogById($scope.project.id, queryString['version']);
+                var contentText = content.content;
+                $scope.project.content = contentText;
+                $scope.project.editable = false; //歷史版本禁止編輯
+                swal({
+                    title: "檢視歷史版本",
+                    text: `您目前正在檢視提案「${$scope.project.name}」於${content.time.format('yyyy-mm-dd HH:MM:ss')}的歷史版本，無法進行內文編輯`,
+                    type: "warning",
+                    confirmButtonText: "確定",
+                    closeOnConfirm: true,
+                });
+            }
             $scope.updateMember();
             //產生隱藏STYLE
             if (!$scope.project.setable) {
@@ -1083,6 +1095,9 @@ app.controller('updateLogsModal', function ($scope, $sce, $uibModalInstance, pro
     return __awaiter(this, void 0, void 0, function* () {
         $scope.logList = [];
         $scope.logResult = null;
+        $scope.openOldVersion = (t) => {
+            window.open('project.html?id=' + project.id + '&version=' + t.id, '_blank');
+        };
         $scope.load = () => __awaiter(this, void 0, void 0, function* () {
             $scope.loading = true;
             if (!$scope.logResult) {

@@ -12,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="t in logList" class="mdl-button--raised">
+            <tr ng-click="openOldVersion(t)" ng-repeat="t in logList" class="updateLogItem">
                 <td>{{t.user.name}}</td>
                 <td>{{t.time.format('yyyy-mm-dd HH:MM:ss')}}</td>
             </tr>

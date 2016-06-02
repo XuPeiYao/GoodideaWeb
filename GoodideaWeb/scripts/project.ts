@@ -27,7 +27,19 @@
             componentHandler.upgradeElement(document.getElementById('project_publish'));
         }
         $scope.loading = false;
-        $scope.project.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.project.content));
+        if (queryString['version']) {
+            var content = await goodidea.ProjectUpdateLog.getUpdateLogById($scope.project.id, queryString['version']);
+            var contentText = content.content;
+            $scope.project.content = contentText;
+            $scope.project.editable = false;//歷史版本禁止編輯
+            swal({
+                title: "檢視歷史版本",
+                text: `您目前正在檢視提案「${$scope.project.name}」於${content.time.format('yyyy-mm-dd HH:MM:ss')}的歷史版本，無法進行內文編輯`,
+                type: "warning",
+                confirmButtonText: "確定",
+                closeOnConfirm: true,
+            })
+        }
 
         $scope.updateMember();
         
@@ -1077,6 +1089,9 @@ app.controller('teacherListModal', async function ($scope, $sce, $uibModalInstan
 app.controller('updateLogsModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.logList = [];
     $scope.logResult = null;
+    $scope.openOldVersion = (t: goodidea.ProjectUpdateLog) => {
+        window.open('project.html?id=' + project.id + '&version=' + t.id, '_blank');
+    }
     $scope.load = async () => {
         $scope.loading = true;
         if (!$scope.logResult) {
