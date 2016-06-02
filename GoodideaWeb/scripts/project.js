@@ -37,7 +37,7 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 componentHandler.upgradeElement(document.getElementById('project_publish'));
             }
             $scope.loading = false;
-            if (queryString['version']) {
+            if (queryString['version'] && $scope.project.editable) {
                 var content = yield goodidea.ProjectUpdateLog.getUpdateLogById($scope.project.id, queryString['version']);
                 var contentText = content.content;
                 $scope.project.content = contentText;
