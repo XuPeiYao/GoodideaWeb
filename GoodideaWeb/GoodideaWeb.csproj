@@ -190,6 +190,7 @@
     <Content Include="pages\project-team.html" />
     <Content Include="pages\project-information.html" />
     <Content Include="project.html" />
+    <Content Include="competition.html" />
     <Content Include="search.html" />
     <Content Include="requestList.html" />
     <Content Include="projectList.html" />
@@ -252,6 +253,7 @@
     <TypeScriptCompile Include="scripts\main.ts" />
     <TypeScriptCompile Include="scripts\project.ts" />
     <TypeScriptCompile Include="scripts\projectEditor.ts" />
+    <TypeScriptCompile Include="scripts\competitionList.ts" />
     <TypeScriptCompile Include="scripts\search.ts" />
     <TypeScriptCompile Include="scripts\requestList.ts" />
     <TypeScriptCompile Include="scripts\projectList.ts" />

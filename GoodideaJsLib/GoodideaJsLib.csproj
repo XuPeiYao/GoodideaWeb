@@ -47,6 +47,7 @@
     <TypeScriptCompile Include="System.ts" />
     <TypeScriptCompile Include="Team.ts" />
     <TypeScriptCompile Include="TeamMember.ts" />
+    <TypeScriptCompile Include="TimeRange.ts" />
     <TypeScriptCompile Include="User.ts" />
     <TypeScriptCompile Include="UserProjectList.ts" />
   </ItemGroup>
