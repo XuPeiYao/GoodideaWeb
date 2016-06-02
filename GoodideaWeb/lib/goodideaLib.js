@@ -97,6 +97,8 @@ var goodidea;
             for (var i = 0; i < data['Condition'].length; i++) {
                 result.condition.push(goodidea.Class.loadFromJSON(data['Condition'][i]['Class']));
             }
+            result.submitRange = goodidea.TimeRange.loadFromJSON(data['SubmitRange']);
+            result.voteRange = goodidea.TimeRange.loadFromJSON(data['VoteRange']);
             return result;
         }
         /**
@@ -1223,6 +1225,24 @@ var goodidea;
         }
     }
     goodidea.TeamMember = TeamMember;
+})(goodidea || (goodidea = {}));
+var goodidea;
+(function (goodidea) {
+    class TimeRange {
+        /**
+         * 由JSON資料產生TimeRange
+         * @param data 資料來源
+         */
+        static loadFromJSON(data) {
+            if (data == null)
+                return null;
+            var result = new TimeRange();
+            result.Start = new Date(data['Start']);
+            result.End = new Date(data['End']);
+            return result;
+        }
+    }
+    goodidea.TimeRange = TimeRange;
 })(goodidea || (goodidea = {}));
 var goodidea;
 (function (goodidea) {

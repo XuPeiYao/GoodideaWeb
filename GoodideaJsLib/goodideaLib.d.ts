@@ -100,6 +100,14 @@ declare module goodidea {
          */
         condition: Class[];
         /**
+         * 投稿時間範圍
+         */
+        submitRange: TimeRange;
+        /**
+         * 透票時間範圍
+         */
+        voteRange: TimeRange;
+        /**
          * 由JSON資料產生Competition
          * @param data 資料來源
          */
@@ -780,6 +788,17 @@ declare module goodidea {
          * @param data 資料來源
          */
         static loadFromJSON(data: JSON): TeamMember;
+    }
+}
+declare module goodidea {
+    class TimeRange {
+        Start: Date;
+        End: Date;
+        /**
+         * 由JSON資料產生TimeRange
+         * @param data 資料來源
+         */
+        static loadFromJSON(data: JSON): TimeRange;
     }
 }
 declare module goodidea {

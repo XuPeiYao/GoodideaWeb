@@ -51,6 +51,16 @@ module goodidea {
         public condition: Class[];
 
         /**
+         * 投稿時間範圍
+         */
+        public submitRange: TimeRange;
+
+        /**
+         * 透票時間範圍
+         */
+        public voteRange: TimeRange;
+
+        /**
          * 由JSON資料產生Competition
          * @param data 資料來源
          */
@@ -66,6 +76,10 @@ module goodidea {
             for (var i = 0; i < data['Condition'].length; i++) {
                 result.condition.push(Class.loadFromJSON(data['Condition'][i]['Class']));
             }
+
+            result.submitRange = TimeRange.loadFromJSON(data['SubmitRange']);
+            result.voteRange = TimeRange.loadFromJSON(data['VoteRange']);
+
 
             return result;
         }
