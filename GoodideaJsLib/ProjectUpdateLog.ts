@@ -48,6 +48,18 @@
         }
 
         /**
+         * 使用Id取得指定提案更新紀錄
+         * @param Id 
+         */
+        public static async getUpdateLogById(project:Project | string,id: string):Promise<ProjectUpdateLog> {
+            var data = await postAsync('api/project/GetUpdateLog', null, {
+                project: project['id'] || project,
+                log: id
+            });
+            return ProjectUpdateLog.loadFromJSON(data['Result']);
+        }
+
+        /**
          * 由JSON資料產生ProjectUpdateLog
          * @param data 資料來源
          */

@@ -712,6 +712,11 @@ declare module goodidea {
          */
         static getUpdateLogs(project: Project | string): Promise<PageResult<ProjectUpdateLog>>;
         /**
+         * 使用Id取得指定提案更新紀錄
+         * @param Id
+         */
+        static getUpdateLogById(project: Project | string, id: string): Promise<ProjectUpdateLog>;
+        /**
          * 由JSON資料產生ProjectUpdateLog
          * @param data 資料來源
          */

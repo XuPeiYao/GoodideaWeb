@@ -1091,6 +1091,19 @@ var goodidea;
             });
         }
         /**
+         * 使用Id取得指定提案更新紀錄
+         * @param Id
+         */
+        static getUpdateLogById(project, id) {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = yield goodidea.postAsync('api/project/GetUpdateLog', null, {
+                    project: project['id'] || project,
+                    log: id
+                });
+                return ProjectUpdateLog.loadFromJSON(data['Result']);
+            });
+        }
+        /**
          * 由JSON資料產生ProjectUpdateLog
          * @param data 資料來源
          */
