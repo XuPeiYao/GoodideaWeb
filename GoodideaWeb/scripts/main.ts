@@ -141,6 +141,10 @@ var navController = async function ($scope, $sce, $uibModal) {
     var loginUser = await goodidea.User.getLoginUser();
     console.info(`目前登入帳戶: ${(loginUser ? loginUser.id : "<未登入>")}`);
 
+    $scope.search = () => {
+        location.href = "search.html?q=" + $scope.keyword;
+    }
+
     $scope.urls = await goodidea.Link.getLinkList();
     $scope.$apply();
 

@@ -11,7 +11,7 @@
                 <i class="material-icons">search</i>
             </label>
             <div class="mdl-textfield__expandable-holder fix-searchBox">
-                <input class="mdl-textfield__input" type="text" id="search-field">
+                <input ng-model="keyword" ng-enter="search()" class="mdl-textfield__input" type="text" id="search-field">
             </div>
         </div>
         <div class="mdl-tooltip" for="nav_simple_search">使用關鍵字快速搜尋平台中所有公開提案</div>
