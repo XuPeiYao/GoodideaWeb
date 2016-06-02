@@ -373,7 +373,7 @@ var goodidea;
         get segments() {
             var temp = MarkdownSegment.parse(this.content);
             if (temp == null)
-                return null;
+                return [];
             return temp.map(x => {
                 x.level = this.level + 1;
                 return x;

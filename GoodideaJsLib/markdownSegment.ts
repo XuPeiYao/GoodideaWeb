@@ -15,7 +15,7 @@
 
         public get segments(): MarkdownSegment[] {
             var temp = MarkdownSegment.parse(this.content);
-            if (temp == null) return null;
+            if (temp == null) return [];
             return temp.map(x => {
                 x.level = this.level + 1;
                 return x;
