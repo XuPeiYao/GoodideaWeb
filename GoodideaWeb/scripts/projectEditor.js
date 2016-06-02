@@ -1,3 +1,11 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator.throw(value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments)).next());
+    });
+};
 function initEditor(selector, $scope) {
     tinymce.init({
         selector: selector,
@@ -37,8 +45,8 @@ function initEditor(selector, $scope) {
                 title: "Inline", items: [
                     { title: "Bold", icon: "bold", format: "bold" },
                     /*{ title: "Italic", icon: "italic", format: "italic" },
-                    { title: "Underline", icon: "underline", format: "underline" },*/
-                    { title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },
+                    { title: "Underline", icon: "underline", format: "underline" },
+                    { title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },*/
                     { title: "Superscript", icon: "superscript", format: "superscript" },
                     { title: "Subscript", icon: "subscript", format: "subscript" },
                     { title: "Code", icon: "code", format: "code" }
@@ -88,16 +96,40 @@ function initEditor(selector, $scope) {
                 }
             });
             ed.addCommand('save', function (ui, v) {
-                //ed.insertContent('Hello world!!<h1>GG</h1>');
-                /*
-
-                console.log(ed.getContent());
-                var text = tinyMCE.activeEditor.getContent();
-                markdown.markdownObject.
-                markdownHTML = toMarkdown(text, { gfm: true });
-                */
-                document.getElementById('editorSave').click();
-                //ed.selection.getContent({ format: 'text' })
+                return __awaiter(this, void 0, void 0, function* () {
+                    var text = tinyMCE.activeEditor.getContent();
+                    var text2 = parseHTML(text);
+                    toArray(text2.querySelectorAll('table')).forEach((x) => {
+                        if (x.firstElementChild.nodeName != "TBODY")
+                            return;
+                        var TH = document.createElement('THEAD');
+                        x.appendChild(TH);
+                        x.insertBefore(TH, x.firstElementChild);
+                        try {
+                            var TR = x.querySelector("tr");
+                            if (TR == null)
+                                return;
+                            toArray(TR.childNodes).forEach(y => {
+                                console.log(y);
+                                TH.appendChild(y);
+                            });
+                            TR.remove();
+                        }
+                        catch (e) { }
+                    });
+                    $scope.project.content = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
+                    $scope.loading = true;
+                    swal({
+                        title: "儲存中",
+                        text: "系統正在儲存您的變更，結束後本視窗自動關閉",
+                        showConfirmButton: false
+                    });
+                    yield $scope.project.updateContent();
+                    $scope.updateContent();
+                    $scope.loading = false;
+                    swal.close();
+                    $scope.$apply();
+                });
             });
             ed.addCommand('insertUrl', function (ui, v) {
                 $scope.editor.addUrl();

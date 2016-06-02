@@ -428,7 +428,6 @@
             componentHandler.upgradeDom();
         });
     }
-    
     //#endregion
 
     //#region 團隊管理
@@ -1112,6 +1111,7 @@ app.controller('editorAddUrlModal', async function ($scope, $sce, $uibModalInsta
 
         var aHtml = <HTMLElement>parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
         tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+        $scope.cancel();
     }
     $scope.cancel = () => $uibModalInstance.close();
 });
@@ -1130,6 +1130,7 @@ app.controller('editorAddImageModal', async function ($scope, $sce, $uibModalIns
         if (!$scope.name || $scope.name.length == 0) $scope.name = "未設定";
         
         tinyMCE.activeEditor.insertContent(markdown.toHtml(`![${$scope.name}](${$scope.image})`));
+        $scope.cancel();
     }
     $scope.cancel = () => $uibModalInstance.close();
 });

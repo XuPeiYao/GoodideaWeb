@@ -16,7 +16,7 @@
         <li ng-repeat="t in project.segments"><a href="#{{t.text}}" style="{{t.active ? 'color: #337ab7;': ''}}">{{t.text || "未命名章節"}}</a></li>
     </ol>
 </div>
-<div ng-hide="editing" class="nkfust-project-content" ng-bind-html="project.htmlContent">
+<div ng-hide="editing" id="project-content" class="nkfust-project-content" ng-bind-html="project.htmlContent">
 
 </div>
 <div ng-show="editing" class="nkfust-project-content">

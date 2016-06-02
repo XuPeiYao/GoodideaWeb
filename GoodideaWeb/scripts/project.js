@@ -1118,6 +1118,7 @@ app.controller('editorAddUrlModal', function ($scope, $sce, $uibModalInstance, p
                 $scope.name = $scope.url;
             var aHtml = parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
             tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+            $scope.cancel();
         };
         $scope.cancel = () => $uibModalInstance.close();
     });
@@ -1136,6 +1137,7 @@ app.controller('editorAddImageModal', function ($scope, $sce, $uibModalInstance,
             if (!$scope.name || $scope.name.length == 0)
                 $scope.name = "未設定";
             tinyMCE.activeEditor.insertContent(markdown.toHtml(`![${$scope.name}](${$scope.image})`));
+            $scope.cancel();
         };
         $scope.cancel = () => $uibModalInstance.close();
     });

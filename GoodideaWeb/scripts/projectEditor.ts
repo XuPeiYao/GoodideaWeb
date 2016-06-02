@@ -1,4 +1,4 @@
-﻿declare var tinymce, tinyMCE;
+﻿declare var tinymce, tinyMCE,toMarkdown;
 function initEditor(selector:string,$scope) {
     tinymce.init({
         selector: selector,
@@ -38,8 +38,8 @@ function initEditor(selector:string,$scope) {
                 title: "Inline", items: [
                     { title: "Bold", icon: "bold", format: "bold" },
                     /*{ title: "Italic", icon: "italic", format: "italic" },
-                    { title: "Underline", icon: "underline", format: "underline" },*/
-                    { title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },
+                    { title: "Underline", icon: "underline", format: "underline" },
+                    { title: "Strikethrough", icon: "strikethrough", format: "strikethrough" },*/
                     { title: "Superscript", icon: "superscript", format: "superscript" },
                     { title: "Subscript", icon: "subscript", format: "subscript" },
                     { title: "Code", icon: "code", format: "code" }
@@ -88,17 +88,36 @@ function initEditor(selector:string,$scope) {
                     tinymce.activeEditor.execCommand('insertImage');
                 }
             });
-            ed.addCommand('save', function (ui, v) {
-                //ed.insertContent('Hello world!!<h1>GG</h1>');
-                /*
-
-                console.log(ed.getContent());
+            ed.addCommand('save',async function (ui, v) {
                 var text = tinyMCE.activeEditor.getContent();
-                markdown.markdownObject.
-                markdownHTML = toMarkdown(text, { gfm: true });
-                */
-                document.getElementById('editorSave').click();
-                //ed.selection.getContent({ format: 'text' })
+                var text2 = parseHTML(text);
+                toArray(text2.querySelectorAll('table')).forEach((x: HTMLTableElement) => {
+                    if (x.firstElementChild.nodeName != "TBODY") return;
+                    var TH = document.createElement('THEAD');
+                    x.appendChild(TH);
+                    x.insertBefore(TH, x.firstElementChild);
+                    try {
+                        var TR = x.querySelector("tr");
+                        if (TR == null) return;
+                        toArray(TR.childNodes).forEach(y => {
+                        console.log(y)
+                            TH.appendChild(y);
+                        });
+                        TR.remove();
+                    } catch (e){ }
+                });
+                $scope.project.content = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
+                $scope.loading = true;
+                swal({
+                    title: "儲存中",
+                    text: "系統正在儲存您的變更，結束後本視窗自動關閉",
+                    showConfirmButton: false
+                });
+                await $scope.project.updateContent();
+                $scope.updateContent();
+                $scope.loading = false;
+                swal.close();
+                $scope.$apply();
             });
             ed.addCommand('insertUrl', function (ui, v) {
                 $scope.editor.addUrl();
