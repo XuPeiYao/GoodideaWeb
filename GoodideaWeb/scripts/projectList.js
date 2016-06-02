@@ -15,6 +15,9 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
         $scope.competitionOptions = [{ id: 'N', name: '不限定' }];
         $scope.competition = 'N';
         (yield goodidea.Competition.getCompetitionList(null, null)).forEach(x => $scope.competitionOptions.push(x));
+        if (queryString['competition']) {
+            $scope.competition = queryString['competition'];
+        }
         $scope.orderOptions = [
             { id: goodidea.OrderBy.lastEditTime, name: '最後更新時間' },
             { id: goodidea.OrderBy.name, name: '提案名稱' },
@@ -24,6 +27,8 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
             { id: goodidea.OrderBy.awardsFirst, name: '獲獎者在前' }
         ];
         $scope.order = goodidea.OrderBy.lastEditTime.toString();
+        if (queryString['order'])
+            $scope.order = queryString['order'];
         $scope.$apply(); //通知更新
         $scope.lastPageResult = null;
         $scope.projectList = [];
