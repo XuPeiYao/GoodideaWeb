@@ -264,6 +264,10 @@ body, h1, h2, h3, h4, h5, h6 {
     padding: 0;
 }
 
+.nkfust-about-card-content{
+    padding-bottom:75px !important;
+}
+
 .nkfust-memberList-card-image { /*Member List 圖片*/
     height: 230px !important;
     max-height: 230px;
