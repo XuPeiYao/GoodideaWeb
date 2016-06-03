@@ -46,6 +46,20 @@
                                 <span style="color:white">{{user.name}}</span>
                             </h2>
                         </div>
+                        <div class="mdl-card__supporting-text nkfust-list-card-content">
+                            <label>學號:</label>{{user.studentId || '未填寫'}}<br />
+                            <label>學院:</label>{{user.department.college.name || '未填寫'}}<br />
+                            <label>系所:</label>{{user.department.name || "未填寫"}}<br />
+                            <div ng-show="editable">
+                                <label>信箱:</label>{{user.email || "未填寫"}}<br />
+                                <label>電話:</label>{{user.phone || "未填寫"}}<br />
+                            </div>
+                            <label>專長:</label>
+                            <span ng-hide="user.specialty.length">未填寫</span>
+                            <span ng-repeat="t in user.specialty">
+                                <span ng-show="t != user.specialty[0]">、</span>{{t.value}}
+                            </span>
+                        </div>
                     </div>
                     <div class="mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
                         123
