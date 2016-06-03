@@ -9,6 +9,11 @@
         編輯紀錄
     </button>
 </div>
+<div ng-show="revert" class="nkfust-project-edit-nav">
+    <button ng-click="revertContent()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        還原至目前版本
+    </button>
+</div>
 <div ng-hide="editing" class="nkfust-project-segments">
     <h4>章節列表</h4>
     <ol style="padding-left:30px">

@@ -32,6 +32,7 @@
             var contentText = content.content;
             $scope.project.content = contentText;
             $scope.project.editable = false;//歷史版本禁止編輯
+            $scope.revert = true;
             swal({
                 title: "檢視歷史版本",
                 text: `您目前正在檢視提案「${$scope.project.name}」於${content.time.format('yyyy-mm-dd HH:MM:ss')}的歷史版本，無法進行內文編輯`,
@@ -142,6 +143,39 @@
     //初始化編輯器
     $scope.initEditor = async() => {
         await initEditor('#editor', $scope);
+    }
+
+    //設定內容至目前版本操作
+    $scope.revertContent = () => {
+        swal({
+            title: "還原提案內容",
+            text: `您確定要將此提案內容還原至目前版本嗎?`,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false,
+        }, async (isConfirm) => {
+            if (!isConfirm) return;
+            $scope.loading = true;
+            swal({
+                title: "更新中",
+                text: "系統正在執行版本內容還原操作，操作完成後本視窗自動關閉與重整",
+                showConfirmButton: false
+            });
+            try {
+                await (<goodidea.Project>$scope.project).updateContent();
+                swal.close();
+            } catch (e) {
+                swal.close();
+                $scope.loading = false;
+                $scope.$apply();
+                return;
+            }
+            $scope.loading = false;
+            location.href = "project.html?id=" + $scope.project.id;
+        });
+        $scope.project.updateContent();
     }
 
     //投票
