@@ -430,6 +430,22 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                 componentHandler.upgradeDom();
             });
         };
+        $scope.editor.addDocument = () => {
+            var addUrl = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/editorAddDocument.html',
+                controller: 'editorAddDocumentModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addUrl.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         $scope.editor.addImage = () => {
             var addImage = $uibModal.open({
                 animation: true,
@@ -1132,6 +1148,32 @@ app.controller('editorAddUrlModal', function ($scope, $sce, $uibModalInstance, p
             if (!$scope.name || $scope.name.length == 0)
                 $scope.name = $scope.url;
             var aHtml = parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
+            tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+            $scope.cancel();
+        };
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+//編輯器插入文件連結控制器
+app.controller('editorAddDocumentModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.documentList = yield project.files.filter(x => x.file.type == goodidea.FileType.Document);
+        $scope.change = () => {
+            $scope.name =
+                $scope.documentList.filter(x => x.file.url == $scope.document).first().name ||
+                    $scope.documentList.filter(x => x.file.url == $scope.document).first().file.name;
+        };
+        if ($scope.documentList.length > 0) {
+            $scope.document = $scope.documentList.first().file.url;
+            $scope.change();
+        }
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.ok = () => {
+            if (!$scope.name || $scope.name.length == 0)
+                $scope.name = "未設定";
+            var aHtml = parseNode(markdown.toHtml(`[${$scope.name}](${$scope.document})`)).firstChild;
             tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
             $scope.cancel();
         };

@@ -21,7 +21,7 @@ function initEditor(selector, $scope) {
         menu: {
             file: { title: "File", items: "save" },
             edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
-            insert: { title: 'Insert', items: 'insertUrl insertImage insertVideo | charmap hr insertdatetime' },
+            insert: { title: 'Insert', items: 'insertUrl insertDocument insertImage insertVideo | charmap hr insertdatetime' },
             format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat' },
             table: { title: 'Table', items: 'inserttable deletetable | row column' },
             view: { title: 'View', items: 'fullscreen' }
@@ -81,6 +81,13 @@ function initEditor(selector, $scope) {
                     tinymce.activeEditor.execCommand('insertUrl');
                 }
             });
+            ed.addMenuItem('insertDocument', {
+                text: '插入文件連結',
+                icon: 'newdocument',
+                onclick: function () {
+                    tinymce.activeEditor.execCommand('insertDocument');
+                }
+            });
             ed.addMenuItem('insertVideo', {
                 text: 'Insert video',
                 icon: 'media',
@@ -133,6 +140,9 @@ function initEditor(selector, $scope) {
             });
             ed.addCommand('insertUrl', function (ui, v) {
                 $scope.editor.addUrl();
+            });
+            ed.addCommand('insertDocument', function (ui, v) {
+                $scope.editor.addDocument();
             });
             ed.addCommand('insertVideo', function (ui, v) {
                 swal({

@@ -171,6 +171,7 @@
     <Content Include="lib\tinymce\js\tinymce\tinymce.min.js" />
     <Content Include="lib\tinymce\LICENSE.TXT" />
     <Content Include="lib\to-markdown.js" />
+    <Content Include="modals\editorAddDocument.html" />
     <Content Include="modals\editorAddImage.html" />
     <Content Include="modals\editorAddUrl.html" />
     <Content Include="modals\updateLogs.html" />
