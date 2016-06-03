@@ -192,6 +192,7 @@
     <Content Include="pages\project-information.html" />
     <Content Include="project.html" />
     <Content Include="competition.html" />
+    <Content Include="about.html" />
     <Content Include="search.html" />
     <Content Include="requestList.html" />
     <Content Include="projectList.html" />
@@ -252,6 +253,7 @@
     <TypeScriptCompile Include="lib\sweetalert\sweetalert.d.ts" />
     <TypeScriptCompile Include="scripts\index.ts" />
     <TypeScriptCompile Include="scripts\main.ts" />
+    <TypeScriptCompile Include="scripts\about.ts" />
     <TypeScriptCompile Include="scripts\project.ts" />
     <TypeScriptCompile Include="scripts\projectEditor.ts" />
     <TypeScriptCompile Include="scripts\competitionList.ts" />
