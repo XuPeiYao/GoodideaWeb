@@ -84,6 +84,12 @@ var goodidea;
 (function (goodidea) {
     class Competition {
         /**
+         * 取得競賽樣板Markdown的章節剖析物件
+         */
+        getTemplateSegments() {
+            return new goodidea.MarkdownSegment(this.template || "");
+        }
+        /**
          * 由JSON資料產生Competition
          * @param data 資料來源
          */

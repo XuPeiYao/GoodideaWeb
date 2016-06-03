@@ -43,7 +43,7 @@ module goodidea {
         /**
          * 提案範本
          */
-        public template: number;
+        public template: string;
 
         /**
          * 競賽限制投稿分類
@@ -59,6 +59,13 @@ module goodidea {
          * 透票時間範圍
          */
         public voteRange: TimeRange;
+
+        /**
+         * 取得競賽樣板Markdown的章節剖析物件
+         */
+        public getTemplateSegments(): MarkdownSegment {
+            return new MarkdownSegment(this.template || "");
+        }
 
         /**
          * 由JSON資料產生Competition
