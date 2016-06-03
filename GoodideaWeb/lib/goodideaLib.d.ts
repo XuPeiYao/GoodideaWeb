@@ -876,6 +876,14 @@ declare module goodidea {
          */
         update(): Promise<void>;
         /**
+         * 更新使用者自我介紹
+         */
+        updateInformation(): Promise<void>;
+        /**
+         * 更新使用者除自我介紹外的資料
+         */
+        updateWithoutInformation(): Promise<void>;
+        /**
          * 串聯Facebook帳號
          * @param token Facebook權杖
          */

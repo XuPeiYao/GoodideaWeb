@@ -168,6 +168,30 @@
 
             await postAsync('api/user/update', null, data);
         }
+
+        /**
+         * 更新使用者自我介紹
+         */
+        public async updateInformation(): Promise<void> {
+            var data = {
+                information: this.information
+            };
+
+            await postAsync('api/user/update', null, data);
+        }
+
+        /**
+         * 更新使用者除自我介紹外的資料
+         */
+        public async updateWithoutInformation(): Promise<void> {
+            var data = {
+                name: this.name,
+                email: this.email,
+                phone: this.phone,
+            };
+
+            await postAsync('api/user/update', null, data);
+        }
         //#endregion
 
         //#region Facebook串聯

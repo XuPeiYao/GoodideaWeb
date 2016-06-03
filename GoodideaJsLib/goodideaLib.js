@@ -1370,6 +1370,30 @@ var goodidea;
                 yield goodidea.postAsync('api/user/update', null, data);
             });
         }
+        /**
+         * 更新使用者自我介紹
+         */
+        updateInformation() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = {
+                    information: this.information
+                };
+                yield goodidea.postAsync('api/user/update', null, data);
+            });
+        }
+        /**
+         * 更新使用者除自我介紹外的資料
+         */
+        updateWithoutInformation() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var data = {
+                    name: this.name,
+                    email: this.email,
+                    phone: this.phone,
+                };
+                yield goodidea.postAsync('api/user/update', null, data);
+            });
+        }
         //#endregion
         //#region Facebook串聯
         /**
