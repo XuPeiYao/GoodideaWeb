@@ -138,9 +138,6 @@ app.directive('ngEnter', function () {
 
 //#region 導覽列控制器
 var navController = async function ($scope, $sce, $uibModal) {
-    var loginUser = await goodidea.User.getLoginUser();
-    console.info(`目前登入帳戶: ${(loginUser ? loginUser.id : "<未登入>")}`);
-
     $scope.search = () => {
         location.href = "search.html?q=" + $scope.keyword;
     }
@@ -148,7 +145,10 @@ var navController = async function ($scope, $sce, $uibModal) {
     $scope.urls = await goodidea.Link.getLinkList();
     $scope.$apply();
 
-    $scope.loginUser = await goodidea.User.getLoginUser();
+    try {
+        $scope.loginUser = await goodidea.User.getLoginUser();
+    } catch (e) {
+    }
     $scope.$apply();
 
     $scope.login = function () {

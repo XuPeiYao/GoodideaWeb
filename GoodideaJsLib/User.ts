@@ -94,8 +94,8 @@
         public async load(): Promise<void> {
             var responseJSON: JSON = await postAsync('api/user/about', null, {
                 id: this.id
-            });
-
+            },true);
+            if (!responseJSON['Success']) return;
             var user = await User.loadFromJSON(responseJSON['Result']);
             var fields = getKeys(user);
             for (var i = 0; i < fields.length; i++) {
@@ -259,8 +259,8 @@
          * 取得目前登入使用者資訊
          */
         public static async getLoginUser(): Promise<User> {
-            var response = await postAsync('api/user/checklogin');
-            if (response['Result'] == null) return null;
+            var response = await postAsync('api/user/checklogin',null,null,true);
+            if (response['Result'] == null || response['Result']['IsAdmin']) return null;
             return await User.getUserById(response['Result'].Id);
         }
         //#endregion

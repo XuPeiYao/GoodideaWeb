@@ -1132,7 +1132,7 @@ var goodidea;
     goodidea.host = "http://goodidea.nkfust.edu.tw/";
     goodidea.origin = "http://goodidea.nkfust.edu.tw/";
     goodidea.version = "1.0.1";
-    function postAsync(url, header, data, user, password, progressCallback) {
+    function postAsync(url, header, data, disableException, user, password, progressCallback) {
         return __awaiter(this, void 0, Promise, function* () {
             var request = new nativeExtensions.HttpClient();
             request.withCredentials = true;
@@ -1141,7 +1141,7 @@ var goodidea;
                 data = {};
             data['origin'] = goodidea.origin;
             var response = JSON.parse((yield request.postAsync(url, header, data, user, password, progressCallback)).resultText);
-            if (!response.Success) {
+            if (!response.Success && !disableException) {
                 var exception = {};
                 for (var key in response.Result)
                     exception[firstToLowerCase(key)] = response.Result[key];
@@ -1298,7 +1298,9 @@ var goodidea;
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/user/about', null, {
                     id: this.id
-                });
+                }, true);
+                if (!responseJSON['Success'])
+                    return;
                 var user = yield User.loadFromJSON(responseJSON['Result']);
                 var fields = getKeys(user);
                 for (var i = 0; i < fields.length; i++) {
@@ -1462,8 +1464,8 @@ var goodidea;
          */
         static getLoginUser() {
             return __awaiter(this, void 0, Promise, function* () {
-                var response = yield goodidea.postAsync('api/user/checklogin');
-                if (response['Result'] == null)
+                var response = yield goodidea.postAsync('api/user/checklogin', null, null, true);
+                if (response['Result'] == null || response['Result']['IsAdmin'])
                     return null;
                 return yield User.getUserById(response['Result'].Id);
             });
