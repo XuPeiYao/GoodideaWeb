@@ -10,11 +10,17 @@ app.controller('about', function ($scope, $sce, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.loading = true;
         $scope.loginUser = yield goodidea.User.getLoginUser();
+        if ($scope.loginUser && $scope.loginUser.id == queryString['id']) {
+            $scope.user = $scope.loginUser;
+            $scope.editable = true;
+        }
+        else {
+            $scope.user = yield goodidea.User.getUserById(queryString['id']);
+            $scope.editable = false;
+        }
         $scope.loading = false;
         $scope.$apply();
-        //讀取提案
-        $scope.load = () => __awaiter(this, void 0, void 0, function* () {
-        });
+        console.log($scope.user);
     });
 });
 //# sourceMappingURL=about.js.map
