@@ -270,6 +270,12 @@ body, h1, h2, h3, h4, h5, h6 {
     padding: 0;
 }
 
+.nkfust-about-card-image { /*Member List 圖片*/
+    height: 280px !important;
+    max-height: 280px;
+    padding: 0;
+}
+
 .nkfust-list-imageTitle {
     overflow: hidden;
     width: 100%;
