@@ -14,6 +14,13 @@
         </select>
         <label class="mdl-textfield__label">分類</label>
     </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select ng-disabled="loading" class="mdl-textfield__input" ng-model="competition">
+            <option ng-repeat="t in competitionList" value="{{t.id}}">{{t.name}}</option>
+        </select>
+        <label class="mdl-textfield__label">競賽樣板</label>
+    </div>
+    如您要針對某競賽進行投稿，建議您選擇競賽樣板，直接載入競賽所需格式
 </div>
 <div class="modal-footer">
     <button tabindex="3" ng-disabled="loading" ng-click="ok()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">

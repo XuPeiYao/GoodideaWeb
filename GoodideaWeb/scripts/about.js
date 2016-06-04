@@ -18,6 +18,13 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             $scope.user = yield goodidea.User.getUserById(queryString['id']);
             $scope.editable = false;
         }
+        initAboutEditor("#editor", $scope);
+        $scope.editInformation = () => {
+            $scope.editing = true;
+        };
+        $scope.back = () => {
+            $scope.editing = false;
+        };
         $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
         $scope.loadProjectList = () => __awaiter(this, void 0, void 0, function* () {
             $scope.user.projectList = yield goodidea.Project.getUserProjects($scope.user);
@@ -238,6 +245,12 @@ app.controller('addProjectModal', function ($scope, $sce, $uibModalInstance, $ui
         $scope.name = "";
         $scope.classList = yield goodidea.Class.getClassList();
         $scope.class = $scope.classList.first().id;
+        $scope.competitionList = [{ id: 'N', name: '未設定' }];
+        $scope.competition = 'N';
+        var competitionList = yield goodidea.Competition.getCompetitionList(true, false);
+        for (var i = 0; i < competitionList.length; i++) {
+            $scope.competitionList.push(competitionList[i]);
+        }
         $scope.ok = () => __awaiter(this, void 0, void 0, function* () {
             if (!$scope.name && $scope.name.length == 0) {
                 swal({
@@ -249,10 +262,25 @@ app.controller('addProjectModal', function ($scope, $sce, $uibModalInstance, $ui
                 return;
             }
             $scope.loading = true;
-            yield goodidea.Project.create($scope.name, $scope.class);
+            var project = yield goodidea.Project.create($scope.name, $scope.class, $scope.competition == 'N' ? null : $scope.competition);
             yield mainScope.loadProjectList();
             $scope.loading = false;
             $scope.$apply();
+            swal({
+                title: "進入編輯",
+                text: `您的提案已經建立完成，是否立刻導引至該提案`,
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+            }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                if (!isConfirm)
+                    return;
+                $scope.loading = true;
+                location.href = "project.html?id=" + project.id;
+                $scope.loading = false;
+            }));
             $scope.cancel();
         });
         $scope.cancel = () => $uibModalInstance.close();

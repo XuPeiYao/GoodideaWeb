@@ -84,7 +84,7 @@
                                     <button ng-hide="editing" ng-click="editInformation()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                         編輯
                                     </button>
-                                    <button ng-show="editing" ng-click="editInformation()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                    <button ng-show="editing" ng-click="back()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                         返回
                                     </button>
                                 </div>
@@ -145,6 +145,8 @@
         </div>
     </div>
     <!--#region script-->
+    <script src="lib/tinymce/js/tinymce.min.js"></script>
+
     <script src="lib/nativeExtensions.js"></script>
     <script src="lib/dateFormat.js"></script>
     <script src="lib/goodideaLib.js"></script>
@@ -162,7 +164,9 @@
     <script src="lib/markdown/markdown-it-sub.js"></script>
     <script src="lib/markdown/markdown-it-video.js"></script>
 
+    <script src="scripts/aboutEditor.js"></script>
     <script src="scripts/main.js"></script>
+
     <script src="scripts/about.js"></script>
 
     <script src="scripts/googleAnalytics.js"></script>
