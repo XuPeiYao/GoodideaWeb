@@ -73,6 +73,7 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new College();
+            console.log(data);
             result.id = data['Id'];
             result.name = data['Name'];
             if (data['Departments']) {
@@ -85,10 +86,13 @@ var goodidea;
         }
         static getCollegeList() {
             return __awaiter(this, void 0, Promise, function* () {
-                var responseJSON = yield goodidea.postAsync('api/Department/list');
+                var responseJSON = yield goodidea.postAsync('api/Department/list', null, { college: true });
                 var result = [];
                 for (var i = 0; i < responseJSON['Result'].length; i++) {
-                    result.push(College.loadFromJSON(responseJSON['Result'][i]));
+                    var temp = responseJSON['Result'][i].College;
+                    temp.Departments = responseJSON['Result'][i].Departments;
+                    console.log(temp);
+                    result.push(College.loadFromJSON(temp));
                 }
                 return result;
             });
@@ -202,7 +206,9 @@ var goodidea;
                     continue;
                 result[goodidea.firstToLowerCase(fields[i])] = data[fields[i]];
             }
-            result.college = goodidea.College.loadFromJSON(data['College']);
+            if (data['College']) {
+                result.college = goodidea.College.loadFromJSON(data['College']);
+            }
             return result;
         }
         /**
@@ -1387,6 +1393,7 @@ var goodidea;
                     name: this.name,
                     email: this.email,
                     phone: this.phone,
+                    department: this.department.id,
                     information: this.information
                 };
                 if (this.department) {
@@ -1415,6 +1422,7 @@ var goodidea;
                     name: this.name,
                     email: this.email,
                     phone: this.phone,
+                    department: this.department.id,
                 };
                 yield goodidea.postAsync('api/user/update', null, data);
             });

@@ -31,7 +31,9 @@
                 if (data[fields[i]] instanceof Function) continue;
                 result[firstToLowerCase(fields[i])] = data[fields[i]];
             }
-            result.college = College.loadFromJSON(data['College']);
+            if (data['College']) {
+                result.college = College.loadFromJSON(data['College']);
+            }
             return result;
         }
 

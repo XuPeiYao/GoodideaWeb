@@ -159,6 +159,7 @@
                 name: this.name,
                 email: this.email,
                 phone: this.phone,
+                department: this.department.id,
                 information: this.information
             };
 
@@ -188,6 +189,7 @@
                 name: this.name,
                 email: this.email,
                 phone: this.phone,
+                department: this.department.id,
             };
 
             await postAsync('api/user/update', null, data);

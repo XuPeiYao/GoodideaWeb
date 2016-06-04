@@ -20,7 +20,7 @@
          * @param data 資料來源
          */
         public static loadFromJSON(data: JSON): College {
-            var result = new College();
+            var result = new College();console.log(data)
             result.id = data['Id'];
             result.name = data['Name'];
             if (data['Departments']) {
@@ -33,10 +33,13 @@
         }
 
         public static async getCollegeList(): Promise<College[]> {
-            var responseJSON = await postAsync('api/Department/list');
+            var responseJSON = await postAsync('api/Department/list', null, {college:true});
             var result = [];
             for (var i = 0; i < responseJSON['Result'].length; i++) {
-                result.push(College.loadFromJSON(responseJSON['Result'][i]));
+                var temp = responseJSON['Result'][i].College;
+                temp.Departments = responseJSON['Result'][i].Departments;
+                console.log(temp)
+                result.push(College.loadFromJSON(temp));
             }
             return result;
         }
