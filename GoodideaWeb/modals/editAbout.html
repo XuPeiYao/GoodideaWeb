@@ -1,0 +1,35 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">更新基本資料</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+        <input ng-disabled="loading" class="mdl-textfield__input" maxlength="128" type="text" ng-model="name" />
+        <label class="mdl-textfield__label">姓名</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select ng-disabled="loading" class="mdl-textfield__input" ng-model="department">
+            <optgroup ng-repeat="t in collegeList" label="{{t.name}}">
+                <option ng-repeat="t2 in t.departments" value="{{t2.id}}">{{t2.name}}</option>
+            </optgroup>
+        </select>
+        <label class="mdl-textfield__label">系所</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+        <input ng-disabled="loading" class="mdl-textfield__input" maxlength="128" type="email" ng-model="email" />
+        <label class="mdl-textfield__label">信箱</label>
+    </div>
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
+        <input ng-disabled="loading" class="mdl-textfield__input" maxlength="128" type="text" ng-model="phone" />
+        <label class="mdl-textfield__label">電話(非公開)</label>
+    </div>
+</div>
+<div class="modal-footer">
+    <button tabindex="3" ng-disabled="loading" ng-click="ok()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        確定
+    </button>
+    <button tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>

@@ -50,6 +50,21 @@
         if (temp) temp.click();
     }
 
+    $scope.edit = () => {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/editAbout.html',
+            controller: 'editAboutModal',
+            size: 'sm',
+            resolve: {
+                mainScope : ()=>$scope
+            }
+        }).rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
+    }
+
     $scope.connectFB = () => {
         FB.login(async function (response) {
             if (response.authResponse) {
@@ -97,4 +112,38 @@
         swal.close();
         $scope.$apply();
     }
+});
+
+app.controller('editAboutModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, $uibModal,mainScope) {
+    $scope.loading = true;
+    $scope.name = mainScope.user.name;
+    $scope.email = mainScope.user.email;
+    $scope.phone = mainScope.user.phone;
+
+    $scope.collegeList = await goodidea.College.getCollegeList();
+    //$scope.department = $scope.collegeList.first().departments.first().id;
+    if (mainScope.user.department) {
+        $scope.department = mainScope.user.department.id;
+    }
+    console.log($scope.collegeList)
+    $scope.loading = false;
+
+    $scope.$apply();
+    $scope.ok = async() => {
+        $scope.loading = true;
+
+        mainScope.user.name = $scope.name;
+        mainScope.user.email = $scope.email;
+        mainScope.user.phone = $scope.phone;
+        if (!mainScope.user.department) mainScope.user.department = {};
+        mainScope.user.department.id = $scope.department;
+        await mainScope.user.updateWithoutInformation();
+        await mainScope.user.load();
+        mainScope.$apply();
+
+        $scope.loading = false;
+
+        $scope.cancel();
+    }
+    $scope.cancel = () => $uibModalInstance.close();
 });

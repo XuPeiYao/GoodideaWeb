@@ -56,6 +56,20 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             if (temp)
                 temp.click();
         }
+        $scope.edit = () => {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/editAbout.html',
+                controller: 'editAboutModal',
+                size: 'sm',
+                resolve: {
+                    mainScope: () => $scope
+                }
+            }).rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         $scope.connectFB = () => {
             FB.login(function (response) {
                 return __awaiter(this, void 0, void 0, function* () {
@@ -106,6 +120,37 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             swal.close();
             $scope.$apply();
         });
+    });
+});
+app.controller('editAboutModal', function ($scope, $sce, $uibModalInstance, $uibModal, mainScope) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.loading = true;
+        $scope.name = mainScope.user.name;
+        $scope.email = mainScope.user.email;
+        $scope.phone = mainScope.user.phone;
+        $scope.collegeList = yield goodidea.College.getCollegeList();
+        //$scope.department = $scope.collegeList.first().departments.first().id;
+        if (mainScope.user.department) {
+            $scope.department = mainScope.user.department.id;
+        }
+        console.log($scope.collegeList);
+        $scope.loading = false;
+        $scope.$apply();
+        $scope.ok = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            mainScope.user.name = $scope.name;
+            mainScope.user.email = $scope.email;
+            mainScope.user.phone = $scope.phone;
+            if (!mainScope.user.department)
+                mainScope.user.department = {};
+            mainScope.user.department.id = $scope.department;
+            yield mainScope.user.updateWithoutInformation();
+            yield mainScope.user.load();
+            mainScope.$apply();
+            $scope.loading = false;
+            $scope.cancel();
+        });
+        $scope.cancel = () => $uibModalInstance.close();
     });
 });
 //# sourceMappingURL=about.js.map
