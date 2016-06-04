@@ -1153,6 +1153,13 @@ var goodidea;
         });
     }
     goodidea.postAsync = postAsync;
+    function getServerDate() {
+        return __awaiter(this, void 0, Promise, function* () {
+            var response = yield postAsync('api/user/checklogin', null, null, true);
+            return new Date(response['Time'] - new Date().getTimezoneOffset() * 60 * 1000);
+        });
+    }
+    goodidea.getServerDate = getServerDate;
     function firstToLowerCase(input) {
         return input[0].toLowerCase() + input.substring(1);
     }

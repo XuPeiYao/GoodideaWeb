@@ -741,6 +741,7 @@ declare module goodidea {
     var version: string;
     var onException: (exception: any) => void;
     function postAsync(url: string, header?: any, data?: (FormData | String | Object), disableException?: boolean, user?: string, password?: string, progressCallback?: (event: ProgressEvent) => any): Promise<JSON>;
+    function getServerDate(): Promise<Date>;
     function firstToLowerCase(input: string): string;
 }
 declare module goodidea {

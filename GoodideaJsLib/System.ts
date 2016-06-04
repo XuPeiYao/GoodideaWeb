@@ -21,6 +21,11 @@
         return response;
     }
 
+    export async function getServerDate(): Promise<Date> {
+        var response = await postAsync('api/user/checklogin', null, null, true);
+        return new Date(response['Time'] - new Date().getTimezoneOffset() * 60 * 1000);
+    }
+
     export function firstToLowerCase(input: string): string {
         return input[0].toLowerCase() + input.substring(1);
     }
