@@ -61,8 +61,11 @@
                             </span>
                         </div>
                         <div ng-show="editable" class="mdl-card__actions mdl-card--border mdl-grid" style="padding:0">
-                            <button style="white-space: nowrap;" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+                            <button ng-hide="user.isLinkFB" ng-click="connectFB()" style="white-space: nowrap;" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
                                 串聯Facebook
+                            </button>
+                            <button ng-show="user.isLinkFB" ng-click="unconnectFB()" style="white-space: nowrap;" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
+                                取消串聯Facebook
                             </button>
                             <button style="white-space: nowrap;" class="mdl-cell mdl-cell--6-col mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--colored">
                                 更新基本資料

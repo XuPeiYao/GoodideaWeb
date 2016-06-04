@@ -56,7 +56,56 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             if (temp)
                 temp.click();
         }
-        console.log($scope.user);
+        $scope.connectFB = () => {
+            FB.login(function (response) {
+                return __awaiter(this, void 0, void 0, function* () {
+                    if (response.authResponse) {
+                        console.log('Facebook登入成功');
+                        $scope.loading = true;
+                        swal({
+                            title: "帳號串聯中",
+                            text: "系統正在串聯您的帳號，成功後本視窗自動關閉",
+                            showConfirmButton: false
+                        });
+                        try {
+                            yield $scope.user.connectFB(response.authResponse.accessToken);
+                            $scope.loading = false;
+                            $scope.$apply(); //通知更新
+                            location.reload();
+                        }
+                        catch (e) {
+                            swal({
+                                type: 'error',
+                                title: e.name,
+                                text: e.message,
+                                confirmButtonText: "確定"
+                            }, (value) => {
+                                $scope.loading = false;
+                                $scope.$apply(); //通知更新
+                            });
+                        }
+                    }
+                    else {
+                        console.log('使用者取消Facebook登入');
+                    }
+                });
+            }, {
+                scope: 'public_profile'
+            });
+        };
+        $scope.unconnectFB = () => __awaiter(this, void 0, void 0, function* () {
+            swal({
+                title: "帳號串聯變更中",
+                text: "系統正在變更您的帳號串聯狀態，成功後本視窗自動關閉",
+                showConfirmButton: false
+            });
+            try {
+                yield $scope.user.unconnectFB();
+            }
+            catch (e) { }
+            swal.close();
+            $scope.$apply();
+        });
     });
 });
 //# sourceMappingURL=about.js.map
