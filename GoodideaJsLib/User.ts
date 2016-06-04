@@ -144,11 +144,11 @@
          */
         public async uploadPhoto(file: File): Promise<FileInfo> {
             var responseJSON = await postAsync('api/user/update', null, { Photo: file });
-            var photo = FileInfo.loadFromJSON(responseJSON['Result']);
+            var user = User.loadFromJSON(responseJSON['Result']);
 
-            this.photo = photo;
+            this.photo = user.photo;
 
-            return photo;
+            return this.photo;
         }
 
         /**

@@ -1379,9 +1379,9 @@ var goodidea;
         uploadPhoto(file) {
             return __awaiter(this, void 0, Promise, function* () {
                 var responseJSON = yield goodidea.postAsync('api/user/update', null, { Photo: file });
-                var photo = goodidea.FileInfo.loadFromJSON(responseJSON['Result']);
-                this.photo = photo;
-                return photo;
+                var user = User.loadFromJSON(responseJSON['Result']);
+                this.photo = user.photo;
+                return this.photo;
             });
         }
         /**
