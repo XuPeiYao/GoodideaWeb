@@ -1,0 +1,25 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">新增提案</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo {{Name.length > 0 ? 'is-dirty' : ''}}">
+        <input class="mdl-textfield__input" maxlength="128" type="text" ng-model="name" />
+        <label class="mdl-textfield__label">名稱</label>
+    </div><br />
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+        <select ng-disabled="loading" class="mdl-textfield__input" ng-model="class">
+            <option ng-repeat="t in classList" value="{{t.id}}">{{t.name}}</option>
+        </select>
+        <label class="mdl-textfield__label">分類</label>
+    </div>
+</div>
+<div class="modal-footer">
+    <button tabindex="3" ng-disabled="loading" ng-click="ok()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        確定
+    </button>
+    <button tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>

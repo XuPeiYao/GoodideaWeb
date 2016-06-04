@@ -81,8 +81,11 @@
                         <div class="mdl-layout__content" style="width:100%">
                             <div class="mdl-tabs__panel is-active" id="Information-Panel">
                                 <div ng-show="editable" class="nkfust-project-edit-nav">
-                                    <button ng-click="edit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                    <button ng-hide="editing" ng-click="editInformation()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                         編輯
+                                    </button>
+                                    <button ng-show="editing" ng-click="editInformation()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                        返回
                                     </button>
                                 </div>
                                 <div style="padding:8px;" ng-hide="editing" class="nkfust-project-content" id="project-content" ng-bind-html="user.htmlContent">
@@ -94,7 +97,7 @@
                             </div>
                             <div class="mdl-tabs__panel" id="Own-Panel">
                                 <div ng-show="editable" class="nkfust-project-edit-nav">
-                                    <button ng-click="edit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                    <button ng-click="addProject()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
                                         新增提案
                                     </button>
                                 </div>

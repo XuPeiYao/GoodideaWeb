@@ -19,34 +19,41 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             $scope.editable = false;
         }
         $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
-        $scope.user.projectList = yield goodidea.Project.getUserProjects($scope.user);
-        var nowTime = yield goodidea.getServerDate();
-        var timeString = x => {
-            var time = nowTime.getTime() - x.lastEditTime;
-            console.log(time);
-            var day = Math.floor(time / (24 * 3600 * 1000));
-            time %= 24 * 3600 * 1000;
-            var hours = Math.floor(time / (3600 * 1000));
-            time %= 3600 * 1000;
-            var minnutes = Math.floor(time / (60 * 1000));
-            time %= 60 * 1000;
-            var seconds = Math.floor(time / 1000);
-            var updateString = "";
-            if (day > 0)
-                updateString += `${day}天`;
-            if (hours > 0 && day == 0)
-                updateString += `${hours}時`;
-            if (minnutes > 0 && hours == 0)
-                updateString += `${minnutes}分`;
-            if (seconds > 0 && minnutes == 0)
-                updateString += `${seconds}秒`;
-            updateString += "前更新";
-            if (time < 0)
-                updateString = "不久前更新";
-            x.timeString = updateString;
-        };
-        $scope.user.projectList.own.forEach(timeString);
-        $scope.user.projectList.participate.forEach(timeString);
+        $scope.loadProjectList = () => __awaiter(this, void 0, void 0, function* () {
+            $scope.user.projectList = yield goodidea.Project.getUserProjects($scope.user);
+            var nowTime = yield goodidea.getServerDate();
+            var timeString = x => {
+                var time = nowTime.getTime() - x.lastEditTime;
+                console.log(time);
+                var day = Math.floor(time / (24 * 3600 * 1000));
+                time %= 24 * 3600 * 1000;
+                var hours = Math.floor(time / (3600 * 1000));
+                time %= 3600 * 1000;
+                var minnutes = Math.floor(time / (60 * 1000));
+                time %= 60 * 1000;
+                var seconds = Math.floor(time / 1000);
+                var updateString = "";
+                if (day > 0)
+                    updateString += `${day}天`;
+                if (hours > 0 && day == 0)
+                    updateString += `${hours}時`;
+                if (minnutes > 0 && hours == 0)
+                    updateString += `${minnutes}分`;
+                if (seconds > 0 && minnutes == 0)
+                    updateString += `${seconds}秒`;
+                updateString += "前更新";
+                if (time < 0) {
+                    updateString = "不久前更新";
+                }
+                else if (day == 0 && minnutes == 0 && seconds == 0) {
+                    updateString = "不久前更新";
+                }
+                x.timeString = updateString;
+            };
+            $scope.user.projectList.own.forEach(timeString);
+            $scope.user.projectList.participate.forEach(timeString);
+        });
+        yield $scope.loadProjectList();
         $scope.loading = false;
         $scope.$apply();
         fixMdlTooltip(document.getElementById("Own-Panel"));
@@ -56,6 +63,20 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             if (temp)
                 temp.click();
         }
+        $scope.addProject = () => {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/addProject.html',
+                controller: 'addProjectModal',
+                size: 'sm',
+                resolve: {
+                    mainScope: () => $scope
+                }
+            }).rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
         $scope.edit = () => {
             $uibModal.open({
                 animation: true,
@@ -207,6 +228,31 @@ app.controller('uploadPhotoModal', function ($scope, $sce, $uibModalInstance, $u
             $scope.loading = true;
             yield rootScope.user.uploadPhoto(file);
             rootScope.$apply();
+            $scope.cancel();
+        });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('addProjectModal', function ($scope, $sce, $uibModalInstance, $uibModal, mainScope) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.name = "";
+        $scope.classList = yield goodidea.Class.getClassList();
+        $scope.class = $scope.classList.first().id;
+        $scope.ok = () => __awaiter(this, void 0, void 0, function* () {
+            if (!$scope.name && $scope.name.length == 0) {
+                swal({
+                    type: 'error',
+                    title: "資料缺漏",
+                    text: "請輸入提案名稱",
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            $scope.loading = true;
+            yield goodidea.Project.create($scope.name, $scope.class);
+            yield mainScope.loadProjectList();
+            $scope.loading = false;
+            $scope.$apply();
             $scope.cancel();
         });
         $scope.cancel = () => $uibModalInstance.close();

@@ -8,39 +8,50 @@
         $scope.user = await goodidea.User.getUserById(queryString['id']);
         $scope.editable = false;
     }
-   
+
 
     $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
-    $scope.user.projectList = await goodidea.Project.getUserProjects(<goodidea.User>$scope.user);
-    var nowTime = await goodidea.getServerDate();
+
+    $scope.loadProjectList = async () => {
+        $scope.user.projectList = await goodidea.Project.getUserProjects(<goodidea.User>$scope.user);
+        var nowTime = await goodidea.getServerDate();
+
+        var timeString = x => {
+            var time = nowTime.getTime() - x.lastEditTime;
+            console.log(time);
+            var day = Math.floor(time / (24 * 3600 * 1000));
+            time %= 24 * 3600 * 1000;
+
+            var hours = Math.floor(time / (3600 * 1000));
+            time %= 3600 * 1000;
+
+            var minnutes = Math.floor(time / (60 * 1000));
+            time %= 60 * 1000;
+
+            var seconds = Math.floor(time / 1000);
+
+
+
+            var updateString = "";
+            if (day > 0) updateString += `${day}天`;
+            if (hours > 0 && day == 0) updateString += `${hours}時`;
+            if (minnutes > 0 && hours == 0) updateString += `${minnutes}分`;
+            if (seconds > 0 && minnutes == 0) updateString += `${seconds}秒`;
+            updateString += "前更新";
+            if (time < 0) {
+                updateString = "不久前更新";
+            } else if (day == 0 && minnutes == 0 && seconds == 0) {
+                updateString = "不久前更新";
+            }
+            
+            x.timeString = updateString;
+        };
+        $scope.user.projectList.own.forEach(timeString);
+        $scope.user.projectList.participate.forEach(timeString);
+    }
     
-    var timeString = x => {
-        var time = nowTime.getTime() - x.lastEditTime;
-        console.log(time);
-        var day = Math.floor(time / (24 * 3600 * 1000));
-        time %= 24 * 3600 * 1000;
+    await $scope.loadProjectList();
 
-        var hours = Math.floor(time / (3600 * 1000));
-        time %= 3600 * 1000;
-
-        var minnutes = Math.floor(time / (60 * 1000));
-        time %= 60 * 1000;
-
-        var seconds = Math.floor(time / 1000);
-
-
-
-        var updateString = "";
-        if (day > 0) updateString += `${day}天`;
-        if (hours > 0 && day == 0) updateString += `${hours}時`;
-        if (minnutes > 0 && hours == 0) updateString += `${minnutes}分`;
-        if (seconds > 0 && minnutes == 0) updateString += `${seconds}秒`;
-        updateString += "前更新";
-        if (time < 0) updateString = "不久前更新";
-        x.timeString = updateString;
-    };
-    $scope.user.projectList.own.forEach(timeString);
-    $scope.user.projectList.participate.forEach(timeString);
     $scope.loading = false;
     $scope.$apply();
     fixMdlTooltip(document.getElementById("Own-Panel"));
@@ -48,6 +59,21 @@
     if (queryString['tab']) {
         var temp = <HTMLElement>document.querySelector(`[href="#${queryString['tab']}"]`);
         if (temp) temp.click();
+    }
+
+    $scope.addProject = () => {
+        $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/addProject.html',
+            controller: 'addProjectModal',
+            size: 'sm',
+            resolve: {
+                mainScope: () => $scope
+            }
+        }).rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
     }
 
     $scope.edit = () => {
@@ -200,6 +226,31 @@ app.controller('uploadPhotoModal', async function ($scope, $sce, $uibModalInstan
         $scope.loading = true;
         await (<goodidea.User>rootScope.user).uploadPhoto(file);
         rootScope.$apply();
+        $scope.cancel();
+    }
+    $scope.cancel = () => $uibModalInstance.close();
+});
+
+app.controller('addProjectModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, $uibModal, mainScope) {
+    $scope.name = "";
+    $scope.classList = await goodidea.Class.getClassList();
+    $scope.class = $scope.classList.first().id;
+    $scope.ok = async () => {
+        if (!$scope.name && $scope.name.length == 0) {
+            swal({
+                type: 'error',
+                title: "資料缺漏",
+                text: "請輸入提案名稱",
+                confirmButtonText: "確定"
+            });
+            return;
+        }
+        $scope.loading = true;
+        await goodidea.Project.create($scope.name, $scope.class);
+        await mainScope.loadProjectList();
+        $scope.loading = false;
+        $scope.$apply();
+
         $scope.cancel();
     }
     $scope.cancel = () => $uibModalInstance.close();
