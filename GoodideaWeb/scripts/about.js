@@ -128,6 +128,9 @@ app.controller('editAboutModal', function ($scope, $sce, $uibModalInstance, $uib
         $scope.name = mainScope.user.name;
         $scope.email = mainScope.user.email;
         $scope.phone = mainScope.user.phone;
+        $scope.specialty = mainScope.user.specialty;
+        $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"]; //預設專長限制
+        $scope.specialtySelect = $scope.specialtyList.first(); //預設選取項目
         $scope.collegeList = yield goodidea.College.getCollegeList();
         //$scope.department = $scope.collegeList.first().departments.first().id;
         if (mainScope.user.department) {
@@ -149,6 +152,25 @@ app.controller('editAboutModal', function ($scope, $sce, $uibModalInstance, $uib
             mainScope.$apply();
             $scope.loading = false;
             $scope.cancel();
+        });
+        $scope.addSpecialty = () => __awaiter(this, void 0, void 0, function* () {
+            var value = $scope.specialtySelect == '' ? $scope.specialtyInput : $scope.specialtySelect;
+            if ($scope.specialty.filter(x => x.value == value).length)
+                return;
+            $scope.loading = true;
+            yield mainScope.user.addSpecialty(value);
+            $scope.specialty = mainScope.user.specialty;
+            $scope.loading = false;
+            $scope.$apply();
+            mainScope.$apply();
+        });
+        $scope.removeSpecialty = (t) => __awaiter(this, void 0, void 0, function* () {
+            $scope.loading = true;
+            yield mainScope.user.removeSpecialty(t);
+            $scope.specialty = mainScope.user.specialty;
+            $scope.loading = false;
+            $scope.$apply();
+            mainScope.$apply();
         });
         $scope.uploadPhoto = () => {
             $uibModal.open({

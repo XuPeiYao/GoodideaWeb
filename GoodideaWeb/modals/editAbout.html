@@ -24,6 +24,30 @@
         <input ng-disabled="loading" class="mdl-textfield__input" maxlength="128" type="text" ng-model="phone" />
         <label class="mdl-textfield__label">電話(非公開)</label>
     </div>
+
+    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo is-dirty">
+        <div>
+            <div ng-hide="specialty.length">
+                您尚未加入專長
+            </div>
+            <div ng-repeat="t in specialty">
+                <button type="button" class="close item-close" ng-click="removeSpecialty(t)"><span aria-hidden="true">&times;</span></button>
+                {{t.value}}
+            </div>
+        </div>
+        <label class="mdl-textfield__label">專長列表</label>
+    </div>
+    <select class="mdl-textfield__input" ng-model="specialtySelect">
+        <option ng-repeat="s in specialtyList" value="{{s}}">{{s}}</option>
+        <option value="">自訂</option>
+    </select>
+    <div ng-show="specialtySelect==''" class="mdl-textfield mdl-js-textfield">
+        <input class="mdl-textfield__input" maxlength="32" type="text" ng-model="specialtyInput">
+        <label class="mdl-textfield__label">自訂專長</label>
+    </div>
+    <button type="button" ng-click="addSpecialty()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        加入專長需求項目
+    </button>
 </div>
 <div class="modal-footer">
     <button tabindex="2" ng-disabled="loading" ng-click="uploadPhoto()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">

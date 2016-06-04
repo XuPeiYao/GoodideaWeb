@@ -119,6 +119,10 @@ app.controller('editAboutModal', async function ($scope, $sce, $uibModalInstance
     $scope.name = mainScope.user.name;
     $scope.email = mainScope.user.email;
     $scope.phone = mainScope.user.phone;
+    $scope.specialty = mainScope.user.specialty;
+
+    $scope.specialtyList = ["設計", "外語", "財管", "行銷", "資訊"];//預設專長限制
+    $scope.specialtySelect = $scope.specialtyList.first();//預設選取項目
 
     $scope.collegeList = await goodidea.College.getCollegeList();
     //$scope.department = $scope.collegeList.first().departments.first().id;
@@ -145,6 +149,24 @@ app.controller('editAboutModal', async function ($scope, $sce, $uibModalInstance
 
         $scope.cancel();
     }
+    $scope.addSpecialty = async () => {
+        var value = $scope.specialtySelect == '' ? $scope.specialtyInput : $scope.specialtySelect;
+        if ($scope.specialty.filter(x => x.value == value).length) return;
+        $scope.loading = true;
+        await (<goodidea.User>mainScope.user).addSpecialty(value);
+        $scope.specialty = mainScope.user.specialty;
+        $scope.loading = false;
+        $scope.$apply();
+        mainScope.$apply();
+    } 
+    $scope.removeSpecialty = async (t) => {
+        $scope.loading = true;
+        await (<goodidea.User>mainScope.user).removeSpecialty(t);
+        $scope.specialty = mainScope.user.specialty;
+        $scope.loading = false;
+        $scope.$apply();
+        mainScope.$apply();
+    } 
     $scope.uploadPhoto = () => {
         $uibModal.open({
             animation: true,
