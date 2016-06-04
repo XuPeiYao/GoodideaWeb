@@ -75,7 +75,23 @@ var goodidea;
             var result = new College();
             result.id = data['Id'];
             result.name = data['Name'];
+            if (data['Departments']) {
+                result.departments = [];
+                for (var i = 0; i < data['Departments'].length; i++) {
+                    result.departments.push(goodidea.Department.loadFromJSON(data['Departments'][i]));
+                }
+            }
             return result;
+        }
+        static getCollegeList() {
+            return __awaiter(this, void 0, Promise, function* () {
+                var responseJSON = yield goodidea.postAsync('api/Department/list');
+                var result = [];
+                for (var i = 0; i < responseJSON['Result'].length; i++) {
+                    result.push(College.loadFromJSON(responseJSON['Result'][i]));
+                }
+                return result;
+            });
         }
     }
     goodidea.College = College;

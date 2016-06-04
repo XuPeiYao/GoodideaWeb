@@ -51,10 +51,15 @@ declare module goodidea {
          */
         name: string;
         /**
+         * 系所集合
+         */
+        departments: Department[];
+        /**
          * 由JSON資料產生College
          * @param data 資料來源
          */
         static loadFromJSON(data: JSON): College;
+        static getCollegeList(): Promise<College[]>;
     }
 }
 declare module goodidea {

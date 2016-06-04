@@ -173,6 +173,7 @@
     <Content Include="lib\to-markdown.js" />
     <Content Include="modals\editorAddDocument.html" />
     <Content Include="modals\editorAddImage.html" />
+    <Content Include="modals\editAbout.html" />
     <Content Include="modals\editorAddUrl.html" />
     <Content Include="modals\updateLogs.html" />
     <Content Include="modals\joinCompetition.html" />

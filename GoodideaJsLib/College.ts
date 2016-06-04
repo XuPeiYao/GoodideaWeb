@@ -11,6 +11,11 @@
         public name: string;
 
         /**
+         * 系所集合
+         */
+        public departments: Department[];
+
+        /**
          * 由JSON資料產生College
          * @param data 資料來源
          */
@@ -18,6 +23,21 @@
             var result = new College();
             result.id = data['Id'];
             result.name = data['Name'];
+            if (data['Departments']) {
+                result.departments = [];
+                for (var i = 0; i < data['Departments'].length; i++) {
+                    result.departments.push(Department.loadFromJSON(data['Departments'][i]));
+                }
+            }
+            return result;
+        }
+
+        public static async getCollegeList(): Promise<College[]> {
+            var responseJSON = await postAsync('api/Department/list');
+            var result = [];
+            for (var i = 0; i < responseJSON['Result'].length; i++) {
+                result.push(College.loadFromJSON(responseJSON['Result'][i]));
+            }
             return result;
         }
     }
