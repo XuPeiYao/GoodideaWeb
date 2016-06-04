@@ -20,6 +20,11 @@ app.controller('about', function ($scope, $sce, $uibModal) {
         }
         $scope.loading = false;
         $scope.$apply();
+        if (queryString['tab']) {
+            var temp = document.querySelector(`[href="#${queryString['tab']}"]`);
+            if (temp)
+                temp.click();
+        }
         console.log($scope.user);
     });
 });

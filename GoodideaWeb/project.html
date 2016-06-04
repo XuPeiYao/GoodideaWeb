@@ -74,23 +74,25 @@
                         <a ng-hide="!project.editable && project.owner.id != loginUser.id" href="#Setting-Panel" class="mdl-cell mdl-cell--2-col mdl-tabs__tab">設定</a>
                     </div>
                 </div>
-                <div class="mdl-tabs__panel is-active" id="Content-Panel">
-                    <include src="pages/project-content.html"></include>
-                </div>
-                <div class="mdl-tabs__panel" id="Team-Panel">
-                    <include src="pages/project-team.html"></include>
-                </div>
-                <div class="mdl-tabs__panel" id="Document-Panel">
-                    <include src="pages/project-document.html"></include>
-                </div>
-                <div class="mdl-tabs__panel" id="Info-Panel">
-                    <include src="pages/project-information.html"></include>
-                </div>
-                <div class="mdl-tabs__panel" id="Forum-Panel">
-                    <include src="pages/project-forum.html"></include>
-                </div>
-                <div class="mdl-tabs__panel" id="Setting-Panel">
-                    <include src="pages/project-setting.html"></include>
+                <div class="mdl-layout__content">
+                    <div class="mdl-tabs__panel is-active" id="Content-Panel">
+                        <include src="pages/project-content.html"></include>
+                    </div>
+                    <div class="mdl-tabs__panel" id="Team-Panel">
+                        <include src="pages/project-team.html"></include>
+                    </div>
+                    <div class="mdl-tabs__panel" id="Document-Panel">
+                        <include src="pages/project-document.html"></include>
+                    </div>
+                    <div class="mdl-tabs__panel" id="Info-Panel">
+                        <include src="pages/project-information.html"></include>
+                    </div>
+                    <div class="mdl-tabs__panel" id="Forum-Panel">
+                        <include src="pages/project-forum.html"></include>
+                    </div>
+                    <div class="mdl-tabs__panel" id="Setting-Panel">
+                        <include src="pages/project-setting.html"></include>
+                    </div>
                 </div>
             </div>
 
@@ -118,9 +120,9 @@
     <script src="lib/markdown/markdown-it-sub.js"></script>
     <script src="lib/markdown/markdown-it-video.js"></script>
     <script src="lib/to-markdown.js"></script>
-    
+
     <script src="scripts/projectEditor.js"></script>
-    
+
     <script src="scripts/main.js"></script>
     <script src="scripts/project.js"></script>
 

@@ -10,5 +10,11 @@
     }
     $scope.loading = false;
     $scope.$apply();
+
+    if (queryString['tab']) {
+        var temp = <HTMLElement>document.querySelector(`[href="#${queryString['tab']}"]`);
+        if (temp) temp.click();
+    }
+
     console.log($scope.user)
 });

@@ -37,7 +37,7 @@
         <div class="mdl-tooltip" for="more-button">{{loginUser?("目前登入使用者 " + loginUser.name):"使用者操作選項"}}</div>
         <div class="mdl-menu mdl-js-menu mdl-menu--bottom-right mdl-js-ripple-effect" for="more-button">
             <a id="nav_top_about" href="about.html?id={{loginUser.id}}" ng-show="loginUser" class="mdl-menu__item">個人資訊</a>
-            <a id="nav_top_project_mang" ng-show="loginUser" class="mdl-menu__item">提案管理</a>
+            <a id="nav_top_project_mang" href="about.html?id={{loginUser.id}}&tab=Own-Panel" ng-show="loginUser" class="mdl-menu__item">提案管理</a>
             <a id="nav_top_login" ng-hide="loginUser" ng-click="login()" class="mdl-menu__item">登入</a>
             <a id="nav_top_logout" ng-show="loginUser" ng-click="logout()" class="mdl-menu__item">登出</a>            
         </div>
@@ -61,7 +61,7 @@
         <div class="android-drawer-separator"></div>
         <span class="mdl-navigation__link" href="">使用者操作</span>
         <a id="nav_left_about" ng-show="loginUser" class="mdl-navigation__link" href="about.html?id={{loginUser.id}}">個人資訊</a>
-        <a id="nav_left_project_mang" ng-show="loginUser" class="mdl-navigation__link" href="">提案管理</a>
+        <a id="nav_left_project_mang" ng-show="loginUser" class="mdl-navigation__link" href="about.html?id={{loginUser.id}}&tab=Own-Panel">提案管理</a>
         <a id="nav_left_login" ng-hide="loginUser" ng-click="login()" class="mdl-navigation__link" href="">登入</a>
         <a id="nav_left_logout" ng-show="loginUser" ng-click="logout()" class="mdl-navigation__link" href="">登出</a>
         <div class="android-drawer-separator"></div>
