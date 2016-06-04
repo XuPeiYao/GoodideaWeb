@@ -75,12 +75,32 @@
                             <a href="#Own-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab">發起提案</a>
                             <a href="#Participate-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab">參與提案</a>
                         </div>
-                        <div class="mdl-layout__content">
+                        <div class="mdl-layout__content" style="width:100%">
                             <div class="mdl-tabs__panel is-active" id="Information-Panel">
-                                自我介紹
+                                <div ng-show="editable" class="nkfust-project-edit-nav">
+                                    <button ng-click="edit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                        編輯
+                                    </button>
+                                </div>
+                                <div style="padding:8px;" ng-hide="editing" class="nkfust-project-content" id="project-content" ng-bind-html="user.htmlContent">
+                                    
+                                </div>
+                                <div ng-show="editing" class="nkfust-project-content">
+                                    <textarea id="editor"></textarea>
+                                </div>
                             </div>
                             <div class="mdl-tabs__panel" id="Own-Panel">
-                                擁有提案
+                                <div ng-show="editable" class="nkfust-project-edit-nav">
+                                    <button ng-click="edit()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+                                        新增提案
+                                    </button>
+                                </div>
+                                <div class="mdl-grid">
+                                    <div ng-repeat="t in user.projectList.own" class="mdl-cell--12-col nkfust-about-project">
+                                        <h5><a href="project.html?id={{t.id}}">{{t.name}}</a></h5>
+                                        {{t.timeString}}
+                                    </div>
+                                </div>
                             </div>
                             <div class="mdl-tabs__panel" id="Participate-Panel">
                                 參與提案
