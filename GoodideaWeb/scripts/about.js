@@ -150,6 +150,43 @@ app.controller('editAboutModal', function ($scope, $sce, $uibModalInstance, $uib
             $scope.loading = false;
             $scope.cancel();
         });
+        $scope.uploadPhoto = () => {
+            $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/uploadPhoto.html',
+                controller: 'uploadPhotoModal',
+                size: 'sm',
+                resolve: {
+                    mainScope: () => $scope,
+                    rootScope: () => mainScope
+                }
+            }).rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+app.controller('uploadPhotoModal', function ($scope, $sce, $uibModalInstance, $uibModal, mainScope, rootScope) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.upload = () => __awaiter(this, void 0, void 0, function* () {
+            var file = document.getElementById("Photo_FileInput").files;
+            if (file == null || file.length == 0) {
+                swal({
+                    type: 'error',
+                    title: "資料缺漏",
+                    text: "請務必選擇上傳檔案",
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            file = file[0];
+            $scope.loading = true;
+            yield rootScope.user.uploadPhoto(file);
+            rootScope.$apply();
+            $scope.cancel();
+        });
         $scope.cancel = () => $uibModalInstance.close();
     });
 });

@@ -1,0 +1,22 @@
+﻿<div class="modal-header">
+    <button type="button" class="close" ng-click="cancel()"><span aria-hidden="true">&times;</span></button>
+    <h5 class="modal-title">上傳大頭貼</h5>
+</div>
+<div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
+<div class="modal-body">
+    <from>
+        <div class="mdl-textfield  mdl-textfield--floating-label textfield-demo is-dirty">
+            <input class="mdl-textfield__input" type="file" id="Photo_FileInput" accept=".jpg,.gif,.png" />
+            <label class="mdl-textfield__label">檔案(檔案大小限制16MB以下)</label>
+        </div>
+        檔案類型必須為jpg,gif,png格式
+    </from>
+</div>
+<div class="modal-footer">
+    <button tabindex="3" ng-disabled="loading" ng-click="upload()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+        上傳
+    </button>
+    <button tabindex="4" ng-disabled="loading" ng-click="cancel()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect">
+        取消
+    </button>
+</div>
