@@ -20,9 +20,10 @@ app.controller('about', function ($scope, $sce, $uibModal) {
         }
         $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
         $scope.user.projectList = yield goodidea.Project.getUserProjects($scope.user);
-        var nowTime = new Date();
-        $scope.user.projectList.own.forEach(x => {
-            var time = (nowTime.getTime() + 8 * 3600 * 1000) - x.lastEditTime;
+        var nowTime = yield goodidea.getServerDate();
+        var timeString = x => {
+            var time = nowTime.getTime() - x.lastEditTime;
+            console.log(time);
             var day = Math.floor(time / (24 * 3600 * 1000));
             time %= 24 * 3600 * 1000;
             var hours = Math.floor(time / (3600 * 1000));
@@ -40,10 +41,16 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             if (seconds > 0 && minnutes == 0)
                 updateString += `${seconds}秒`;
             updateString += "前更新";
+            if (time < 0)
+                updateString = "不久前更新";
             x.timeString = updateString;
-        });
+        };
+        $scope.user.projectList.own.forEach(timeString);
+        $scope.user.projectList.participate.forEach(timeString);
         $scope.loading = false;
         $scope.$apply();
+        fixMdlTooltip(document.getElementById("Own-Panel"));
+        fixMdlTooltip(document.getElementById("Participate-Panel"));
         if (queryString['tab']) {
             var temp = document.querySelector(`[href="#${queryString['tab']}"]`);
             if (temp)

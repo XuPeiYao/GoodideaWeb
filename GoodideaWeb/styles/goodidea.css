@@ -17,8 +17,25 @@
 .nkfust-about-project{
     border-bottom: #9E9E9E solid 1px;
     height: 100px;
+    padding:10px;
+}
+.nkfust-about-project-class{
+    position: absolute;
+    right: 5px;
+    margin-right: 20px;
+}
+.nkfust-about-project-time{
+    position: relative;
+    top: 60px;
+}
+.nkfust-about-project-header{
+    position: absolute;
+    width:calc(100% - 120px) !important;
 }
 
+.nkfust-about-project-title{
+    color: #23527c;
+}
 .updateLogItem{
     cursor : pointer;
 }
@@ -293,7 +310,7 @@ body, h1, h2, h3, h4, h5, h6 {
 }
 
 .nkfust-about-card-image { /*Member List 圖片*/
-    height: 280px !important;
+    min-height: 280px !important;
     max-height: 280px;
     padding: 0;
 }
@@ -373,6 +390,10 @@ body, h1, h2, h3, h4, h5, h6 {
 
     .nkfust-project-header-banner {
         height: calc(100% - 96px);
+    }
+
+     .nkfust-about-card-content {
+        padding-bottom: 120px !important;
     }
 
     .nkfust-project-header-tab {

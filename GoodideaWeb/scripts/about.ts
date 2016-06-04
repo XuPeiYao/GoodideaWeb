@@ -12,9 +12,11 @@
 
     $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
     $scope.user.projectList = await goodidea.Project.getUserProjects(<goodidea.User>$scope.user);
-    var nowTime = new Date();
-    $scope.user.projectList.own.forEach(x => {
-        var time = (nowTime.getTime() + 8 * 3600 * 1000) - x.lastEditTime;
+    var nowTime = await goodidea.getServerDate();
+    
+    var timeString = x => {
+        var time = nowTime.getTime() - x.lastEditTime;
+        console.log(time);
         var day = Math.floor(time / (24 * 3600 * 1000));
         time %= 24 * 3600 * 1000;
 
@@ -25,18 +27,24 @@
         time %= 60 * 1000;
 
         var seconds = Math.floor(time / 1000);
+
+
+
         var updateString = "";
         if (day > 0) updateString += `${day}天`;
         if (hours > 0 && day == 0) updateString += `${hours}時`;
         if (minnutes > 0 && hours == 0) updateString += `${minnutes}分`;
         if (seconds > 0 && minnutes == 0) updateString += `${seconds}秒`;
         updateString += "前更新";
-
+        if (time < 0) updateString = "不久前更新";
         x.timeString = updateString;
-    });
+    };
+    $scope.user.projectList.own.forEach(timeString);
+    $scope.user.projectList.participate.forEach(timeString);
     $scope.loading = false;
     $scope.$apply();
-
+    fixMdlTooltip(document.getElementById("Own-Panel"));
+    fixMdlTooltip(document.getElementById("Participate-Panel"));
     if (queryString['tab']) {
         var temp = <HTMLElement>document.querySelector(`[href="#${queryString['tab']}"]`);
         if (temp) temp.click();
