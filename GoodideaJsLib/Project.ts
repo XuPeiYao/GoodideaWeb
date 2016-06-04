@@ -337,7 +337,7 @@
          * @param _class 提案分類ID或Class物件
          * @param temp 提案競賽樣板，競賽ID或Competition物件
          */
-        public static async create(name: string, _class: (Class | string), temp: (Competition | string)): Promise<Project> {
+        public static async create(name: string, _class: (Class | string), temp?: (Competition | string)): Promise<Project> {
             var data = {
                 name: name,
                 class: _class['id'] || _class

@@ -653,7 +653,7 @@ declare module goodidea {
          * @param _class 提案分類ID或Class物件
          * @param temp 提案競賽樣板，競賽ID或Competition物件
          */
-        static create(name: string, _class: (Class | string), temp: (Competition | string)): Promise<Project>;
+        static create(name: string, _class: (Class | string), temp?: (Competition | string)): Promise<Project>;
         /**
          * 由JSON資料產生Project
          * @param data 資料來源
