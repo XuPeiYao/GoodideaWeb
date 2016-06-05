@@ -5,11 +5,11 @@
 <div style="visibility:{{loading?'visible':'collapse'}}" class="mdl-progress mdl-js-progress mdl-progress__indeterminate"></div>
 <div class="modal-body">
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label textfield-demo">
-        <input class="mdl-textfield__input" maxlength="128" type="text" ng-model="name" />
+        <input tabindex="1" class="mdl-textfield__input" maxlength="128" type="text" ng-model="name" />
         <label class="mdl-textfield__label">輔助文字</label>
     </div><br />
     <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-        <select ng-disabled="loading" class="mdl-textfield__input" ng-model="image">
+        <select tabindex="2" ng-disabled="loading" class="mdl-textfield__input" ng-model="image">
             <option ng-repeat="t in imageList" value="{{t.file.url}}">{{t.name || t.file.name}}</option>
         </select>
         <label class="mdl-textfield__label">圖片</label>

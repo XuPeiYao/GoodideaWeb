@@ -14,7 +14,7 @@
         <button id="project_document_remove_{{t.id}}" ng-click="removeDocument(t)" ng-show="project.editable && !project.competition" class="close item-close">
             ×
         </button>
-        <a target="_blank" href="{{t.file.url}}">{{t.name || t.file.name}}</a>
+        <a target="_blank" href="{{t.file.url}}">[{{t.file.type==0?'文件':'圖片'}}]{{t.name || t.file.name}}</a>
         <div class="mdl-tooltip" for="project_document_remove_{{t.id}}">刪除文件</div>
     </li>
 </ul>
