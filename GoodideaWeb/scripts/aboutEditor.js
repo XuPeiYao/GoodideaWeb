@@ -24,7 +24,6 @@ function initAboutEditor(selector, $scope) {
             insert: { title: 'Insert', items: 'insertUrl insertVideo | charmap hr insertdatetime' },
             format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat' },
             table: { title: 'Table', items: 'inserttable deletetable | row column' },
-            view: { title: 'View', items: 'fullscreen' }
         },
         toolbar: "save | cut copy paste | insertfile undo redo | styleselect | bold strikethrough superscript subscript | bullist numlist | hr",
         contextmenu: "cut copy paste | formats | insertUrl insertVideo | inserttable row column",
@@ -124,15 +123,15 @@ function initAboutEditor(selector, $scope) {
                         }
                         catch (e) { }
                     });
-                    $scope.project.content = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
+                    $scope.user.information = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
                     $scope.loading = true;
                     swal({
                         title: "儲存中",
                         text: "系統正在儲存您的變更，結束後本視窗自動關閉",
                         showConfirmButton: false
                     });
-                    yield $scope.project.updateContent();
-                    $scope.updateContent();
+                    yield $scope.user.updateInformation();
+                    $scope.loadInformation();
                     $scope.loading = false;
                     swal.close();
                     $scope.$apply();
@@ -168,8 +167,8 @@ function initAboutEditor(selector, $scope) {
                 });
             });
             ed.on('init', function (ed) {
-                console.log(markdown.toHtml($scope.project.content));
-                tinyMCE.activeEditor.setContent(markdown.toHtml($scope.project.content));
+                console.log(markdown.toHtml($scope.user.information));
+                tinyMCE.activeEditor.setContent(markdown.toHtml($scope.user.information));
             });
         }
     });

@@ -114,15 +114,15 @@ function initAboutEditor(selector:string,$scope) {
                         TR.remove();
                     } catch (e){ }
                 });
-                $scope.project.content = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
+                $scope.user.information = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
                 $scope.loading = true;
                 swal({
                     title: "儲存中",
                     text: "系統正在儲存您的變更，結束後本視窗自動關閉",
                     showConfirmButton: false
                 });
-                await $scope.project.updateContent();
-                $scope.updateContent();
+                await $scope.user.updateInformation();
+                $scope.loadInformation();
                 $scope.loading = false;
                 swal.close();
                 $scope.$apply();
@@ -156,8 +156,8 @@ function initAboutEditor(selector:string,$scope) {
                 });
             });
             ed.on('init', function (ed) {
-                console.log(markdown.toHtml($scope.project.content));
-                tinyMCE.activeEditor.setContent(markdown.toHtml($scope.project.content));
+                console.log(markdown.toHtml($scope.user.information));
+                tinyMCE.activeEditor.setContent(markdown.toHtml($scope.user.information));
             });
         }
     });
