@@ -317,7 +317,7 @@
             $scope.loading = true;
             swal({
                 title: "刪除中",
-                text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回首頁",
+                text: "系統正在執行刪除提案的操作，操作完成後本視窗自動關閉並跳轉回提案管理",
                 showConfirmButton: false
             });
             try {
@@ -330,7 +330,12 @@
                 return;
             }
             $scope.loading = false;
-            location.href = "index.html";//刪除後回首頁
+
+            if ($scope.loginUser) {
+                location.href = "about.html?id=" + $scope.loginUser.id + "&tab=Own-Panel";//刪除後回提案管理
+            } else {//未登入(理論上不可能
+                location.href = "index.html";//刪除後回首頁
+            }
         });
     }
 
