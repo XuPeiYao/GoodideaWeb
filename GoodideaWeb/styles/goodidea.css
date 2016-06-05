@@ -92,12 +92,17 @@
 }
 
     .mce-tinymce.mce-fullscreen #editor_ifr {
-        margin-bottom: 26px;
+        /*margin-bottom: 26px;*/
+        margin-bottom: 30px;
     }
 
 @media(max-width:1025px) {
     .mce-tinymce.mce-fullscreen {
         top: 56px;
+    }
+    .mce-tinymce.mce-fullscreen #editor_ifr {
+        /*margin-bottom: 26px;*/
+        margin-bottom: 26px;
     }
 }
 
