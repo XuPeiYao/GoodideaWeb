@@ -15,8 +15,8 @@ function initEditor(selector:string,$scope) {
             file: { title: "File", items: "save" },
             edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
             insert: { title: 'Insert', items: 'insertUrl insertDocument insertImage insertVideo | charmap hr insertdatetime' },
-            format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat' },
-            table: { title: 'Table', items: 'inserttable deletetable | row column' },//cell
+            format: { title: 'Format', items: 'bold italic superscript subscript | formats | removeformat' },
+            table: { title: 'Table', items: 'inserttable deletetable | row column' },// strikethrough  underline
             view: { title: 'View', items: 'fullscreen' }
         },
         toolbar: "save | cut copy paste | insertfile undo redo | styleselect | bold strikethrough superscript subscript | bullist numlist | hr",

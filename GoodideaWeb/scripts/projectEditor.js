@@ -22,7 +22,7 @@ function initEditor(selector, $scope) {
             file: { title: "File", items: "save" },
             edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
             insert: { title: 'Insert', items: 'insertUrl insertDocument insertImage insertVideo | charmap hr insertdatetime' },
-            format: { title: 'Format', items: 'bold italic underline strikethrough superscript subscript | formats | removeformat' },
+            format: { title: 'Format', items: 'bold italic superscript subscript | formats | removeformat' },
             table: { title: 'Table', items: 'inserttable deletetable | row column' },
             view: { title: 'View', items: 'fullscreen' }
         },
