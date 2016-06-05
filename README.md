@@ -5,4 +5,4 @@
 
 1. GoodideaJsLib：為創意創新雲端平台之JavaScript/TypeScript語言SDK
 
-2. GoodideaWeb(未完成)：下一版的創意創新雲端平台前端
+2. GoodideaWeb：創意創新雲端平台前端
