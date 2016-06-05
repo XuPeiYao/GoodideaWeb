@@ -258,6 +258,7 @@
     <TypeScriptCompile Include="scripts\main.ts" />
     <TypeScriptCompile Include="scripts\about.ts" />
     <TypeScriptCompile Include="scripts\project.ts" />
+    <TypeScriptCompile Include="scripts\aboutEditor.ts" />
     <TypeScriptCompile Include="scripts\projectEditor.ts" />
     <TypeScriptCompile Include="scripts\competitionList.ts" />
     <TypeScriptCompile Include="scripts\search.ts" />

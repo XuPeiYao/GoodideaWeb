@@ -18,8 +18,10 @@
         $scope.editing = false;
     };
 
-    $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
-
+    $scope.loadInformation = () => {
+        $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
+    }
+    $scope.loadInformation();
     $scope.loadProjectList = async () => {
         $scope.user.projectList = await goodidea.Project.getUserProjects(<goodidea.User>$scope.user);
         var nowTime = await goodidea.getServerDate();
@@ -145,6 +147,25 @@
         } catch (e) { }
         swal.close();
         $scope.$apply();
+    }
+
+
+    $scope.editor = {};
+    $scope.editor.addUrl = () => {
+        var addUrl = $uibModal.open({
+            animation: true,
+            templateUrl: 'modals/editorAddUrl.html',
+            controller: 'editorAddUrlModal',
+            size: 'sm',
+            resolve: {
+                project: () => $scope.project,
+                mainScope: () => $scope
+            }
+        });
+        addUrl.rendered.then(() => {
+            $scope.loading = false;
+            componentHandler.upgradeDom();
+        });
     }
 });
 
@@ -280,6 +301,28 @@ app.controller('addProjectModal', async function ($scope, $sce, $uibModalInstanc
             $scope.loading = false;
         });
 
+        $scope.cancel();
+    }
+    $scope.cancel = () => $uibModalInstance.close();
+});
+
+
+//編輯器插入連結控制器
+app.controller('editorAddUrlModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
+    $scope.ok = () => {
+        if (!$scope.url) {
+            swal({
+                type: 'error',
+                title: "連結網址不該為空",
+                text: "您尚未輸入連結網址，或者您輸入的格式錯誤",
+                confirmButtonText: "確定"
+            });
+            return;
+        }
+        if (!$scope.name || $scope.name.length == 0) $scope.name = $scope.url;
+
+        var aHtml = <HTMLElement>parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
+        tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
         $scope.cancel();
     }
     $scope.cancel = () => $uibModalInstance.close();

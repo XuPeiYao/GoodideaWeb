@@ -25,7 +25,10 @@ app.controller('about', function ($scope, $sce, $uibModal) {
         $scope.back = () => {
             $scope.editing = false;
         };
-        $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
+        $scope.loadInformation = () => {
+            $scope.user.htmlContent = $sce.trustAsHtml(markdown.toHtml($scope.user.information));
+        };
+        $scope.loadInformation();
         $scope.loadProjectList = () => __awaiter(this, void 0, void 0, function* () {
             $scope.user.projectList = yield goodidea.Project.getUserProjects($scope.user);
             var nowTime = yield goodidea.getServerDate();
@@ -148,6 +151,23 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             swal.close();
             $scope.$apply();
         });
+        $scope.editor = {};
+        $scope.editor.addUrl = () => {
+            var addUrl = $uibModal.open({
+                animation: true,
+                templateUrl: 'modals/editorAddUrl.html',
+                controller: 'editorAddUrlModal',
+                size: 'sm',
+                resolve: {
+                    project: () => $scope.project,
+                    mainScope: () => $scope
+                }
+            });
+            addUrl.rendered.then(() => {
+                $scope.loading = false;
+                componentHandler.upgradeDom();
+            });
+        };
     });
 });
 app.controller('editAboutModal', function ($scope, $sce, $uibModalInstance, $uibModal, mainScope) {
@@ -283,6 +303,28 @@ app.controller('addProjectModal', function ($scope, $sce, $uibModalInstance, $ui
             }));
             $scope.cancel();
         });
+        $scope.cancel = () => $uibModalInstance.close();
+    });
+});
+//編輯器插入連結控制器
+app.controller('editorAddUrlModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
+    return __awaiter(this, void 0, void 0, function* () {
+        $scope.ok = () => {
+            if (!$scope.url) {
+                swal({
+                    type: 'error',
+                    title: "連結網址不該為空",
+                    text: "您尚未輸入連結網址，或者您輸入的格式錯誤",
+                    confirmButtonText: "確定"
+                });
+                return;
+            }
+            if (!$scope.name || $scope.name.length == 0)
+                $scope.name = $scope.url;
+            var aHtml = parseNode(markdown.toHtml(`[${$scope.name}](${$scope.url})`)).firstChild;
+            tinyMCE.activeEditor.insertContent(aHtml.outerHTML);
+            $scope.cancel();
+        };
         $scope.cancel = () => $uibModalInstance.close();
     });
 });
