@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 app.controller('competitionList', function ($scope, $sce, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.bannerList = yield goodidea.Banner.getBannerList();
+        $scope.active = true;
         $scope.load = () => __awaiter(this, void 0, void 0, function* () {
             $scope.competitionList = yield goodidea.Competition.getCompetitionList($scope.active, $scope.vote);
             $scope.competitionList.forEach(x => {

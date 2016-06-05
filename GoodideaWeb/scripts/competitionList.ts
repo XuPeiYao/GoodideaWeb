@@ -1,6 +1,6 @@
 ﻿app.controller('competitionList', async function ($scope, $sce, $uibModal) {
     $scope.bannerList = await goodidea.Banner.getBannerList();
-
+    $scope.active = true;
     $scope.load = async () => {
         $scope.competitionList = await goodidea.Competition.getCompetitionList($scope.active, $scope.vote);
         $scope.competitionList.forEach(x => {
