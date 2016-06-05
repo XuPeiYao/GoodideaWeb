@@ -352,13 +352,22 @@
                 swal.showInputError("提案名稱不該為空"); return false
             }
             $scope.loading = true;
-            await (<goodidea.Project>$scope.project).clone(<string>inputValue);
+            var newProject = await (<goodidea.Project>$scope.project).clone(<string>inputValue);
             $scope.loading = false;
+
             swal({
-                type: 'success',
                 title: "複製提案成功",
-                text: `您已經成功的建立本提案的副本「${<string>inputValue}」`,
-                confirmButtonText: "確定"
+                text: `您已經成功的建立本提案的副本「${<string>inputValue}」，是否導引至該提案`,
+                type: "success",
+                showCancelButton: true,
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+            }, async (isConfirm) => {
+                if (!isConfirm) return;
+                $scope.loading = true;
+                location.href = "project.html?id=" + newProject.id;
+                $scope.loading = false;
             });
             $scope.$apply();
         });

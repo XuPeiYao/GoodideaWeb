@@ -367,14 +367,23 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                     return false;
                 }
                 $scope.loading = true;
-                yield $scope.project.clone(inputValue);
+                var newProject = yield $scope.project.clone(inputValue);
                 $scope.loading = false;
                 swal({
-                    type: 'success',
                     title: "複製提案成功",
-                    text: `您已經成功的建立本提案的副本「${inputValue}」`,
-                    confirmButtonText: "確定"
-                });
+                    text: `您已經成功的建立本提案的副本「${inputValue}」，是否導引至該提案`,
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonText: "確定",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: false,
+                }, (isConfirm) => __awaiter(this, void 0, void 0, function* () {
+                    if (!isConfirm)
+                        return;
+                    $scope.loading = true;
+                    location.href = "project.html?id=" + newProject.id;
+                    $scope.loading = false;
+                }));
                 $scope.$apply();
             }));
         });
