@@ -73,7 +73,6 @@ var goodidea;
          */
         static loadFromJSON(data) {
             var result = new College();
-            console.log(data);
             result.id = data['Id'];
             result.name = data['Name'];
             if (data['Departments']) {
@@ -91,7 +90,6 @@ var goodidea;
                 for (var i = 0; i < responseJSON['Result'].length; i++) {
                     var temp = responseJSON['Result'][i].College;
                     temp.Departments = responseJSON['Result'][i].Departments;
-                    console.log(temp);
                     result.push(College.loadFromJSON(temp));
                 }
                 return result;
