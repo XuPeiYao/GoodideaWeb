@@ -12,6 +12,15 @@ app.controller('bannerPlayer', async function ($scope, $sce, $uibModal) {
     bannerPlayer.querySelectorAll('.carousel-control')
         .toArray()
         .forEach((x: Node) => x.parentNode.removeChild(x));//移除上一張圖與下一張圖按鈕
+
+    bannerPlayer.querySelectorAll('.banner-image')
+        .toArray()
+        .forEach((x: Node) => {
+            var node = x.cloneNode();
+            var target = x.parentNode.parentNode;
+            target.removeChild(x.parentNode);
+            target.appendChild(node);
+        });
 });
 
 //最新消息檢視器
