@@ -22,7 +22,8 @@
             });
         }
 
-        public static parse(content: string, level: number = 1): MarkdownSegment[] {
+        public static parse(content: string, level?: number): MarkdownSegment[] {
+            if (!level) level = 1;
             var result: MarkdownSegment[] = [];
 
             var regex = new RegExp("^" + "#".repeat(level) + "\\s+.+");

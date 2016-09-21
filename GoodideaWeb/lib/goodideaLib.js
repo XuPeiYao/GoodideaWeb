@@ -407,7 +407,9 @@ var goodidea;
                 return x;
             });
         }
-        static parse(content, level = 1) {
+        static parse(content, level) {
+            if (!level)
+                level = 1;
             var result = [];
             var regex = new RegExp("^" + "#".repeat(level) + "\\s+.+");
             var lines = content.replace(/\r/g, "").split("\n");
