@@ -360,6 +360,7 @@ body, h1, h2, h3, h4, h5, h6 {
     font-size: 25px;
     position: absolute;
     right: 5px;
+    top:0px;
 }
 
 .nkfust-project-header {
