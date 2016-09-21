@@ -7,7 +7,9 @@
 
     $scope.competitionOptions = [{ id: 'N', name: '不限定' }];
     $scope.competition = 'N';
-    (await goodidea.Competition.getCompetitionList(null, null)).forEach(x => $scope.competitionOptions.push(x));
+    (await goodidea.Competition.getCompetitionList(null, null))
+        .reverse()//翻轉順序
+        .forEach(x => $scope.competitionOptions.push(x));
     if (queryString['competition']) {
         $scope.competition = queryString['competition'];
     }

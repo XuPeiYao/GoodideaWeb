@@ -14,7 +14,9 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
         (yield goodidea.Class.getClassList()).forEach(x => $scope.classOptions.push(x));
         $scope.competitionOptions = [{ id: 'N', name: '不限定' }];
         $scope.competition = 'N';
-        (yield goodidea.Competition.getCompetitionList(null, null)).forEach(x => $scope.competitionOptions.push(x));
+        (yield goodidea.Competition.getCompetitionList(null, null))
+            .reverse() //翻轉順序
+            .forEach(x => $scope.competitionOptions.push(x));
         if (queryString['competition']) {
             $scope.competition = queryString['competition'];
         }
