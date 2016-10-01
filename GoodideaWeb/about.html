@@ -104,7 +104,6 @@
                                 <div class="mdl-grid">
                                     <div ng-repeat="t in user.projectList.own" class="mdl-cell--12-col nkfust-about-project">
                                         <div class="nkfust-about-project-class">
-                                            <span>{{t.class.name}}</span>
                                             <span style="margin-left:5px;" id="project_views_{{t.id}}"><i class="fa fa-fire" aria-hidden="true"></i>{{t.views}}</span>
                                         </div>
                                         <div class="nkfust-about-project-header">
@@ -115,6 +114,7 @@
                                         <div class="mdl-tooltip" for="project_time_{{t.id}}">{{t.lastEditTime.format('yyyy-mm-dd HH:MM:ss')}}</div>
 
                                         <div class="mdl-tooltip" for="project_views_{{t.id}}">瀏覽人次</div>
+                                        <div style="right: -10px;top: 40px; position: relative;text-align: right;">{{t.class.name}}</div>
                                     </div>
                                 </div>
                             </div>
@@ -122,7 +122,6 @@
                                 <div class="mdl-grid">
                                     <div ng-repeat="t in user.projectList.participate" class="mdl-cell--12-col nkfust-about-project">
                                         <div class="nkfust-about-project-class">
-                                            <span>{{t.class.name}}</span>
                                             <span style="margin-left:5px;" id="project_views_{{t.id}}"><i class="fa fa-fire" aria-hidden="true"></i>{{t.views}}</span>
                                         </div>
                                         <div class="nkfust-about-project-header">
@@ -133,6 +132,7 @@
                                         <div class="mdl-tooltip" for="project_time_{{t.id}}">{{t.lastEditTime.format('yyyy-mm-dd HH:MM:ss')}}</div>
 
                                         <div class="mdl-tooltip" for="project_views_{{t.id}}">瀏覽人次</div>
+                                        <div style="right: -10px;top: 40px; position: relative;text-align: right;">{{t.class.name}}</div>
                                     </div>
                                 </div>
                             </div>
