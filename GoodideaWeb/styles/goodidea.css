@@ -14,6 +14,17 @@
  * limitations under the License.
  */
 
+.project-counter {
+    display: inline-block;
+    padding: 2px 5px;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1;
+    color: #666;
+    background-color: #eee;
+    border-radius: 20px;
+}
+
 .nkfust-about-project{
     border-bottom: #9E9E9E solid 1px;
     height: 100px;

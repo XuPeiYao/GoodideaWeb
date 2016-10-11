@@ -75,8 +75,8 @@
                     <div class="mdl-tabs mdl-js-tabs mdl-js-ripple-effect mdl-cell mdl-cell--8-col mdl-cell--8-col-tablet mdl-cell--12-col-phone mdl-card mdl-shadow--3dp">
                         <div class="mdl-grid mdl-tabs__tab-bar nkfust-about-header-tab">
                             <a href="#Information-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab is-active">自我介紹</a>
-                            <a href="#Own-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab">發起提案</a>
-                            <a href="#Participate-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab">參與提案</a>
+                            <a href="#Own-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab">發起提案<span class="project-counter">{{user.projectList.own.length}}</span></a>
+                            <a href="#Participate-Panel" class="mdl-cell mdl-cell--4-col mdl-tabs__tab">參與提案<span class="project-counter">{{user.projectList.participate.length}}</span></a>
                         </div>
                         <div class="mdl-layout__content" style="width:100%">
                             <div class="mdl-tabs__panel is-active" id="Information-Panel">
