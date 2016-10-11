@@ -35,6 +35,8 @@ app.controller('about', function ($scope, $sce, $uibModal) {
             var timeString = x => {
                 var time = nowTime.getTime() - x.lastEditTime;
                 console.log(time);
+                var year = Math.floor(time / (365 * 24 * 3600 * 1000));
+                time %= 365 * 24 * 3600 * 1000;
                 var day = Math.floor(time / (24 * 3600 * 1000));
                 time %= 24 * 3600 * 1000;
                 var hours = Math.floor(time / (3600 * 1000));
@@ -43,6 +45,8 @@ app.controller('about', function ($scope, $sce, $uibModal) {
                 time %= 60 * 1000;
                 var seconds = Math.floor(time / 1000);
                 var updateString = "";
+                if (year > 0)
+                    updateString += `${year}年`;
                 if (day > 0)
                     updateString += `${day}天`;
                 if (hours > 0 && day == 0)

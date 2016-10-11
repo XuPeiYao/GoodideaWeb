@@ -29,6 +29,10 @@
         var timeString = x => {
             var time = nowTime.getTime() - x.lastEditTime;
             console.log(time);
+
+            var year = Math.floor(time / (365 * 24 * 3600 * 1000));
+            time %= 365 * 24 * 3600 * 1000;
+
             var day = Math.floor(time / (24 * 3600 * 1000));
             time %= 24 * 3600 * 1000;
 
@@ -43,6 +47,7 @@
 
 
             var updateString = "";
+            if (year > 0) updateString += `${year}年`;
             if (day > 0) updateString += `${day}天`;
             if (hours > 0 && day == 0) updateString += `${hours}時`;
             if (minnutes > 0 && hours == 0) updateString += `${minnutes}分`;
