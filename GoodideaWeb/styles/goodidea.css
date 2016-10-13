@@ -96,7 +96,7 @@
   margin-top: 10px;
   margin-bottom: 10px;
 }
-#project-content *{
+#project-content p,td{
     font-size: 12pt;
 }
 
