@@ -54,3 +54,6 @@ img{/*提案正文圖片置中*/
       vertical-align: baseline !important;
       display: initial !important;
 }
+p{
+    font-size: 12pt !important;
+}
