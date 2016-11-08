@@ -97,7 +97,10 @@ app.controller('project', function ($scope, $sce, $uibModal) {
                     var aTag = document.createElement('a');
                     aTag.name = x.innerText;
                     $scope.tags.push(aTag); //加入標籤集合
-                    contentElement.insertBefore(aTag, x);
+                    try {
+                        contentElement.insertBefore(aTag, x);
+                    }
+                    catch (e) { }
                 });
             }
             //取得頁面主要區塊

@@ -93,7 +93,9 @@
                 var aTag = document.createElement('a');
                 aTag.name = x.innerText;
                 $scope.tags.push(aTag);//加入標籤集合
-                contentElement.insertBefore(aTag, x);
+                try {//暫時解決insertBefore中使用這可能將Header設定成li項目造成DOMException
+                    contentElement.insertBefore(aTag, x);
+                } catch (e) {}
             });
         }
 
