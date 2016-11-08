@@ -107,7 +107,7 @@
                                             <span style="margin-left:5px;" id="project_views_{{t.id}}"><i class="fa fa-fire" aria-hidden="true"></i>{{t.views}}</span>
                                         </div>
                                         <div class="nkfust-about-project-header">
-                                            <a class="nkfust-about-project-title" href="project.html?id={{t.id}}">{{t.name}}</a>
+                                            <a class="nkfust-about-project-title" href="project.html?id={{t.id}}"><span ng-show="t.competition">[已參賽]</span>{{t.name}}</a>
                                             <span style="font-size: 10px;background-color:#ffefc6;padding: 4px 5px 3px;" ng-hide="t.isPublish">PRIVATE</span>
                                         </div>
                                         <div class="nkfust-about-project-time" id="project_time_{{t.id}}">{{t.timeString}}</div>
