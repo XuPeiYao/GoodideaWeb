@@ -1010,7 +1010,7 @@ app.controller('changeClassModal', function ($scope, $sce, $uibModalInstance, pr
 app.controller('joinCompetitionModal', function ($scope, $sce, $uibModalInstance, project, mainScope, $uibModal) {
     return __awaiter(this, void 0, void 0, function* () {
         $scope.loading = true;
-        $scope.competitionList = yield goodidea.Competition.getCompetitionList(true, false);
+        $scope.competitionList = yield goodidea.Competition.getCompetitionList(true, null);
         if ($scope.competitionList.length) {
             $scope.competition = $scope.competitionList.first().id;
         }

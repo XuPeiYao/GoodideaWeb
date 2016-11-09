@@ -1003,7 +1003,7 @@ app.controller('changeClassModal', async function ($scope, $sce, $uibModalInstan
 //參加競賽控制器
 app.controller('joinCompetitionModal', async function ($scope, $sce, $uibModalInstance: angular.ui.bootstrap.IModalServiceInstance, project: goodidea.Project, mainScope, $uibModal) {
     $scope.loading = true;
-    $scope.competitionList = await goodidea.Competition.getCompetitionList(true, false);
+    $scope.competitionList = await goodidea.Competition.getCompetitionList(true,null);
     if ($scope.competitionList.length) {
         $scope.competition = $scope.competitionList.first().id;
     }
