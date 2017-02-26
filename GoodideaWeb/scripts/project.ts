@@ -11,6 +11,7 @@
         try {
             $scope.loginUser = await goodidea.User.getLoginUser();//取得目前登入使用者
             $scope.project = await goodidea.Project.getProjectById($scope.projectId);//透過Querystring取得ID後讀取該提案
+
             if ($scope.loginUser && $scope.project.competition && $scope.project.competition.canVote) {
                 $scope.voteQuota = await goodidea.Competition.getLoginUserQuota($scope.project.competition);//取得剩餘可投票數
             }
@@ -53,6 +54,37 @@
 
         //更新內文HTML
         $scope.updateContent();
+        
+        //#region 插入Facebook Meta資料
+        try {
+            var ogTitle = document.createElement("meta");
+            ogTitle.setAttribute("property", "og:title");
+            ogTitle.setAttribute("content", (<goodidea.Project>$scope.project).name);
+            document.head.appendChild(ogTitle);
+
+            var ogDescription = document.createElement("meta");
+            ogDescription.setAttribute("property", "og:description");
+            ogDescription.setAttribute("content", (<goodidea.Project>$scope.project).summary);
+            document.head.appendChild(ogDescription);
+
+            var contentImages = document.getElementById("Content-Panel").getElementsByTagName("img");
+
+            var ogCoverImage = document.createElement("meta");
+            ogCoverImage.setAttribute("property", "og:image");
+            ogCoverImage.setAttribute("content", (<goodidea.Project>$scope.project).cover.url);
+            document.head.appendChild(ogCoverImage);
+
+            for (var index in contentImages) {
+                var ogContentImage = document.createElement("meta");
+                ogContentImage.setAttribute("property", "og:image");
+                ogContentImage.setAttribute("content", contentImages[index].src);
+                document.head.appendChild(ogContentImage);
+            }
+        } catch (e) {
+            console.error("初始化Facebook meta標籤錯誤");
+        }
+        //#endregion
+
 
         //初始化編輯器
         if($scope.project.editable)$scope.initEditor();
