@@ -451,12 +451,16 @@
     //FB分享
     $scope.share = () => {
         FB.ui({
-            method: "feed",
-            link: location.href,
-            name: `[${$scope.project.class.name}]${$scope.project.name}`,
-            caption: '創意創新雲端平台 - 國立高雄第一科技大學',
-            description: $scope.project.summary,
-            //picture: (<goodidea.Project>$scope.project).cover.url
+            method: 'share_open_graph',
+            action_type: 'og.likes',
+            action_properties: JSON.stringify({
+                object: {
+                    'og:url': location.href,
+                    'og:title': `[${$scope.project.class.name}]${$scope.project.name}`,
+                    'og:description': $scope.project.summary,
+                    'og:image': (<goodidea.Project>$scope.project).cover.url
+                }
+            })
         });
     }
 
