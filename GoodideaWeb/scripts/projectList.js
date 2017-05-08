@@ -3,7 +3,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
         function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
         function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments)).next());
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
 app.controller('projectList', function ($scope, $sce, $uibModal) {
@@ -36,13 +36,24 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
         $scope.projectList = [];
         $scope.loading = false;
         $scope.loadNextPage = () => __awaiter(this, void 0, void 0, function* () {
+            if ($scope.loadRuning) {
+                $scope.loadBreakSignal++;
+                ;
+            }
             $scope.loading = true;
+            $scope.loadRuning = true; //標誌執行
+            var temp = null;
             if ($scope.lastPageResult == null) {
-                $scope.lastPageResult = yield goodidea.Project.getProjectList($scope.class == 'N' ? null : $scope.class, $scope.competition == 'N' ? null : $scope.competition, parseInt($scope.order));
+                temp = yield goodidea.Project.getProjectList($scope.class == 'N' ? null : $scope.class, $scope.competition == 'N' ? null : $scope.competition, parseInt($scope.order));
             }
             else {
-                $scope.lastPageResult = yield $scope.lastPageResult.nextPage();
+                temp = (yield $scope.lastPageResult.nextPage());
             }
+            if ($scope.loadBreakSignal > 0) {
+                $scope.loadBreakSignal--;
+                return; //本次流程該被中斷
+            }
+            $scope.lastPageResult = temp;
             $scope.lastPageResult.result.forEach(x => {
                 if (!x.cover)
                     x.cover = $scope.bannerList[0];
@@ -52,7 +63,10 @@ app.controller('projectList', function ($scope, $sce, $uibModal) {
             $scope.loading = false;
             $scope.$apply(); //通知更新    
             fixMdlTooltip(document.getElementsByClassName('android-content')[0]);
+            $scope.loadRuning = false;
         });
+        $scope.loadBreakSignal = 0;
+        $scope.loadRuning = false;
         $scope.reload = () => __awaiter(this, void 0, void 0, function* () {
             $scope.lastPageResult = null;
             $scope.projectList = [];

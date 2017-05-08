@@ -30,16 +30,27 @@
     $scope.projectList = [];
     $scope.loading = false;
     $scope.loadNextPage = async () => {
+        if ($scope.loadRuning) {
+            $scope.loadBreakSignal++;;
+        }
         $scope.loading = true;
+        $scope.loadRuning = true;//標誌執行
+        var temp = null;
         if ($scope.lastPageResult == null) {
-            $scope.lastPageResult = await goodidea.Project.getProjectList(
+            temp = await goodidea.Project.getProjectList(
                 $scope.class == 'N'? null : $scope.class,
                 $scope.competition == 'N' ? null : $scope.competition,
                 parseInt($scope.order)
             );
         } else {
-            $scope.lastPageResult = await $scope.lastPageResult.nextPage();
+            temp = <goodidea.PageResult<goodidea.Project>>await $scope.lastPageResult.nextPage();
         }
+        if ($scope.loadBreakSignal > 0) {//檢查中斷信標
+            $scope.loadBreakSignal--;
+            return;//本次流程該被中斷
+        }
+
+        $scope.lastPageResult = temp;
         
         $scope.lastPageResult.result.forEach(x => {
             if (!x.cover) x.cover = $scope.bannerList[0];
@@ -49,13 +60,16 @@
         $scope.loading = false;
         $scope.$apply();//通知更新    
         fixMdlTooltip(document.getElementsByClassName('android-content')[0]);
+        $scope.loadRuning = false;
     }
-    $scope.reload =async () => {
+    $scope.loadBreakSignal = 0;
+    $scope.loadRuning = false;
+    $scope.reload = async () => {
         $scope.lastPageResult = null;
         $scope.projectList = [];
         await $scope.loadNextPage();
         $scope.$apply();//通知更新  
-    }
+    }    
     await $scope.reload();
     $scope.$apply();//通知更新 
     fixMdlTextfields(document.getElementsByClassName('listController')[0]);
