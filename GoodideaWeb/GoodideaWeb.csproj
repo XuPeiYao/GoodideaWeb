@@ -331,6 +331,15 @@
     <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.ttf" />
     <Content Include="lib\tinymce\js\tinymce\skins\lightgray\fonts\tinymce.woff" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="web.config" />
+    <None Include="web.Debug.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+    <None Include="web.Release.config">
+      <DependentUpon>web.config</DependentUpon>
+    </None>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">12.0</VisualStudioVersion>
   </PropertyGroup>

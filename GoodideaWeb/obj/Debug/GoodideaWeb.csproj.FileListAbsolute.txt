@@ -3,3 +3,8 @@ C:\Users\XuPeiYao\Documents\GitHub\GoodideaWeb\GoodideaWeb\bin\GoodideaWeb.pdb
 C:\Users\XuPeiYao\Documents\GitHub\GoodideaWeb\GoodideaWeb\obj\Debug\GoodideaWeb.csprojResolveAssemblyReference.cache
 C:\Users\XuPeiYao\Documents\GitHub\GoodideaWeb\GoodideaWeb\obj\Debug\GoodideaWeb.dll
 C:\Users\XuPeiYao\Documents\GitHub\GoodideaWeb\GoodideaWeb\obj\Debug\GoodideaWeb.pdb
+D:\GoodideaWeb\GoodideaWeb\bin\GoodideaWeb.dll
+D:\GoodideaWeb\GoodideaWeb\bin\GoodideaWeb.pdb
+D:\GoodideaWeb\GoodideaWeb\obj\Debug\GoodideaWeb.csprojResolveAssemblyReference.cache
+D:\GoodideaWeb\GoodideaWeb\obj\Debug\GoodideaWeb.dll
+D:\GoodideaWeb\GoodideaWeb\obj\Debug\GoodideaWeb.pdb
