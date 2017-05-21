@@ -34,7 +34,9 @@
             $scope.loadBreakSignal++;;
         }
         $scope.loading = true;
-        $scope.$apply();//通知更新 
+        try {
+            $scope.$apply();//通知更新 
+        } catch (e) { console.log(e) }
         $scope.loadRuning = true;//標誌執行
         var temp = null;
         if ($scope.lastPageResult == null) {
