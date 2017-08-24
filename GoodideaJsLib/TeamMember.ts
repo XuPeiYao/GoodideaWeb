@@ -5,33 +5,33 @@ module goodidea {
 
     export class TeamMember {
         /**
-         * ¹Î¶¤¦¨­û¸ê°TId
+         * ï¿½Î¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½TId
          */
         public id: string;
 
         /**
-         * ¬O§_¬°«ü¾É¦Ñ®v
+         * ï¿½Oï¿½_ï¿½ï¿½ï¿½ï¿½ï¿½É¦Ñ®v
          */
         public isTeacher: boolean;
 
         /**
-         * ¬O§_¬°§U±Ð
+         * ï¿½Oï¿½_ï¿½ï¿½ï¿½Uï¿½ï¿½
          */
         public isAssistant: boolean;
 
         /**
-         * ¨Ï¥ÎªÌ
+         * ï¿½Ï¥Îªï¿½
          */
         public user: User;
 
         /**
-         * ¨ú±o©Î³]©w¹Î¶¤¦¨­ûÃþ«¬
+         * ï¿½ï¿½ï¿½oï¿½Î³]ï¿½wï¿½Î¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
          */
-        public get memberType(): MemberType {
+        public getMemberType(): MemberType {
             if (!this.isTeacher) return MemberType.member;
             return this.isAssistant ? MemberType.assistant : MemberType.teacher;
         }
-        public set memberType(value: MemberType) {
+        public setMemberType(value: MemberType) {
             switch (value) {
                 case MemberType.member:
                     this.isTeacher = false; this.isAssistant = false;
@@ -46,8 +46,8 @@ module goodidea {
         }
 
         /**
-         * ¥ÑJSON¸ê®Æ²£¥ÍTeamMember
-         * @param data ¸ê®Æ¨Ó·½
+         * ï¿½ï¿½JSONï¿½ï¿½Æ²ï¿½ï¿½ï¿½TeamMember
+         * @param data ï¿½ï¿½Æ¨Ó·ï¿½
          */
         public static loadFromJSON(data: JSON): TeamMember {
             var result = new TeamMember();

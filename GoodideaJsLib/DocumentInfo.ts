@@ -1,23 +1,23 @@
-module goodidea {
+ï»¿module goodidea {
     export class DocumentInfo {
         /**
-         * ´£®×¤å¥óId
+         * ææ¡ˆæ–‡ä»¶Id
          */
         public id: string;
 
         /**
-         * ´£®×¤å¥ó¦WºÙ
+         * ææ¡ˆæ–‡ä»¶åç¨±
          */
         public name: string;
 
         /**
-         * ´£®×¤å¥óÀÉ®×¸ê°T
+         * ææ¡ˆæ–‡ä»¶æª”æ¡ˆè³‡è¨Š
          */
         public file:FileInfo;
 
         /**
-         * ¥ÑJSON¸ê®Æ²£¥ÍDocumentInfo
-         * @param data ¸ê®Æ¨Ó·½
+         * ç”±JSONè³‡æ–™ç”¢ç”ŸDocumentInfo
+         * @param data è³‡æ–™ä¾†æº
          */
         public static loadFromJSON(data: JSON): DocumentInfo{
             var result = new DocumentInfo();

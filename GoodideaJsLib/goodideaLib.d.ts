@@ -349,7 +349,7 @@ declare module goodidea {
         content: string;
         private contentIndex;
         constructor(content: string);
-        segments: MarkdownSegment[];
+        getSegments(): MarkdownSegment[];
         static parse(content: string, level?: number): MarkdownSegment[];
     }
 }
@@ -752,16 +752,16 @@ declare module goodidea {
 declare module goodidea {
     class Team {
         /**
-         * 團隊名稱
+         * �ζ��W��
          */
         name: string;
         /**
-         * 團隊成員資訊
+         * �ζ��������T
          */
         group: TeamMember[];
         /**
-         * 由JSON資料產生Team
-         * @param data 資料來源
+         * ��JSON���Ʋ���Team
+         * @param data ���ƨӷ�
          */
         static loadFromJSON(data: JSON): Team;
     }
@@ -774,28 +774,29 @@ declare module goodidea {
     }
     class TeamMember {
         /**
-         * 團隊成員資訊Id
+         * �ζ�������TId
          */
         id: string;
         /**
-         * 是否為指導老師
+         * �O�_�����ɦѮv
          */
         isTeacher: boolean;
         /**
-         * 是否為助教
+         * �O�_���U��
          */
         isAssistant: boolean;
         /**
-         * 使用者
+         * �ϥΪ�
          */
         user: User;
         /**
-         * 取得或設定團隊成員類型
+         * ���o�γ]�w�ζ���������
          */
-        memberType: MemberType;
+        getMemberType(): MemberType;
+        setMemberType(value: MemberType): void;
         /**
-         * 由JSON資料產生TeamMember
-         * @param data 資料來源
+         * ��JSON��Ʋ���TeamMember
+         * @param data ��ƨӷ�
          */
         static loadFromJSON(data: JSON): TeamMember;
     }

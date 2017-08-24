@@ -1,75 +1,75 @@
-module goodidea {
+ï»¿module goodidea {
     export class Competition {
         /**
-         * ÄvÁÉId
+         * ç«¶è³½Id
          */
         public id: string;
 
         /**
-         * ÄvÁÉ¦WºÙ
+         * ç«¶è³½åç¨±
          */
         public name: string;
 
         /**
-         * ¥Î¤á¦b¸ÓÄvÁÉ¥i§ë²¼¼Æ
+         * ç”¨æˆ¶åœ¨è©²ç«¶è³½å¯æŠ•ç¥¨æ•¸
          */
         public userVotes: number;
 
         /**
-         * §ë½Z«á§Y¤½¶}
+         * æŠ•ç¨¿å¾Œå³å…¬é–‹
          */
         public publishOnSubmit: boolean;
 
         /**
-         * »İ­n«ü¾É±Ğ±Â
+         * éœ€è¦æŒ‡å°æ•™æˆ
          */
         public needTeacher: boolean;
 
         /**
-         * ³Ì¦h¦¨­û¼Æ­­¨î
+         * æœ€å¤šæˆå“¡æ•¸é™åˆ¶
          */
         public maxMember: number;
 
         /**
-         * ³Ì¤Ö¦¨­û¼Æ­­¨î
+         * æœ€å°‘æˆå“¡æ•¸é™åˆ¶
          */
         public minMember: number;
 
         /**
-         * ³æ¤@¨Ï¥ÎªÌ³æ¤@­«½Æ°ÑÁÉ¦¸¼Æ
+         * å–®ä¸€ä½¿ç”¨è€…å–®ä¸€é‡è¤‡åƒè³½æ¬¡æ•¸
          */
         public repeatCount: number;
 
         /**
-         * ´£®×½d¥»
+         * ææ¡ˆç¯„æœ¬
          */
         public template: string;
 
         /**
-         * ÄvÁÉ­­¨î§ë½Z¤ÀÃş
+         * ç«¶è³½é™åˆ¶æŠ•ç¨¿åˆ†é¡
          */
         public condition: Class[];
 
         /**
-         * §ë½Z®É¶¡½d³ò
+         * æŠ•ç¨¿æ™‚é–“ç¯„åœ
          */
         public submitRange: TimeRange;
 
         /**
-         * ³z²¼®É¶¡½d³ò
+         * é€ç¥¨æ™‚é–“ç¯„åœ
          */
         public voteRange: TimeRange;
 
         /**
-         * ¨ú±oÄvÁÉ¼ËªOMarkdownªº³¹¸`­åªRª«¥ó
+         * å–å¾—ç«¶è³½æ¨£æ¿Markdownçš„ç« ç¯€å‰–æç‰©ä»¶
          */
         public getTemplateSegments(): MarkdownSegment {
             return new MarkdownSegment(this.template || "");
         }
 
         /**
-         * ¥ÑJSON¸ê®Æ²£¥ÍCompetition
-         * @param data ¸ê®Æ¨Ó·½
+         * ç”±JSONè³‡æ–™ç”¢ç”ŸCompetition
+         * @param data è³‡æ–™ä¾†æº
          */
         public static loadFromJSON(data: JSON): Competition {
             var result = new Competition();
@@ -92,9 +92,9 @@ module goodidea {
         }
 
         /**
-         * ³z¹L­­¨î±ø¥ó¨ú±oÄvÁÉ²M³æ
-         * @param active ¥Ø«e¥i°ÑÁÉ
-         * @param vote ¥Ø«e¥i§ë²¼
+         * é€éé™åˆ¶æ¢ä»¶å–å¾—ç«¶è³½æ¸…å–®
+         * @param active ç›®å‰å¯åƒè³½
+         * @param vote ç›®å‰å¯æŠ•ç¥¨
          */
         public static async getCompetitionList(active: boolean, vote: boolean): Promise<Competition[]> {
             var responseJSON = await postAsync('api/competition/list', null, { active: active, vote: vote });
@@ -109,8 +109,8 @@ module goodidea {
         }
 
         /**
-         * ¨ú±o¥Ø«eµn¤J¨Ï¥ÎªÌ°w¹ï«ü©wÄvÁÉ³Ñ¾l¥i§ë²¼¼Æ
-         * @param competition ÄvÁÉ
+         * å–å¾—ç›®å‰ç™»å…¥ä½¿ç”¨è€…é‡å°æŒ‡å®šç«¶è³½å‰©é¤˜å¯æŠ•ç¥¨æ•¸
+         * @param competition ç«¶è³½
          */
         public static async getLoginUserQuota(competition: string | Competition): Promise<number> {
             var id = competition['id'] || competition;
