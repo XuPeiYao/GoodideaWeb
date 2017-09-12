@@ -1,4 +1,5 @@
 ﻿declare var tinymce, tinyMCE, toMarkdown;
+var ignoreElement = [];
 function initEditor(selector: string, $scope) {
     tinymce.init({
         selector: selector,
@@ -164,37 +165,42 @@ function initEditor(selector: string, $scope) {
                 console.log(markdown.toHtml($scope.project.content));
                 tinyMCE.activeEditor.setContent(markdown.toHtml($scope.project.content));
 
-                var ignoreElement = [];
 
-                var headers = tinyMCE.activeEditor
-                    .contentDocument
-                    .querySelectorAll("h1,h2,h3,h4,h5,h6");
+                function initHeaderAlert() {
+                    var headers = tinyMCE.activeEditor
+                        .contentDocument
+                        .querySelectorAll("h1,h2,h3,h4,h5,h6");
 
-                for (var i = 0; i < headers.length; i++) {
-                    headers[i].addEventListener("DOMSubtreeModified", function (e) {
-                        if (ignoreElement.contains(this)) return;
-                        var THIS = this;
-                        swal({
-                            title: "不建議變更的項目",
-                            text: "變更或刪除標題內容，可能導致參賽格式檢查時發生異常，請確保移除的內容並非參賽必要的章節",
-                            type: "warning",
-                            showCancelButton: true,
-                            confirmButtonText: "這個標題不用再提醒",
-                            cancelButtonText: "依舊提醒我，取消變更",
-                            closeOnConfirm: false,
-                            closeOnCancel: false
-                        }, function (isConfirm) {
-                            if (isConfirm) {
-                                console.log(THIS);
-                                ignoreElement.push(THIS);
-                                swal.close();
-                            } else {
-                                tinymce.activeEditor.undoManager.undo();
-                                swal.close();
-                            }
-                        });
-                    }, false);
+                    for (var i = 0; i < headers.length; i++) {
+                        headers[i].addEventListener("DOMSubtreeModified", function (e) {
+                            console.log(this);
+                            if (ignoreElement.contains(this)) return;
+                            var THIS = this;
+                            swal({
+                                title: "不建議變更的項目",
+                                text: "變更或刪除標題內容，可能導致參賽格式檢查時發生異常，請確保移除的內容並非參賽必要的章節",
+                                type: "warning",
+                                showCancelButton: true,
+                                confirmButtonText: "這個標題不用再提醒",
+                                cancelButtonText: "依舊提醒我，取消變更",
+                                closeOnConfirm: false,
+                                closeOnCancel: false
+                            }, function (isConfirm) {
+                                if (isConfirm) {
+                                    console.log(THIS);
+                                    ignoreElement.push(THIS);
+                                    swal.close();
+                                } else {
+                                    tinymce.activeEditor.undoManager.undo();
+                                    swal.close();
+                                }
+                            });
+                        }, false);
+                    }
                 }
+
+                tinymce.activeEditor.undoManager.onUndo = initHeaderAlert;
+                initHeaderAlert();
             });
         }
     });
