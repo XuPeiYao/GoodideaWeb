@@ -203,13 +203,13 @@ function initEditor(selector, $scope) {
                                 }
                                 else {
                                     tinymce.activeEditor.undoManager.undo();
+                                    initHeaderAlert();
                                     swal.close();
                                 }
                             });
                         }, false);
                     }
                 }
-                tinymce.activeEditor.undoManager.onUndo = initHeaderAlert;
                 initHeaderAlert();
             });
         }

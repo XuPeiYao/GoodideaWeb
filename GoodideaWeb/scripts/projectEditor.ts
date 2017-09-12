@@ -192,6 +192,7 @@ function initEditor(selector: string, $scope) {
                                     swal.close();
                                 } else {
                                     tinymce.activeEditor.undoManager.undo();
+                                    initHeaderAlert();
                                     swal.close();
                                 }
                             });
@@ -199,7 +200,6 @@ function initEditor(selector: string, $scope) {
                     }
                 }
 
-                tinymce.activeEditor.undoManager.onUndo = initHeaderAlert;
                 initHeaderAlert();
             });
         }
