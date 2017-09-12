@@ -1,5 +1,5 @@
-﻿declare var tinymce, tinyMCE,toMarkdown;
-function initEditor(selector:string,$scope) {
+﻿declare var tinymce, tinyMCE, toMarkdown;
+function initEditor(selector: string, $scope) {
     tinymce.init({
         selector: selector,
         language: "zh_TW",
@@ -19,7 +19,7 @@ function initEditor(selector:string,$scope) {
             view: { title: 'View', items: 'fullscreen' }
         },
         toolbar: "save | cut copy paste | insertfile undo redo | styleselect | bold strikethrough superscript subscript | bullist numlist | hr",
-        contextmenu: "cut copy paste | formats | insertUrl insertImage insertVideo | inserttable row column",
+        contextmenu: "cut copy paste | formats | insertUrl insertImage insertVideo",
         advlist_number_styles: "default",
         advlist_bullet_styles: "default",
         style_formats: [
@@ -95,7 +95,7 @@ function initEditor(selector:string,$scope) {
                     tinymce.activeEditor.execCommand('insertImage');
                 }
             });
-            ed.addCommand('save',async function (ui, v) {
+            ed.addCommand('save', async function (ui, v) {
                 var text = tinyMCE.activeEditor.getContent();
                 var text2 = parseHTML(text);
                 toArray(text2.querySelectorAll('table')).forEach((x: HTMLTableElement) => {
@@ -107,11 +107,11 @@ function initEditor(selector:string,$scope) {
                         var TR = x.querySelector("tr");
                         if (TR == null) return;
                         toArray(TR.childNodes).forEach(y => {
-                        console.log(y)
+                            console.log(y)
                             TH.appendChild(y);
                         });
                         TR.remove();
-                    } catch (e){ }
+                    } catch (e) { }
                 });
                 $scope.project.content = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
                 $scope.loading = true;

@@ -1,5 +1,5 @@
-﻿declare var tinymce, tinyMCE,toMarkdown;
-function initAboutEditor(selector:string,$scope) {
+﻿declare var tinymce, tinyMCE, toMarkdown;
+function initAboutEditor(selector: string, $scope) {
     tinymce.init({
         selector: selector,
         language: "zh_TW",
@@ -15,11 +15,10 @@ function initAboutEditor(selector:string,$scope) {
             file: { title: "File", items: "save" },
             edit: { title: 'Edit', items: 'undo redo | cut copy paste pastetext | selectall | searchreplace' },
             insert: { title: 'Insert', items: 'insertUrl insertVideo | charmap hr insertdatetime' },
-            format: { title: 'Format', items: 'bold italic superscript subscript | formats | removeformat' },
-            table: { title: 'Table', items: 'inserttable deletetable | row column' },//strikethrough  underline 
+            format: { title: 'Format', items: 'bold italic superscript subscript | formats | removeformat' }
         },
         toolbar: "save | cut copy paste | insertfile undo redo | styleselect | bold strikethrough superscript subscript | bullist numlist | hr",
-        contextmenu: "cut copy paste | formats | insertUrl insertVideo | inserttable row column",
+        contextmenu: "cut copy paste | formats | insertUrl insertVideo",
         advlist_number_styles: "default",
         advlist_bullet_styles: "default",
         style_formats: [
@@ -95,7 +94,7 @@ function initAboutEditor(selector:string,$scope) {
                     tinymce.activeEditor.execCommand('insertImage');
                 }
             });
-            ed.addCommand('save',async function (ui, v) {
+            ed.addCommand('save', async function (ui, v) {
                 var text = tinyMCE.activeEditor.getContent();
                 var text2 = parseHTML(text);
                 toArray(text2.querySelectorAll('table')).forEach((x: HTMLTableElement) => {
@@ -107,11 +106,11 @@ function initAboutEditor(selector:string,$scope) {
                         var TR = x.querySelector("tr");
                         if (TR == null) return;
                         toArray(TR.childNodes).forEach(y => {
-                        console.log(y)
+                            console.log(y)
                             TH.appendChild(y);
                         });
                         TR.remove();
-                    } catch (e){ }
+                    } catch (e) { }
                 });
                 $scope.user.information = toMarkdown(text2.documentElement.outerHTML, { gfm: true });
                 $scope.loading = true;
