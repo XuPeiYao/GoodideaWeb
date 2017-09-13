@@ -181,8 +181,8 @@ function initEditor(selector: string, $scope) {
                                 text: "變更或刪除標題內容，可能導致參賽格式檢查時發生異常，請確保移除的內容並非參賽必要的章節",
                                 type: "warning",
                                 showCancelButton: true,
-                                confirmButtonText: "這個標題不用再提醒",
-                                cancelButtonText: "依舊提醒我，取消變更",
+                                confirmButtonText: "繼續編輯",
+                                cancelButtonText: "取消變更",
                                 closeOnConfirm: false,
                                 closeOnCancel: false
                             }, function (isConfirm) {
